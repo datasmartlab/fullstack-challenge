@@ -30,19 +30,25 @@ A Datasmart trabalha sempre com feedbacks construtivos e, portanto, daremos semp
 
 ## :clipboard: Instruções
 
-1. Faça um fork desse projeto para a sua conta pessoal do GitHub;
+1. Faça um fork desse projeto;
 
-2. Crie uma branch com o padrão: `fullstack-challenge/seu-nome-sobrenome`;
+2. Crie uma branch para o seu desafio no padrão: `git checkout -b fullstack-challenge/seu-nome-sobrenome`;
 
 3. Crie uma pasta `backend` e outra `frontend` para colocar os projetos;
 
-4. Siga as especificações abaixo;
+4. Realize o desafio seguindo a seção de especificações;
 
 5. Crie um README com uma descrição e instruções para compilar e rodar o projeto;
 
-6. Ao terminar o teste, solicite um pull request;
+6. Adicione seu desafio para transferência `git add .`;
 
-7. Envie um email para `vagas@datasmart.com.br` com o título: `Desenvolvedor Fullstack - Seu Nome Sobrenome`. Adicione seu telefone, LinkedIn, seu perfil do GitHub e em anexo seu currículo.
+7. Faça commit do seu desafio `git commit -m 'Challenge'`;
+
+8. Faça o push da branch: `git push origin fullstack-challenge/seu-nome-sobrenome`;
+
+9. Abra um pull request com o nome `Challenge: Seu Nome Sobrenome`;
+
+10. Envie um email para `vagas@datasmart.com.br` com o título: `Desenvolvedor Fullstack - Seu Nome Sobrenome`. Adicione seu telefone, LinkedIn, seu perfil do GitHub e em anexo seu currículo.
 
 ## :wrench: Especificações técnicas
 
