@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import AlertDelete from "./DeleteDialog";
+import DeleteDialog from "./DeleteDialog";
 import { alterProduct, deleteProduct } from "../../services/ProductApi";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ interface productData{
     price:string,
     description:string
 }
-const newProductValidationSchema =zod.object({
+const newProductValidationSchema = zod.object({
     id:zod.number(),
     name:zod.string().min(2, "O nome é obrigatório"),
     price: zod.string().refine((value) => !isNaN(parseFloat(value)), "O preço deve ser um número válido"),
@@ -34,7 +34,7 @@ export function InfoProduct(){
     const [Alert,setAlert]= useState(false);
 
 
-    async function dropProduct(){
+    async function handleDeleteProduct(){
         try{   
             const response = await deleteProduct(product.id);
             if(response.status===200){
@@ -52,7 +52,7 @@ export function InfoProduct(){
             }
         }
     }
-    async function handleAlterProduct(data:productData){
+    async function handleUpdateProduct(data:productData){
         try{
             setLoding(true)
             const response = await alterProduct(data);
@@ -72,8 +72,6 @@ export function InfoProduct(){
             }
         }
     }
-
-
     useEffect(()=>{
         if(!product){
             navigator('/');
@@ -81,7 +79,7 @@ export function InfoProduct(){
     },[navigator,product]);
     return(
         <Box>
-            <AlertDelete deleteProduct={dropProduct} onClose={() => setAlert(false)} Open={Alert}/>
+            <DeleteDialog deleteProduct={handleDeleteProduct} onClose={() => setAlert(false)} Open={Alert}/>
             <Grid container>
                 <Grid item width={'50%'}>
                     <Button size={'large'} disabled={loding} sx={{marginTop:'1.5rem'}} onClick={()=>{navigator('/')}} variant='text'><ArrowBack sx={{fontSize:'3rem'}}/></Button>
@@ -91,11 +89,11 @@ export function InfoProduct(){
                     <Button sx={{marginTop:'1.5rem'}} disabled={loding} color='error' onClick={()=>{setAlert(true)}} variant='text'><Delete sx={{fontSize:'3rem'}}/></Button>
                 </Grid>
                 <Grid item sx={{marginTop:'2rem'}} lg={12}>
-                    <form onSubmit={handleSubmit(handleAlterProduct)}>
+                    <form onSubmit={handleSubmit(handleUpdateProduct)}>
                     <TextField
                             defaultValue={product.id}
                             type='hidden' 
-                            {...register("id", {required: true})} 
+                            {...register("id", {required: true,valueAsNumber:true})} 
                         />
                         <TextField
                             defaultValue={product.name}
@@ -105,7 +103,7 @@ export function InfoProduct(){
                             sx={{width:'85%',marginRight:'5%',marginBottom:'2rem'}} 
                             variant={'outlined'} 
                             label={'Nome'}  
-                            {...register("name", {required: true,valueAsNumber:true})} 
+                            {...register("name", {required: true})} 
                         />
                         <TextField 
                             error={errors.price?.message?true:false}

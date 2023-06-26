@@ -6,7 +6,7 @@ interface AlertDeleteProps {
   deleteProduct: () => void; 
 }
 
-export default function AlertDelete({ Open, onClose, deleteProduct }: AlertDeleteProps) {
+export default function DeleteDialog({ Open, onClose, deleteProduct }: AlertDeleteProps) {
   const handleClose = () => {
     onClose(); // Chame a função 'onClose' para fechar o diálogo
   };

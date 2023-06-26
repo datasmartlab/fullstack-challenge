@@ -1,7 +1,7 @@
 import {BrowserRouter,Route,Routes} from 'react-router-dom'
 import { Home } from './pages/Home'
 import { DefaultLayout } from './layouts/DefaultLayout'
-import { FormProduct } from './pages/FormProduct'
+import { FormProduct } from './pages/FormAddProduct'
 import { InfoProduct } from './pages/InfoProduct'
 
 function App() {

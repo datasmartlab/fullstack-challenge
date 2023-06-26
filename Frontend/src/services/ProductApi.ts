@@ -7,14 +7,14 @@ interface productData{
     description:string
 }
 
-const baseURL = 'http://localhost:3001/'
+const baseURL = import.meta.env.VITE_LINK
 
 const api = axios.create({
     baseURL:baseURL,
 })
 
 export async function getAllProducts(){
-    const response = await api.get('products');
+    const response = await api.get('product');
     return response;
 }
 
@@ -41,4 +41,9 @@ export async function alterProduct(data:productData) {
         description:data.description
     });
     return response;
+}
+
+export async function show( id:number ){
+    const response = await api.get(`product/${id}`);
+    return response
 }
