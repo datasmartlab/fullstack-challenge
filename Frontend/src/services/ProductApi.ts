@@ -1,49 +1,50 @@
-import axios from 'axios'
+import axios from 'axios';
 
-interface productData{
-    id?:number,
-    name:string,
-    price:string,
-    description:string
+interface productData {
+    id?: number | string;
+    name: string;
+    price: string;
+    description: string;
 }
 
-const baseURL = import.meta.env.VITE_LINK
+const baseURL = import.meta.env.VITE_LINK;
 
 const api = axios.create({
-    baseURL:baseURL,
-})
+    baseURL: baseURL,
+});
 
-export async function getAllProducts(){
-    const response = await api.get('product');
+export async function readProduct() {
+    const response = await api.get(`product`);
     return response;
 }
 
-
-export async function addProduct(data:productData){
-    const response = await api.post('product',{
-            name:data.name,
-            price:data.price,
-            description:data.description
-        });
-    return response;
+export async function showProduct(id: number) {
+    const response = await api.get(`product/${id}`);
+    if (response.status != 200) {
+        return response.data.message;
+    }
+    return response.data;
 }
 
-export async function deleteProduct(id:number){
-    const response = await api.delete('product/'+id)
-    return response
-}
-
-export async function alterProduct(data:productData) {
-    const response = await api.put('product',{
-        id:data.id,
-        name:data.name,
-        price:data.price,
-        description:data.description
+export async function createProduct(data: productData) {
+    const response = await api.post(`product`, {
+        name: data.name,
+        price: data.price,
+        description: data.description,
     });
     return response;
 }
 
-export async function show( id:number ){
-    const response = await api.get(`product/${id}`);
-    return response
+export async function deleteProduct(id: number | string | undefined) {
+    const response = await api.delete(`product/${id}`);
+    return response;
+}
+
+export async function updateProduct(data: productData) {
+    const response = await api.put(`product/${data.id}`, {
+        name: data.name,
+        price: data.price,
+        description: data.description,
+    });
+    return response;
 }
