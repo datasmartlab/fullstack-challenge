@@ -10,32 +10,19 @@ interface productData {
 
 export const Update = async (req: Request, res: Response) => {
     try {
-        const productData: productData = {
-            id: parseInt(req.params.id),
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-        };
+        const id = parseInt(req.params.id);
 
-        if (!productData.id) {
-            return res.status(400).json({ message: 'ID é obrigatório' });
-        }
-
-        const result = await Product.findOne({ where: { id: productData.id } });
+        const result = await Product.findOne({ where: { id } });
         if (!result) {
             return res
                 .status(404)
-                .json(
-                    `O produto com o ID ${productData.id} não foi encontrado`,
-                );
+                .json(`O produto com o ID ${id} não foi encontrado`);
         }
 
-        await Product.update(productData, {
-            where: { id: productData.id },
-        });
+        await result.update(req.body);
 
         res.json({ message: 'O produto foi alterado com sucesso' });
     } catch (error) {
-        console.log(error);
+        res.status(500).json(error);
     }
 };

@@ -6,9 +6,12 @@ import {
     Box,
     CircularProgress,
 } from '@mui/material';
-import { useState, useEffect, useCallback } from 'react';
-import { readProduct } from '../../services/ProductApi';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsRequested } from '../../redux/products/actions';
+import { RootState } from '../../redux/store';
+import { FormProduct } from './FormCreateProduct';
 
 interface productData {
     id: number;
@@ -16,22 +19,24 @@ interface productData {
     description: string;
     price: number;
 }
-export function Home() {
-    const navigator = useNavigate();
-    const [results, setResults] = useState<productData[]>([]);
-    const [loading, setLoading] = useState(true);
 
-    const getProducts = useCallback(async () => {
-        const reponse = (await readProduct()).data;
-        setResults(reponse);
-        setLoading(false);
-    }, []);
+export function Home() {
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
+
+    const results: productData[] = useSelector(
+        (state: RootState) => state.products,
+    );
+
+    const [loading, setLoading] = useState(true);
+    const [visibleForm, setVisibleForm] = useState(false);
 
     useEffect(() => {
-        getProducts();
-    }, [getProducts]);
+        dispatch(fetchProductsRequested());
+        setLoading(false);
+    }, [dispatch]);
     return (
-        <>
+        <Box>
             {loading ? (
                 <Box
                     sx={{
@@ -91,14 +96,31 @@ export function Home() {
                             sx={{ alignItems: 'flex-end' }}
                             fullWidth
                             onClick={() => {
-                                navigator('/addProduct');
+                                setVisibleForm(true);
                             }}
                         >
                             Adicionar Produto
                         </Button>
+                        {visibleForm ? (
+                            <Box
+                                sx={{
+                                    position: 'fixed',
+                                    top: '0',
+                                    left: '0',
+                                    right: '0',
+                                    bottom: '0',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    zIndex: '9999',
+                                }}
+                            >
+                                <FormProduct setVisibleForm={setVisibleForm} />
+                            </Box>
+                        ) : null}
                     </Box>
                 </>
             )}
-        </>
+        </Box>
     );
 }

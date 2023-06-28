@@ -41,6 +41,6 @@ export const Create = async (req: Request, res: Response) => {
             message: 'O produto foi cadastrado com sucesso',
         });
     } catch (error) {
-        console.log(error);
+        res.status(500).json(error);
     }
 };

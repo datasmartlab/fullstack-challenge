@@ -1,13 +1,13 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
-import { createProduct } from '../../services/ProductApi';
+import { createProduct } from '../../../services/ProductApi';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
-import { ArrowBack } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 
 interface newProductData {
     name: string;
@@ -28,7 +28,11 @@ const newProductValidationSchema = zod.object({
 
 type Product = zod.infer<typeof newProductValidationSchema>;
 
-export function FormProduct() {
+interface FormProps {
+    setVisibleForm: (valor: boolean) => void;
+}
+
+export function FormProduct({ setVisibleForm }: FormProps) {
     const newProductForm = useForm<Product>({
         resolver: zodResolver(newProductValidationSchema),
     });
@@ -59,17 +63,28 @@ export function FormProduct() {
     }
 
     return (
-        <Box>
-            <Button
-                disabled={loding}
-                sx={{ marginTop: '1.5rem' }}
-                onClick={() => {
-                    navigator('/');
-                }}
-                variant="text"
-            >
-                <ArrowBack sx={{ fontSize: '3rem' }} />
-            </Button>
+        <Box
+            sx={{
+                position: 'relative',
+                zIndex: 1,
+                backgroundColor: '#ffffff',
+                paddingX: '2rem',
+                borderRadius: 6,
+            }}
+        >
+            <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                <Button
+                    disabled={loding}
+                    sx={{ marginTop: '1rem' }}
+                    color="error"
+                    onClick={() => {
+                        setVisibleForm(false);
+                    }}
+                    variant="text"
+                >
+                    <Close sx={{ fontSize: '3rem' }} />
+                </Button>
+            </Box>
             <Typography
                 variant="h2"
                 sx={{ textAlign: 'center', marginBottom: '2rem' }}

@@ -13,7 +13,7 @@ const api = axios.create({
     baseURL: baseURL,
 });
 
-export async function readProduct() {
+export async function listProducts() {
     const response = await api.get(`product`);
     return response;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField, CircularProgress } from '@mui/material';
 import { ArrowBack, Delete } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -56,7 +56,6 @@ export function InfoProduct() {
             const ID = parseInt(id);
             const productData = await showProduct(ID);
             setProduct(productData);
-            setLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 if (error.response?.status === 404) {
@@ -73,6 +72,7 @@ export function InfoProduct() {
         if (id) {
             getProduct(id);
         }
+        setLoading(false);
     }, [getProduct, id]);
 
     async function handleDeleteProduct() {
@@ -150,9 +150,18 @@ export function InfoProduct() {
                     </Button>
                 </Grid>
                 {!product ? (
-                    <>
-                        <h1>Produto não encontrado</h1>
-                    </>
+                    <Box
+                        sx={{
+                            width: '100vw',
+                            height: '100vh',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textAlign: 'center',
+                        }}
+                    >
+                        <CircularProgress size={'10rem'} />
+                    </Box>
                 ) : (
                     <>
                         <DeleteDialog

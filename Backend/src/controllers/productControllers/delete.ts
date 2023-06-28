@@ -4,9 +4,6 @@ import { Product } from '../../models/Product';
 export const Delete = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        if (!id) {
-            return res.status(400).json({ message: 'ID é obrigatório' });
-        }
 
         const result = await Product.findOne({ where: { id: id } });
 
@@ -22,6 +19,6 @@ export const Delete = async (req: Request, res: Response) => {
             message: `O produto ${result.name}  foi deletado com sucesso`,
         });
     } catch (error) {
-        console.log(error);
+        res.status(500).json(error);
     }
 };
