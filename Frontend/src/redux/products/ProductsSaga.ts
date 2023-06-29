@@ -1,8 +1,13 @@
 import { put, takeLatest, call } from 'redux-saga/effects';
 import { FETCH_PRODUCTS_REQUESTED } from './actions';
-import { setProduct } from './ProductSlice'; // Importe as actions do slice de produtos
+import {
+    getProductRequest,
+    getProductFailure,
+    getProductSuccess,
+} from './ProductsSlice'; // Importe as actions do slice de produtos
 
 import { listProducts } from '../../services/ProductApi';
+import axios from 'axios';
 interface productData {
     data: {
         id: number;
@@ -14,9 +19,14 @@ interface productData {
 function* fetchProducts() {
     try {
         const product: productData = yield call(listProducts);
-        yield put(setProduct(product.data)); // Use a action setProduct do slice de produtos
-    } catch (e) {
-        console.log(e);
+        yield put(getProductRequest(product.data));
+        yield put(getProductSuccess(product.data));
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            if (error.response) {
+                yield put(getProductFailure(error.response.data.message));
+            }
+        }
     }
 }
 

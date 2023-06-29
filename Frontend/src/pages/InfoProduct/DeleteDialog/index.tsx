@@ -42,10 +42,18 @@ export default function DeleteDialog({
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button
+                        variant="contained"
+                        onClick={handleClose}
+                        color="error"
+                    >
                         Cancelar
                     </Button>
-                    <Button onClick={Confirm} color="primary">
+                    <Button
+                        variant="contained"
+                        onClick={Confirm}
+                        color="primary"
+                    >
                         Deletar
                     </Button>
                 </DialogActions>

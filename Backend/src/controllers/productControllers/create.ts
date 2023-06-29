@@ -5,7 +5,7 @@ import { ProductSchema } from '../../validations/product';
 interface productData {
     id?: number;
     name: string;
-    description: string;
+    description?: string;
     price: number;
 }
 
@@ -16,7 +16,6 @@ export const Create = async (req: Request, res: Response) => {
             description: req.body.description,
             price: req.body.price,
         };
-
         await ProductSchema.validate(productData);
 
         const result = await Product.findOne({
@@ -31,7 +30,7 @@ export const Create = async (req: Request, res: Response) => {
 
         const product = Product.build({
             name: productData.name,
-            description: productData.description,
+            description: productData.description || '',
             price: productData.price,
         });
 

@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
 import { Close } from '@mui/icons-material';
 
 interface newProductData {
@@ -23,7 +22,7 @@ const newProductValidationSchema = zod.object({
             (value) => !isNaN(parseFloat(value)),
             'O preço deve ser um número válido',
         ),
-    description: zod.string().min(3, 'A descrição é obrigatória'),
+    description: zod.string(),
 });
 
 type Product = zod.infer<typeof newProductValidationSchema>;
@@ -42,14 +41,13 @@ export function FormProduct({ setVisibleForm }: FormProps) {
         formState: { errors },
     } = newProductForm;
     const [loding, setLoding] = useState(false);
-    const navigator = useNavigate();
 
     async function handleCreateProduct(data: newProductData) {
         try {
             setLoding(true);
             const response = await createProduct(data);
             if (response.status === 201) {
-                navigator('/');
+                setVisibleForm(false);
                 toast.success(response.data.message);
             }
         } catch (error) {
@@ -67,7 +65,7 @@ export function FormProduct({ setVisibleForm }: FormProps) {
             sx={{
                 position: 'relative',
                 zIndex: 1,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#f5f5f5',
                 paddingX: '2rem',
                 borderRadius: 6,
             }}
@@ -97,7 +95,7 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                     helperText={errors.name?.message}
                     type="text"
                     sx={{
-                        width: '85%',
+                        width: '75%',
                         marginRight: '5%',
                         marginBottom: '2rem',
                     }}
@@ -109,7 +107,7 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                     error={errors.price?.message ? true : false}
                     helperText={errors.price?.message}
                     type="text"
-                    sx={{ width: '10%' }}
+                    sx={{ width: '20%' }}
                     variant={'outlined'}
                     label={'Preço'}
                     {...register('price', { required: true })}
@@ -121,10 +119,11 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                     variant={'outlined'}
                     sx={{ marginBottom: '2rem' }}
                     multiline
-                    maxRows={8}
+                    inputProps={{ maxLength: 250 }}
+                    maxRows={3}
                     label={'Descrição'}
                     fullWidth
-                    {...register('description', { required: true })}
+                    {...register('description')}
                 />
                 <Button
                     size="large"

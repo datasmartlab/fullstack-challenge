@@ -1,4 +1,3 @@
-// productsSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
 
 interface Product {
@@ -22,13 +21,18 @@ export const sliceProduct = createSlice({
     initialState,
     reducers: {
         getProductRequest: (state, action) => {
-            state.list = action.payload;
+            state.loading = true;
         },
         getProductSuccess: (state, action) => {
-            state.lsit=
+            state.list = action.payload;
+            state.loading = false;
+        },
+        getProductFailure: (state, action) => {
+            state.loading = false;
         },
     },
 });
 
-export const { setProduct } = sliceProduct.actions;
+export const { getProductRequest, getProductSuccess, getProductFailure } =
+    sliceProduct.actions;
 export default sliceProduct.reducer;

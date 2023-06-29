@@ -29,7 +29,7 @@ const newProductValidationSchema = zod.object({
             (value) => !isNaN(parseFloat(value)),
             'O preço deve ser um número válido',
         ),
-    description: zod.string().min(3, 'A descrição é obrigatória'),
+    description: zod.string(),
 });
 type Product = zod.infer<typeof newProductValidationSchema>;
 
@@ -43,7 +43,6 @@ export function InfoProduct() {
         register,
         formState: { errors },
     } = newProductForm;
-
     const { id } = useParams();
     const navigator = useNavigate();
 
@@ -57,14 +56,7 @@ export function InfoProduct() {
             const productData = await showProduct(ID);
             setProduct(productData);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                if (error.response?.status === 404) {
-                    return toast.error(error.response.data.message);
-                }
-                if (error.response?.status === 500) {
-                    return toast.error(error.response.data.message);
-                }
-            }
+            return toast.error(error + '');
         }
     }, []);
 
@@ -172,7 +164,7 @@ export function InfoProduct() {
 
                         <Grid item sx={{ marginTop: '2rem' }} lg={12}>
                             <form onSubmit={handleSubmit(handleUpdateProduct)}>
-                                <TextField
+                                <input
                                     defaultValue={product.id}
                                     type="hidden"
                                     {...register('id', {
@@ -186,7 +178,7 @@ export function InfoProduct() {
                                     helperText={errors.name?.message}
                                     type="text"
                                     sx={{
-                                        width: '85%',
+                                        width: '75%',
                                         marginRight: '5%',
                                         marginBottom: '2rem',
                                     }}
@@ -199,7 +191,7 @@ export function InfoProduct() {
                                     defaultValue={product.price}
                                     helperText={errors.price?.message}
                                     type="text"
-                                    sx={{ width: '10%' }}
+                                    sx={{ width: '20%' }}
                                     variant={'outlined'}
                                     label={'Preço'}
                                     {...register('price', { required: true })}
@@ -216,12 +208,11 @@ export function InfoProduct() {
                                     variant={'outlined'}
                                     sx={{ marginBottom: '2rem' }}
                                     multiline
-                                    maxRows={8}
+                                    inputProps={{ maxLength: 250 }}
+                                    maxRows={3}
                                     label={'Descrição'}
                                     fullWidth
-                                    {...register('description', {
-                                        required: true,
-                                    })}
+                                    {...register('description')}
                                 />
                                 <Button
                                     size="large"

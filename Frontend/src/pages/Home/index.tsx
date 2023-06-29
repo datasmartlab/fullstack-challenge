@@ -1,17 +1,11 @@
-import {
-    Typography,
-    List,
-    ListItemButton,
-    Button,
-    Box,
-    CircularProgress,
-} from '@mui/material';
+import { Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsRequested } from '../../redux/products/actions';
 import { RootState } from '../../redux/store';
 import { FormProduct } from './FormCreateProduct';
+import { TableProduct } from './tableProduct';
 
 interface productData {
     id: number;
@@ -19,22 +13,20 @@ interface productData {
     description: string;
     price: number;
 }
-
 export function Home() {
     const dispatch = useDispatch();
-    const navigator = useNavigate();
 
     const results: productData[] = useSelector(
-        (state: RootState) => state.products,
+        (state: RootState) => state.products.list,
     );
-
-    const [loading, setLoading] = useState(true);
+    const loading = useSelector((state: RootState) => state.products.loading);
     const [visibleForm, setVisibleForm] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchProductsRequested());
-        setLoading(false);
-    }, [dispatch]);
+        if (!visibleForm) {
+            dispatch(fetchProductsRequested());
+        }
+    }, [dispatch, visibleForm]);
     return (
         <Box>
             {loading ? (
@@ -50,31 +42,12 @@ export function Home() {
                 </Box>
             ) : (
                 <>
-                    <Typography sx={{ fontSize: '4rem', textAlign: 'center' }}>
+                    <Typography variant="h3" align="center">
                         Lista De Produtos
                     </Typography>
                     {results.length != 0 ? (
                         <>
-                            <List>
-                                {results.map((item) => {
-                                    return (
-                                        <ListItemButton
-                                            key={item.id}
-                                            onClick={() => {
-                                                navigator(
-                                                    `/infoProduct/${item.id}`,
-                                                );
-                                            }}
-                                        >
-                                            <Typography fontSize={'2rem'}>
-                                                Nome: {item.name}
-                                                price: {item.price}
-                                                desc:{item.description}
-                                            </Typography>
-                                        </ListItemButton>
-                                    );
-                                })}
-                            </List>
+                            <TableProduct data={results} />
                         </>
                     ) : (
                         <Typography
@@ -98,6 +71,7 @@ export function Home() {
                             onClick={() => {
                                 setVisibleForm(true);
                             }}
+                            disabled={visibleForm}
                         >
                             Adicionar Produto
                         </Button>

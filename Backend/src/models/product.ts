@@ -15,18 +15,15 @@ export const Product = sequelize.define<productInterface>(
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
-            allowNull: false,
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
         },
         description: {
             type: DataTypes.STRING,
         },
         price: {
             type: DataTypes.FLOAT,
-            allowNull: false,
         },
     },
     {

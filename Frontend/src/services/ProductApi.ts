@@ -29,7 +29,7 @@ export async function showProduct(id: number) {
 export async function createProduct(data: productData) {
     const response = await api.post(`product`, {
         name: data.name,
-        price: data.price,
+        price: data.price.replace(',', '.'),
         description: data.description,
     });
     return response;
@@ -43,7 +43,7 @@ export async function deleteProduct(id: number | string | undefined) {
 export async function updateProduct(data: productData) {
     const response = await api.put(`product/${data.id}`, {
         name: data.name,
-        price: data.price,
+        price: data.price.replace(',', '.'),
         description: data.description,
     });
     return response;
