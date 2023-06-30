@@ -13,8 +13,18 @@ const api = axios.create({
     baseURL: baseURL,
 });
 
-export async function listProducts() {
-    const response = await api.get(`product`);
+interface paginationData {
+    offset: number;
+    limit: number;
+}
+
+export async function listProducts(pagination: paginationData) {
+    const response = await api.get(`product`, {
+        params: {
+            offset: pagination.offset,
+            limit: pagination.limit,
+        },
+    });
     return response;
 }
 

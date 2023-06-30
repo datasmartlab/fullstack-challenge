@@ -110,6 +110,7 @@ export function InfoProduct() {
             <Grid container>
                 <Grid item width={'50%'}>
                     <Button
+                        color="secondary"
                         size={'large'}
                         disabled={loading}
                         sx={{ marginTop: '1.5rem' }}
@@ -160,6 +161,7 @@ export function InfoProduct() {
                             deleteProduct={handleDeleteProduct}
                             onClose={() => setAlert(false)}
                             Open={Alert}
+                            name={product.name}
                         />
 
                         <Grid item sx={{ marginTop: '2rem' }} lg={12}>

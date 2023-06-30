@@ -4,61 +4,40 @@ import { GlobalStyles } from '@mui/styled-engine-sc';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
-import DarkTheme from '../../styles/Themes/Dark';
 import lightTheme from '../../styles/Themes/Light';
-import { useEffect, useState } from 'react';
 export function DefaultLayout() {
-    const [darkTheme, setDarkTheme] = useState(() => {
-        const SavcedDarkTheme = localStorage.getItem('darkTheme');
-        return SavcedDarkTheme ? JSON.parse(SavcedDarkTheme) : true;
-    });
-
-    useEffect(() => {
-        localStorage.setItem('darkTheme', JSON.stringify(darkTheme));
-    }, [darkTheme]);
-
-    const handleThemeChange = () => {
-        setDarkTheme(!darkTheme);
-    };
-
-    const theme = darkTheme ? DarkTheme : lightTheme;
     return (
-        <ThemeProvider theme={theme}>
-            <Box sx={{ backgroundColor: theme.palette.primary.main }}>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                />
+        <ThemeProvider theme={lightTheme}>
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
 
-                <GlobalStyles
-                    styles={{
-                        '*': {
-                            boxSizing: 'border-box',
-                            margin: 0,
-                            padding: 0,
-                            textDecoration: 'none',
-                            outline: 0,
-                            fontFamily: "'Marvel', sans-serif",
-                        },
-                        body: {},
-                    }}
-                />
-                <Header
-                    handleThemeChange={handleThemeChange}
-                    darkTheme={darkTheme}
-                />
+            <GlobalStyles
+                styles={{
+                    '*': {
+                        boxSizing: 'border-box',
+                        margin: 0,
+                        padding: 0,
+                        textDecoration: 'none',
+                        outline: 0,
+                    },
+                }}
+            />
+            <Box sx={{ backgroundColor: lightTheme.palette.background.paper }}>
+                <Header />
                 <Container
                     maxWidth={'lg'}
                     sx={{
-                        backgroundColor: theme.palette.primary.light,
+                        backgroundColor: lightTheme.palette.background.default,
                         minHeight: '100vh',
                     }}
                 >

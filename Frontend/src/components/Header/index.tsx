@@ -1,37 +1,21 @@
-import { DarkMode, LightMode } from '@mui/icons-material';
-import { Typography, Box, Button } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
-interface HeaderProps {
-    handleThemeChange: () => void;
-    darkTheme: boolean;
-}
-
-export function Header({ handleThemeChange, darkTheme }: HeaderProps) {
+export function Header() {
     return (
         <Box
             sx={{
-                backgroundColor: 'grey',
-                height: '3rem',
-                textAlign: 'center',
+                backgroundColor: grey[500],
+                height: '100%',
             }}
         >
-            <Typography variant="h4" fontWeight={'bold'}>
+            <Typography
+                variant="h4"
+                sx={{ paddingY: '0.5rem', marginLeft: '0.5rem' }}
+                fontWeight={'bold'}
+            >
                 Mercadinho
             </Typography>
-            <Button
-                size="large"
-                sx={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    marginTop: '0.8rem',
-                    marginRight: '1rem',
-                }}
-                variant="contained"
-                onClick={handleThemeChange}
-            >
-                {darkTheme ? <DarkMode /> : <LightMode />}
-            </Button>
         </Box>
     );
 }

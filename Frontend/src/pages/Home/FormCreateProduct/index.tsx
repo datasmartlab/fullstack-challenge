@@ -64,79 +64,87 @@ export function FormProduct({ setVisibleForm }: FormProps) {
         <Box
             sx={{
                 position: 'relative',
-                zIndex: 1,
-                backgroundColor: '#f5f5f5',
-                paddingX: '2rem',
-                borderRadius: 6,
+                borderRadius: 2,
+                boxShadow: `0 0 0 2000px rgba(0, 0, 0, 0.6)`,
             }}
         >
-            <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                <Button
-                    disabled={loding}
-                    sx={{ marginTop: '1rem' }}
-                    color="error"
-                    onClick={() => {
-                        setVisibleForm(false);
-                    }}
-                    variant="text"
-                >
-                    <Close sx={{ fontSize: '3rem' }} />
-                </Button>
-            </Box>
-            <Typography
-                variant="h2"
-                sx={{ textAlign: 'center', marginBottom: '2rem' }}
+            <Box
+                sx={{
+                    position: 'relative',
+                    zIndex: 2,
+                    backgroundColor: '#ffffff',
+                    paddingX: '1rem',
+                    borderRadius: 2,
+                }}
             >
-                Formulário de Adição de produtos
-            </Typography>
-            <form onSubmit={handleSubmit(handleCreateProduct)}>
-                <TextField
-                    error={errors.name?.message ? true : false}
-                    helperText={errors.name?.message}
-                    type="text"
-                    sx={{
-                        width: '75%',
-                        marginRight: '5%',
-                        marginBottom: '2rem',
-                    }}
-                    variant={'outlined'}
-                    label={'Nome'}
-                    {...register('name', { required: true })}
-                />
-                <TextField
-                    error={errors.price?.message ? true : false}
-                    helperText={errors.price?.message}
-                    type="text"
-                    sx={{ width: '20%' }}
-                    variant={'outlined'}
-                    label={'Preço'}
-                    {...register('price', { required: true })}
-                />
-                <TextField
-                    error={errors.description?.message ? true : false}
-                    helperText={errors.description?.message}
-                    type="text"
-                    variant={'outlined'}
-                    sx={{ marginBottom: '2rem' }}
-                    multiline
-                    inputProps={{ maxLength: 250 }}
-                    maxRows={3}
-                    label={'Descrição'}
-                    fullWidth
-                    {...register('description')}
-                />
-                <Button
-                    size="large"
-                    color={'success'}
-                    disabled={loding}
-                    sx={{ marginBottom: '2rem' }}
-                    variant="contained"
-                    type="submit"
-                    fullWidth
+                <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                    <Button
+                        disabled={loding}
+                        sx={{ marginTop: '1rem' }}
+                        color="error"
+                        onClick={() => {
+                            setVisibleForm(false);
+                        }}
+                        variant="text"
+                    >
+                        <Close sx={{ fontSize: '3rem' }} />
+                    </Button>
+                </Box>
+                <Typography
+                    variant="h3"
+                    sx={{ textAlign: 'center', marginBottom: '2rem' }}
                 >
-                    {loding ? 'Adicionando...' : 'Adicionar Produto'}
-                </Button>
-            </form>
+                    Formulário de Adição de produtos
+                </Typography>
+                <form onSubmit={handleSubmit(handleCreateProduct)}>
+                    <TextField
+                        error={errors.name?.message ? true : false}
+                        helperText={errors.name?.message}
+                        type="text"
+                        sx={{
+                            width: '75%',
+                            marginRight: '5%',
+                            marginBottom: '2rem',
+                        }}
+                        variant={'outlined'}
+                        label={'Nome'}
+                        {...register('name', { required: true })}
+                    />
+                    <TextField
+                        error={errors.price?.message ? true : false}
+                        helperText={errors.price?.message}
+                        type="text"
+                        sx={{ width: '20%' }}
+                        variant={'outlined'}
+                        label={'Preço'}
+                        {...register('price', { required: true })}
+                    />
+                    <TextField
+                        error={errors.description?.message ? true : false}
+                        helperText={errors.description?.message}
+                        type="text"
+                        variant={'outlined'}
+                        sx={{ marginBottom: '2rem' }}
+                        multiline
+                        inputProps={{ maxLength: 250 }}
+                        maxRows={3}
+                        label={'Descrição'}
+                        fullWidth
+                        {...register('description')}
+                    />
+                    <Button
+                        size="large"
+                        color={'success'}
+                        disabled={loding}
+                        sx={{ marginBottom: '2rem' }}
+                        variant="contained"
+                        type="submit"
+                        fullWidth
+                    >
+                        {loding ? 'Adicionando...' : 'Adicionar Produto'}
+                    </Button>
+                </form>
+            </Box>
         </Box>
     );
 }

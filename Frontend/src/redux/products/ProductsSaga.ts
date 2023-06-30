@@ -8,19 +8,43 @@ import {
 
 import { listProducts } from '../../services/ProductApi';
 import axios from 'axios';
-interface productData {
+interface ProductData {
     data: {
         id: number;
         name: string;
         description: string;
         price: number;
+    }[];
+    count?: number;
+}
+
+interface FetchProductsAction {
+    type: typeof FETCH_PRODUCTS_REQUESTED;
+    payload: {
+        offset: number;
+        limit: number;
     };
 }
-function* fetchProducts() {
+
+interface Data {
+    list: ProductData;
+    pagination: {
+        offset: number;
+        limit: number;
+    };
+}
+
+function* fetchProducts({ payload }: FetchProductsAction) {
     try {
-        const product: productData = yield call(listProducts);
-        yield put(getProductRequest(product.data));
-        yield put(getProductSuccess(product.data));
+        yield put(getProductRequest({}));
+        const product: ProductData = yield call(listProducts, payload);
+        const Data: Data = {
+            list: product,
+            pagination: payload,
+        };
+        console.log(Data);
+
+        yield put(getProductSuccess(Data));
     } catch (error) {
         if (axios.isAxiosError(error)) {
             if (error.response) {

@@ -9,11 +9,23 @@ interface Product {
 interface initialStateProps {
     list: Product[];
     loading: boolean;
+    pagination: {
+        count: number;
+        offset: number;
+        limit: number;
+        filtro: string;
+    };
 }
 
 const initialState: initialStateProps = {
     list: [],
     loading: false,
+    pagination: {
+        offset: 0,
+        limit: 5,
+        count: 10,
+        filtro: '',
+    },
 };
 
 export const sliceProduct = createSlice({
@@ -24,7 +36,10 @@ export const sliceProduct = createSlice({
             state.loading = true;
         },
         getProductSuccess: (state, action) => {
-            state.list = action.payload;
+            state.pagination = action.payload.pagination;
+            state.pagination.count = action.payload.list.data.count;
+            state.list = action.payload.list.data.data;
+
             state.loading = false;
         },
         getProductFailure: (state, action) => {

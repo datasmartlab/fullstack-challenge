@@ -15,18 +15,22 @@ interface productData {
 }
 export function Home() {
     const dispatch = useDispatch();
-
     const results: productData[] = useSelector(
         (state: RootState) => state.products.list,
     );
+    const pagination = useSelector(
+        (state: RootState) => state.products.pagination,
+    );
+    const [limit, setLimit] = useState(pagination.limit);
+    const [offset, setOffset] = useState(pagination.offset);
     const loading = useSelector((state: RootState) => state.products.loading);
     const [visibleForm, setVisibleForm] = useState(false);
-
+    const [filter, setFilter] = useState('');
     useEffect(() => {
         if (!visibleForm) {
-            dispatch(fetchProductsRequested());
+            dispatch(fetchProductsRequested(offset, limit, filter));
         }
-    }, [dispatch, visibleForm]);
+    }, [dispatch, visibleForm, limit, offset, filter]);
     return (
         <Box>
             {loading ? (
@@ -47,7 +51,12 @@ export function Home() {
                     </Typography>
                     {results.length != 0 ? (
                         <>
-                            <TableProduct data={results} />
+                            <TableProduct
+                                data={results}
+                                setLimit={setLimit}
+                                setOffset={setOffset}
+                                pagination={pagination}
+                            />
                         </>
                     ) : (
                         <Typography
@@ -68,6 +77,7 @@ export function Home() {
                             variant="contained"
                             sx={{ alignItems: 'flex-end' }}
                             fullWidth
+                            color="secondary"
                             onClick={() => {
                                 setVisibleForm(true);
                             }}
