@@ -16,6 +16,7 @@ const api = axios.create({
 interface paginationData {
     offset: number;
     limit: number;
+    filter: string;
 }
 
 export async function listProducts(pagination: paginationData) {
@@ -23,6 +24,7 @@ export async function listProducts(pagination: paginationData) {
         params: {
             offset: pagination.offset,
             limit: pagination.limit,
+            filter: pagination.filter,
         },
     });
     return response;

@@ -5,45 +5,59 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
 import lightTheme from '../../styles/Themes/Light';
+import { IntlProvider } from 'react-intl';
+import { locale } from '../../translate/index';
 export function DefaultLayout() {
+    const teste = locale.english.message;
     return (
-        <ThemeProvider theme={lightTheme}>
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
+        <IntlProvider
+            messages={teste}
+            locale={locale.portugueseBrazil.locale}
+            defaultLocale={locale.portugueseBrazil.locale}
+        >
+            <ThemeProvider theme={lightTheme}>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
 
-            <GlobalStyles
-                styles={{
-                    '*': {
-                        boxSizing: 'border-box',
-                        margin: 0,
-                        padding: 0,
-                        textDecoration: 'none',
-                        outline: 0,
-                    },
-                }}
-            />
-            <Box sx={{ backgroundColor: lightTheme.palette.background.paper }}>
-                <Header />
-                <Container
-                    maxWidth={'lg'}
+                <GlobalStyles
+                    styles={{
+                        '*': {
+                            boxSizing: 'border-box',
+                            margin: 0,
+                            padding: 0,
+                            textDecoration: 'none',
+                            outline: 0,
+                        },
+                    }}
+                />
+                <Box
                     sx={{
-                        backgroundColor: lightTheme.palette.background.default,
-                        minHeight: '100vh',
+                        backgroundColor: lightTheme.palette.background.paper,
                     }}
                 >
-                    <Outlet />
-                </Container>
-            </Box>
-        </ThemeProvider>
+                    <Header />
+                    <Container
+                        maxWidth={'lg'}
+                        sx={{
+                            backgroundColor:
+                                lightTheme.palette.background.default,
+                            minHeight: '100vh',
+                        }}
+                    >
+                        <Outlet />
+                    </Container>
+                </Box>
+            </ThemeProvider>
+        </IntlProvider>
     );
 }

@@ -4,12 +4,12 @@ export const FETCH_PRODUCTS_REQUESTED = 'FETCH_PRODUCTS_REQUESTED';
 
 export const fetchProductsRequested = createAction(
     FETCH_PRODUCTS_REQUESTED,
-    (offset, limit, filtro) => {
+    (offset, limit, filter = '') => {
         return {
             payload: {
                 offset,
                 limit,
-                filtro,
+                filter,
             },
         };
     },

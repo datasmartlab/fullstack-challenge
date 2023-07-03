@@ -9,6 +9,7 @@ import {
     TableRow,
     TablePagination,
     Box,
+    // useMediaQuery
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { TableHeadCellStyled, TableBodyCellStyled } from './style';
@@ -60,13 +61,13 @@ export function TableProduct({
                         {data.map((item) => (
                             <TableRow key={item.id}>
                                 <TableBodyCellStyled
-                                    width={200}
+                                    width={150}
                                     component="th"
                                     scope="row"
                                 >
                                     {item.name}
                                 </TableBodyCellStyled>
-                                <TableBodyCellStyled width={200}>
+                                <TableBodyCellStyled width={150}>
                                     R${item.price}
                                 </TableBodyCellStyled>
                                 <TableBodyCellStyled width={540}>

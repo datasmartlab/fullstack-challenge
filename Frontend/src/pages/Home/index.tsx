@@ -1,4 +1,10 @@
-import { Typography, Button, Box, CircularProgress } from '@mui/material';
+import {
+    Typography,
+    Button,
+    Box,
+    CircularProgress,
+    TextField,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +12,7 @@ import { fetchProductsRequested } from '../../redux/products/actions';
 import { RootState } from '../../redux/store';
 import { FormProduct } from './FormCreateProduct';
 import { TableProduct } from './tableProduct';
+import { FormattedMessage } from 'react-intl';
 
 interface productData {
     id: number;
@@ -25,12 +32,17 @@ export function Home() {
     const [offset, setOffset] = useState(pagination.offset);
     const loading = useSelector((state: RootState) => state.products.loading);
     const [visibleForm, setVisibleForm] = useState(false);
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState(pagination.filter);
+    const [localFilter, setLocalFilter] = useState(pagination.filter);
     useEffect(() => {
         if (!visibleForm) {
             dispatch(fetchProductsRequested(offset, limit, filter));
         }
     }, [dispatch, visibleForm, limit, offset, filter]);
+
+    function handleSeachProduct() {
+        setFilter(localFilter);
+    }
     return (
         <Box>
             {loading ? (
@@ -46,9 +58,43 @@ export function Home() {
                 </Box>
             ) : (
                 <>
-                    <Typography variant="h3" align="center">
-                        Lista De Produtos
+                    <Typography variant="h5" align="center">
+                        <FormattedMessage id="headerTitle" />
                     </Typography>
+                    <Box
+                        marginBottom={2}
+                        sx={{ display: 'flex', height: '3rem' }}
+                    >
+                        <TextField
+                            sx={{
+                                width: '69%',
+                                marginRight: '1%',
+                                marginBottom: 0,
+                            }}
+                            inputProps={{
+                                style: {
+                                    height: '3rem',
+                                    padding: 0,
+                                    paddingLeft: '0.5rem',
+                                },
+                            }}
+                            label={'Filtro'}
+                            value={localFilter}
+                            onChange={(action) => {
+                                setLocalFilter(action.target.value);
+                            }}
+                            placeholder="Digite o nome do produto"
+                        />
+                        <Button
+                            variant="contained"
+                            sx={{ width: '30%' }}
+                            color="success"
+                            onClick={handleSeachProduct}
+                        >
+                            Buscar
+                        </Button>
+                    </Box>
+
                     {results.length != 0 ? (
                         <>
                             <TableProduct
@@ -71,7 +117,7 @@ export function Home() {
                             Nenhum Produto foi Cadastrado
                         </Typography>
                     )}
-                    <Box sx={{ height: '100%' }}>
+                    <Box sx={{ height: '3rem' }}>
                         <Button
                             size="large"
                             variant="contained"

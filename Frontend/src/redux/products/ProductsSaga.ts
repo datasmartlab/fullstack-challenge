@@ -23,6 +23,7 @@ interface FetchProductsAction {
     payload: {
         offset: number;
         limit: number;
+        filter: string;
     };
 }
 
@@ -42,8 +43,6 @@ function* fetchProducts({ payload }: FetchProductsAction) {
             list: product,
             pagination: payload,
         };
-        console.log(Data);
-
         yield put(getProductSuccess(Data));
     } catch (error) {
         if (axios.isAxiosError(error)) {

@@ -65,7 +65,7 @@ export function FormProduct({ setVisibleForm }: FormProps) {
             sx={{
                 position: 'relative',
                 borderRadius: 2,
-                boxShadow: `0 0 0 2000px rgba(0, 0, 0, 0.6)`,
+                boxShadow: `0 0 0 100vw rgba(0, 0, 0, 0.6)`,
             }}
         >
             <Box
@@ -91,7 +91,7 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                     </Button>
                 </Box>
                 <Typography
-                    variant="h3"
+                    variant="h4"
                     sx={{ textAlign: 'center', marginBottom: '2rem' }}
                 >
                     Formulário de Adição de produtos

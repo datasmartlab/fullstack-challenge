@@ -13,8 +13,9 @@ export function Header() {
                 variant="h4"
                 sx={{ paddingY: '0.5rem', marginLeft: '0.5rem' }}
                 fontWeight={'bold'}
+                align="center"
             >
-                Mercadinho
+                MERCADINHO DO JOÃO
             </Typography>
         </Box>
     );

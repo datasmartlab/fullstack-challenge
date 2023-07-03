@@ -13,7 +13,7 @@ interface initialStateProps {
         count: number;
         offset: number;
         limit: number;
-        filtro: string;
+        filter: string;
     };
 }
 
@@ -24,7 +24,7 @@ const initialState: initialStateProps = {
         offset: 0,
         limit: 5,
         count: 10,
-        filtro: '',
+        filter: '',
     },
 };
 
