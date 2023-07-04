@@ -16,18 +16,31 @@ const api = axios.create({
 interface paginationData {
     offset: number;
     limit: number;
-    filter: string;
+    filter: {
+        name: string;
+        price: string;
+    };
 }
 
 export async function listProducts(pagination: paginationData) {
-    const response = await api.get(`product`, {
-        params: {
-            offset: pagination.offset,
-            limit: pagination.limit,
-            filter: pagination.filter,
-        },
-    });
-    return response;
+    if (pagination.filter.name || pagination.filter.price) {
+        const response = await api.get(`product`, {
+            params: {
+                offset: pagination.offset,
+                limit: pagination.limit,
+                filter: pagination.filter,
+            },
+        });
+        return response;
+    } else {
+        const response = await api.get(`product`, {
+            params: {
+                offset: pagination.offset,
+                limit: pagination.limit,
+            },
+        });
+        return response;
+    }
 }
 
 export async function showProduct(id: number) {

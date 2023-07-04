@@ -1,4 +1,4 @@
-import { messagesPtBr } from './messages';
+import messagesPtBr from './messages';
 
 export const portugueseBrazil = {
     message: { ...messagesPtBr },

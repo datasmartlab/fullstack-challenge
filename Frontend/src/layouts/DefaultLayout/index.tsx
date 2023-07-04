@@ -6,14 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
 import lightTheme from '../../styles/Themes/Light';
 import { IntlProvider } from 'react-intl';
-import { locale } from '../../translate/index';
+import locales from '../../translate/index';
+
 export function DefaultLayout() {
-    const teste = locale.english.message;
+    const locale = locales['en'];
     return (
         <IntlProvider
-            messages={teste}
-            locale={locale.portugueseBrazil.locale}
-            defaultLocale={locale.portugueseBrazil.locale}
+            messages={locale.message}
+            locale={locale.locale}
+            defaultLocale={locales.pt.locale}
         >
             <ThemeProvider theme={lightTheme}>
                 <ToastContainer

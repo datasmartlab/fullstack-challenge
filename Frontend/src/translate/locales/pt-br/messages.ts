@@ -1,4 +1,4 @@
-export const messagesPtBr = {
+const messagesPtBr = {
     // Header
     headerTitle: 'Mercadinho do João',
 
@@ -30,8 +30,11 @@ export const messagesPtBr = {
 
     infoProductErrorMessageName: 'O nome é obrigatório',
     infoProductErrorMessagePrice: 'O preço deve ser um número válido',
+
     //mesagens do backend
     infoProductName: 'nome',
     infoProductPrice: 'preço',
     infoProductDescription: 'descrição',
 };
+
+export default messagesPtBr;

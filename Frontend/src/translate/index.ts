@@ -1,7 +1,8 @@
 import { english } from './locales/english';
 import { portugueseBrazil } from './locales/pt-br';
 
-export const locale = {
-    portugueseBrazil,
-    english,
+const locales = {
+    pt: portugueseBrazil,
+    en: english,
 };
+export default locales;

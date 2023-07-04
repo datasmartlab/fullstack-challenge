@@ -1,7 +1,9 @@
 import { Typography, Box } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { useIntl } from '../../translate/useTranslate';
 
 export function Header() {
+    const { formatMessage } = useIntl();
     return (
         <Box
             sx={{
@@ -15,7 +17,7 @@ export function Header() {
                 fontWeight={'bold'}
                 align="center"
             >
-                MERCADINHO DO JOÃO
+                {formatMessage({ id: 'headerTitle' })}
             </Typography>
         </Box>
     );

@@ -1,4 +1,4 @@
-import { messagesEnglish } from './messages';
+import messagesEnglish from './messages';
 
 export const english = {
     message: { ...messagesEnglish },

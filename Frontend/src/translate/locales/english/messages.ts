@@ -1,4 +1,4 @@
-export const messagesEnglish = {
+const messagesEnglish = {
     //Header
     headerTitle: "John's market",
 
@@ -34,3 +34,5 @@ export const messagesEnglish = {
     infoProductPrice: 'Price',
     infoProductDescription: 'Description',
 };
+
+export default messagesEnglish;

@@ -23,7 +23,10 @@ interface FetchProductsAction {
     payload: {
         offset: number;
         limit: number;
-        filter: string;
+        filter: {
+            name: string;
+            price: string;
+        };
     };
 }
 
@@ -37,7 +40,7 @@ interface Data {
 
 function* fetchProducts({ payload }: FetchProductsAction) {
     try {
-        yield put(getProductRequest({}));
+        yield put(getProductRequest(payload));
         const product: ProductData = yield call(listProducts, payload);
         const Data: Data = {
             list: product,
