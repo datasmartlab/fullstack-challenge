@@ -13,6 +13,8 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { TableHeadCellStyled, TableBodyCellStyled } from './style';
+import { useIntl } from '../../../translate/useTranslate';
+
 interface tableProductProps {
     data: {
         id: number;
@@ -31,6 +33,7 @@ export function TableProduct({
     setLimit,
     pagination,
 }: tableProductProps) {
+    const { formatMessage } = useIntl();
     const navigator = useNavigate();
 
     const handleChangePage = (_event: unknown, newPage: number) => {
@@ -49,11 +52,17 @@ export function TableProduct({
                 <Table sx={{ minWidth: 700 }}>
                     <TableHead>
                         <TableRow sx={{ fontSize: '4rem' }}>
-                            <TableHeadCellStyled>Nome</TableHeadCellStyled>
-                            <TableHeadCellStyled>Preço</TableHeadCellStyled>
-                            <TableHeadCellStyled>Descrição</TableHeadCellStyled>
+                            <TableHeadCellStyled>
+                                {formatMessage({ id: 'TableName' })}
+                            </TableHeadCellStyled>
+                            <TableHeadCellStyled>
+                                {formatMessage({ id: 'TablePrice' })}
+                            </TableHeadCellStyled>
+                            <TableHeadCellStyled>
+                                {formatMessage({ id: 'TableDescription' })}
+                            </TableHeadCellStyled>
                             <TableHeadCellStyled sx={{ textAlign: 'center' }}>
-                                Ação
+                                {formatMessage({ id: 'TableAction' })}
                             </TableHeadCellStyled>
                         </TableRow>
                     </TableHead>
@@ -79,7 +88,9 @@ export function TableProduct({
                                                 color: 'red',
                                             }}
                                         >
-                                            Sem descrição
+                                            {formatMessage({
+                                                id: 'TableNoDescription',
+                                            })}
                                         </span>
                                     )}
                                 </TableBodyCellStyled>
@@ -94,7 +105,9 @@ export function TableProduct({
                                             );
                                         }}
                                     >
-                                        Ver Detalhes
+                                        {formatMessage({
+                                            id: 'TableButtonInfoProduct',
+                                        })}
                                     </Button>
                                 </TableBodyCellStyled>
                             </TableRow>
@@ -109,9 +122,13 @@ export function TableProduct({
                                 )}
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 rowsPerPage={pagination.limit}
-                                labelRowsPerPage={'Linhas por página'}
+                                labelRowsPerPage={formatMessage({
+                                    id: 'TablePageLines',
+                                })}
                                 labelDisplayedRows={({ from, to, count }) => {
-                                    return `${from}–${to} de ${count}`;
+                                    return `${from}–${to} ${formatMessage({
+                                        id: 'TableOutOf',
+                                    })} ${count}`;
                                 }}
                             />
                         </TableRow>

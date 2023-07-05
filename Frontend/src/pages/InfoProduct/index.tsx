@@ -3,9 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, Grid, CircularProgress } from '@mui/material';
 import { ArrowBack, Delete } from '@mui/icons-material';
 import DeleteDialog from './DeleteDialog';
-
 import { toast } from 'react-toastify';
-
 import { showProduct, deleteProduct } from '../../services/ProductApi';
 import axios from 'axios';
 import { FormUpdateProduct } from './FormUpdateProduct';

@@ -6,7 +6,6 @@ import {
     TextField,
 } from '@mui/material';
 import { useState, useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductsRequested } from '../../redux/products/actions';
 import { RootState } from '../../redux/store';
@@ -91,12 +90,14 @@ export function Home() {
                                     lineHeight: '1rem',
                                 },
                             }}
-                            label={'Nome'}
+                            label={formatMessage({ id: 'homeFilterNameLabel' })}
                             value={name}
                             onChange={(envent) => {
                                 setName(envent.target.value);
                             }}
-                            placeholder="Digite o nome do produto"
+                            placeholder={formatMessage({
+                                id: 'homeFilterNamePlaceholder',
+                            })}
                         />
                         <TextField
                             type="number"
@@ -116,7 +117,9 @@ export function Home() {
                                     lineHeight: '1rem',
                                 },
                             }}
-                            label={'Preço'}
+                            label={formatMessage({
+                                id: 'homeFilterPriceLabel',
+                            })}
                             value={price}
                             onChange={(event) => {
                                 const inputValue = event.target.value;
@@ -124,7 +127,9 @@ export function Home() {
                                     setPrice(inputValue);
                                 }
                             }}
-                            placeholder="R$00.00"
+                            placeholder={formatMessage({
+                                id: 'homeFilterPricePlaceholder',
+                            })}
                         />
                         <Button
                             variant="contained"
@@ -140,7 +145,9 @@ export function Home() {
                             color="success"
                             onClick={handleSeachProduct}
                         >
-                            Buscar
+                            {formatMessage({
+                                id: 'homeFilterButton',
+                            })}
                         </Button>
                     </Box>
 
@@ -163,7 +170,9 @@ export function Home() {
                                 marginBottom: '0.5rem',
                             }}
                         >
-                            Nenhum Produto foi Cadastrado
+                            {formatMessage({
+                                id: 'homeNoProduct',
+                            })}
                         </Typography>
                     )}
                     <Box sx={{ height: '3rem' }}>
@@ -178,7 +187,9 @@ export function Home() {
                             }}
                             disabled={visibleForm}
                         >
-                            Adicionar Produto
+                            {formatMessage({
+                                id: 'homeCreateProductButton',
+                            })}
                         </Button>
                         {visibleForm ? (
                             <Box

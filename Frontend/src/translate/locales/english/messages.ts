@@ -3,36 +3,47 @@ const messagesEnglish = {
     headerTitle: "John's market",
 
     //Form create Products
-    formCreateProductTitle: 'Product addition form',
-    formCreateProductErrorMessageName: 'Name is required',
-    formCreateProductErrorMessagePrice: 'Price must be a valid number',
+    formCreateProductTitle: 'Add product form',
+    formUpdateProductTitle: 'Update product form',
+    formProductErrorMessageName: 'Name is required',
+    formProductErrorMessagePrice: 'Price must be a valid number',
     //Mesagens do backend
-    formCreateProductName: 'Name',
-    formCreateProductPrice: 'Price',
-    formCreateProductDescription: 'Description',
+    formProductNameLabel: 'Name*',
+    formProductNamePlaceholder: 'Enter product name',
+    formProductPriceLabel: 'Price*',
+    formProductPricePlaceholder: 'R$00.00',
+    formProductDescriptionLabel: 'Description',
+    formProductDescriptionPlaceholder: 'Enter product description (optional)',
     formCreateProductButton: 'Add product',
+    formCreateProductButtonLoading: 'Adding...',
+    formUpdateProductButton: 'Update product',
+    formUpdateProductButtonLoading: 'Updating',
 
     //Home
     homeTitle: 'Product List',
-    homeFilterLabel: 'Filter',
-    homeFilterPlaceHolder: 'Enter product name',
-    homeFilterButton: 'Seach',
-    homeTableName: 'Name',
-    homeTablePrice: 'Price',
-    homeTableDescription: 'Description',
-    homeTableAction: 'Action',
-    homeTableButtonInfoProduct: 'Show product',
-    homeTableNoDescription: 'without description',
-    homeTablePageLines: 'Lines per page',
-    homeTableOutOf: 'out of',
+    homeFilterNameLabel: 'Name',
+    homeFilterNamePlaceholder: 'Enter product name',
+    homeFilterPriceLabel: 'Price',
+    homeFilterPricePlaceholder: 'R$00.00',
+    homeFilterButton: 'Search',
 
-    //Info Products
-    infoProductErrorMessageName: 'Name is required',
-    infoProductErrorMessagePrice: 'Price must be a valid number',
-    //mesagens do backend
-    infoProductName: 'Name',
-    infoProductPrice: 'Price',
-    infoProductDescription: 'Description',
+    homeNoProduct: 'No Product has been Registered',
+
+    homeCreateProductButton: 'add product',
+
+    TableName: 'Name',
+    TablePrice: 'Price',
+    TableDescription: 'Description',
+    TableAction: 'Action',
+    TableButtonInfoProduct: 'Show product',
+    TableNoDescription: 'without description',
+    TablePageLines: 'Lines per page',
+    TableOutOf: 'out of',
+
+    DeleteDialogTitle: 'Product deletion',
+    DeleteDialog: 'Are you sure you want to delete the product with the name',
+    DeleteDialogButtonCancel: 'Cancel',
+    DeleteDialogButtonConfirm: 'Confirm',
 };
 
 export default messagesEnglish;

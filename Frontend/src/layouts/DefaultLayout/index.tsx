@@ -7,9 +7,17 @@ import { Outlet } from 'react-router-dom';
 import lightTheme from '../../styles/Themes/Light';
 import { IntlProvider } from 'react-intl';
 import locales from '../../translate/index';
+import { useState } from 'react';
 
 export function DefaultLayout() {
-    const locale = locales['en'];
+    const [language, setLanguage] = useState<'pt' | 'en'>(() => {
+        const savedLanguage = localStorage.getItem('langue');
+        return savedLanguage === 'pt' || savedLanguage === 'en'
+            ? savedLanguage
+            : 'pt';
+    });
+
+    const locale = locales[language];
     return (
         <IntlProvider
             messages={locale.message}
@@ -46,7 +54,7 @@ export function DefaultLayout() {
                         backgroundColor: lightTheme.palette.background.paper,
                     }}
                 >
-                    <Header />
+                    <Header setLanguage={setLanguage} language={language} />
                     <Container
                         maxWidth={'lg'}
                         sx={{

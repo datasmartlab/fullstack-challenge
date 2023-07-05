@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { updateProduct } from '../../../services/ProductApi';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useIntl } from '../../../translate/useTranslate';
 
 interface productData {
     id: number | string;
@@ -12,6 +13,7 @@ interface productData {
     price: string;
     description: string;
 }
+
 const newProductValidationSchema = zod.object({
     id: zod.number(),
     name: zod.string().min(2, 'O nome é obrigatório'),
@@ -23,6 +25,7 @@ const newProductValidationSchema = zod.object({
         ),
     description: zod.string(),
 });
+
 type Product = zod.infer<typeof newProductValidationSchema>;
 
 interface formUpdateProductProps {
@@ -38,6 +41,7 @@ export function FormUpdateProduct({
     product,
     loading,
 }: formUpdateProductProps) {
+    const { formatMessage } = useIntl();
     const newProductForm = useForm<Product>({
         resolver: zodResolver(newProductValidationSchema),
     });
@@ -86,7 +90,10 @@ export function FormUpdateProduct({
                         marginBottom: '2rem',
                     }}
                     variant={'outlined'}
-                    label={'Nome'}
+                    label={formatMessage({ id: 'formProductNameLabel' })}
+                    placeholder={formatMessage({
+                        id: 'formProductNamePlaceholder',
+                    })}
                     {...register('name', { required: true })}
                 />
                 <TextField
@@ -96,7 +103,10 @@ export function FormUpdateProduct({
                     type="text"
                     sx={{ width: '20%' }}
                     variant={'outlined'}
-                    label={'Preço'}
+                    label={formatMessage({ id: 'formProductPriceLabel' })}
+                    placeholder={formatMessage({
+                        id: 'formProductPricePlaceholder',
+                    })}
                     {...register('price', { required: true })}
                 />
                 <TextField
@@ -109,7 +119,10 @@ export function FormUpdateProduct({
                     multiline
                     inputProps={{ maxLength: 250 }}
                     maxRows={3}
-                    label={'Descrição'}
+                    label={formatMessage({ id: 'formProductDescriptionLabel' })}
+                    placeholder={formatMessage({
+                        id: 'formProductDescriptionPlaceholder',
+                    })}
                     fullWidth
                     {...register('description')}
                 />
@@ -122,7 +135,13 @@ export function FormUpdateProduct({
                     type="submit"
                     fullWidth
                 >
-                    {loading ? 'Alterando...' : 'Alterar Produto'}
+                    {loading
+                        ? formatMessage({
+                              id: 'formUpdateProductButtonLoading',
+                          })
+                        : formatMessage({
+                              id: 'formUpdateProductButton',
+                          })}
                 </Button>
             </form>
         </Grid>

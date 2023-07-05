@@ -22,6 +22,7 @@ interface initialStateProps {
 
 const initialState: initialStateProps = {
     list: [],
+
     loading: false,
     pagination: {
         offset: 0,

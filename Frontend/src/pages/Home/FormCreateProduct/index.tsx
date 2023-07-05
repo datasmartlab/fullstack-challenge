@@ -7,6 +7,7 @@ import axios from 'axios';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Close } from '@mui/icons-material';
+import { useIntl } from '../../../translate/useTranslate';
 
 interface newProductData {
     name: string;
@@ -19,8 +20,8 @@ const newProductValidationSchema = zod.object({
     price: zod
         .string()
         .refine(
-            (value) => !isNaN(parseFloat(value)),
-            'O preço deve ser um número válido',
+            (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
+            'O preço deve ser um número válido e maior que zero',
         ),
     description: zod.string(),
 });
@@ -32,6 +33,7 @@ interface FormProps {
 }
 
 export function FormProduct({ setVisibleForm }: FormProps) {
+    const { formatMessage } = useIntl();
     const newProductForm = useForm<Product>({
         resolver: zodResolver(newProductValidationSchema),
     });
@@ -94,7 +96,7 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                     variant="h4"
                     sx={{ textAlign: 'center', marginBottom: '2rem' }}
                 >
-                    Formulário de Adição de produtos
+                    {formatMessage({ id: 'formCreateProductTitle' })}
                 </Typography>
                 <form onSubmit={handleSubmit(handleCreateProduct)}>
                     <TextField
@@ -107,7 +109,12 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                             marginBottom: '2rem',
                         }}
                         variant={'outlined'}
-                        label={'Nome'}
+                        label={formatMessage({
+                            id: 'formProductNameLabel',
+                        })}
+                        placeholder={formatMessage({
+                            id: 'formProductNamePlaceholder',
+                        })}
                         {...register('name', { required: true })}
                     />
                     <TextField
@@ -116,8 +123,11 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                         type="text"
                         sx={{ width: '20%' }}
                         variant={'outlined'}
-                        label={'Preço'}
+                        label={formatMessage({ id: 'formProductPriceLabel' })}
                         {...register('price', { required: true })}
+                        placeholder={formatMessage({
+                            id: 'formProductPricePlaceholder',
+                        })}
                     />
                     <TextField
                         error={errors.description?.message ? true : false}
@@ -128,7 +138,12 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                         multiline
                         inputProps={{ maxLength: 250 }}
                         maxRows={3}
-                        label={'Descrição'}
+                        label={formatMessage({
+                            id: 'formProductDescriptionLabel',
+                        })}
+                        placeholder={formatMessage({
+                            id: 'formProductDescriptionPlaceholder',
+                        })}
                         fullWidth
                         {...register('description')}
                     />

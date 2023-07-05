@@ -7,8 +7,10 @@ const lightTheme = createTheme({
     },
     palette: {
         info: {
-            main: grey['A700'],
-            light: grey[900],
+            main: grey[500],
+            light: grey[500],
+            dark: grey[700],
+            contrastText: '#ffffff',
         },
         primary: {
             main: grey[800],

@@ -6,6 +6,7 @@ import {
     DialogContentText,
     DialogTitle,
 } from '@mui/material';
+import { useIntl } from '../../../translate/useTranslate';
 
 interface AlertDeleteProps {
     Open: boolean; // Altere o nome da propriedade para 'open'
@@ -20,6 +21,7 @@ export default function DeleteDialog({
     deleteProduct,
     name,
 }: AlertDeleteProps) {
+    const { formatMessage } = useIntl();
     const handleClose = () => {
         onClose(); // Chame a função 'onClose' para fechar o diálogo
     };
@@ -38,11 +40,13 @@ export default function DeleteDialog({
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle align="center">Deleção do produto</DialogTitle>
+                <DialogTitle align="center">
+                    {formatMessage({ id: 'DeleteDialogTitle' })}
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        Tem certeza que deseja deletar o produto com o nome "
-                        {name}" ?
+                        {formatMessage({ id: 'DeleteDialog' })}{' '}
+                        <span style={{ color: 'red' }}>{name}</span>?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -52,7 +56,7 @@ export default function DeleteDialog({
                         onClick={handleClose}
                         color="error"
                     >
-                        Cancelar
+                        {formatMessage({ id: 'DeleteDialogButtonCancel' })}
                     </Button>
                     <Button
                         fullWidth
@@ -60,7 +64,7 @@ export default function DeleteDialog({
                         onClick={Confirm}
                         color="secondary"
                     >
-                        Deletar
+                        {formatMessage({ id: 'DeleteDialogButtonConfirm' })}
                     </Button>
                 </DialogActions>
             </Dialog>

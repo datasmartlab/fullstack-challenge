@@ -22,36 +22,26 @@ export const List = async (req: Request, res: Response) => {
             return res.json({ data: results.rows, count: results.count });
         }
 
-        // se tiver os dois
+        let whereData = {};
+
+        if (filter.name) {
+            whereData = { name: { [Op.like]: `${filter.name}%` } };
+        }
+        if (filter.price) {
+            whereData = { price: filter.price };
+        }
         if (filter.name && filter.price) {
-            const results = await Product.findAndCountAll({
-                where: {
-                    name: { [Op.like]: `${filter.name}%` },
-                    price: filter.price,
-                },
-            });
-            return res.json({ data: results.rows, count: results.count });
+            whereData = {
+                name: { [Op.like]: `${filter.name}%` },
+                price: filter.price,
+            };
         }
-
-        // caso tenha apenas o filtro do preço
-        if (filter.name && !filter.price) {
-            const results = await Product.findAndCountAll({
-                where: {
-                    name: { [Op.like]: `%${filter.name}%` },
-                },
-            });
-            return res.json({ data: results.rows, count: results.count });
-        }
-
-        // caso tenha apenas o filtro do preço
-        if (filter.price && !filter.name) {
-            const results = await Product.findAndCountAll({
-                where: {
-                    price: filter.price,
-                },
-            });
-            return res.json({ data: results.rows, count: results.count });
-        }
+        const results = await Product.findAndCountAll({
+            offset,
+            limit,
+            where: whereData,
+        });
+        return res.json({ data: results.rows, count: results.count });
     } catch (error) {
         res.status(500).json(error);
     }

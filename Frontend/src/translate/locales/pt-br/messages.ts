@@ -4,37 +4,48 @@ const messagesPtBr = {
 
     // Form create Product
     formCreateProductTitle: 'Formulário de adição de produtos',
-    formCreateProductErrorMessageName: 'O nome é obrigatório',
-    formCreateProductErrorMessagePrice: 'O preço deve ser um número válido',
+    formUpdateProductTitle: 'Formulário de Atualização de produtos',
+    formProductErrorMessageName: 'O nome é obrigatório',
+    formProductErrorMessagePrice: 'O preço deve ser um número válido',
     // Mesagens do backend
-    formCreateProductName: 'nome',
-    formCreateProductPrice: 'preço',
-    formCreateProductDescription: 'descrição',
+    formProductNameLabel: 'Nome*',
+    formProductNamePlaceholder: 'Digite o nome do Produto',
+    formProductPriceLabel: 'Preço*',
+    formProductPricePlaceholder: 'R$00.00',
+    formProductDescriptionLabel: 'Descrição',
+    formProductDescriptionPlaceholder:
+        'Digite uma descrição ao produto (opcional)',
     formCreateProductButton: 'Adicionar produto',
+    formCreateProductButtonLoading: 'Adicionando...',
+    formUpdateProductButton: 'Alterar Produto',
+    formUpdateProductButtonLoading: 'Atualizando...',
 
     // Home
     homeTitle: 'Lista de produtos',
 
-    homeFilterLabel: 'Filtro',
-    homeFilterPlaceHolder: 'Digite o nome do produto',
+    homeFilterNameLabel: 'nome',
+    homeFilterNamePlaceholder: 'Digite o nome do produto',
+    homeFilterPriceLabel: 'preço',
+    homeFilterPricePlaceholder: 'R$00.00',
     homeFilterButton: 'Buscar',
 
-    homeTableName: 'nome',
-    homeTablePrice: 'preço',
-    homeTableDescription: 'descrição',
-    homeTableAction: 'ação',
-    homeTableButtonInfoProduct: 'Ver produto',
-    homeTableNoDescription: 'Sem descrição',
-    homeTablePageLines: 'Linhas por página',
-    homeTableOutOf: 'de',
+    homeNoProduct: 'Nenhum Produto foi Cadastrado',
 
-    infoProductErrorMessageName: 'O nome é obrigatório',
-    infoProductErrorMessagePrice: 'O preço deve ser um número válido',
+    homeCreateProductButton: 'Adicionar Produto',
 
-    //mesagens do backend
-    infoProductName: 'nome',
-    infoProductPrice: 'preço',
-    infoProductDescription: 'descrição',
+    TableName: 'Nome',
+    TablePrice: 'Preço',
+    TableDescription: 'Descrição',
+    TableAction: 'Ação',
+    TableButtonInfoProduct: 'Ver produto',
+    TableNoDescription: 'Sem descrição',
+    TablePageLines: 'Linhas por página',
+    TableOutOf: 'de',
+
+    DeleteDialogTitle: 'Deleção de Produto',
+    DeleteDialog: 'Tem certeza que deseja deletar o produto com o nome',
+    DeleteDialogButtonCancel: 'Cancelar',
+    DeleteDialogButtonConfirm: 'Confirmar',
 };
 
 export default messagesPtBr;
