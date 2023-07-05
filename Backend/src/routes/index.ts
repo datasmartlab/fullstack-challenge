@@ -1,14 +1,25 @@
 import { Router } from 'express';
-import { Create } from '../controllers/productControllers/create';
-import { Update } from '../controllers/productControllers/update';
-import { Delete } from '../controllers/productControllers/delete';
-import { List } from '../controllers/productControllers/list';
-import { Show } from '../controllers/productControllers/show';
-
+import { CreateProduct } from '../controllers/productControllers/create';
+import { UpdateProduct } from '../controllers/productControllers/update';
+import { DeleteProduct } from '../controllers/productControllers/delete';
+import { ListProduct } from '../controllers/productControllers/list';
+import { ShowProduct } from '../controllers/productControllers/show';
+import { CreateBrand } from '../controllers/brandControllers/create';
+import { DeleteBrand } from '../controllers/brandControllers/delete';
 const mainRoutes = Router();
 
-mainRoutes.route('/product').get(List).post(Create);
+//rotas das Marcas
 
-mainRoutes.route('/product/:id').get(Show).delete(Delete).put(Update);
+mainRoutes.route('/brand').post(CreateBrand);
+mainRoutes.route('/brand/:id').delete(DeleteBrand);
+
+// rotas do produto
+mainRoutes.route('/product').get(ListProduct).post(CreateProduct);
+
+mainRoutes
+    .route('/product/:id')
+    .get(ShowProduct)
+    .delete(DeleteProduct)
+    .put(UpdateProduct);
 
 export default mainRoutes;

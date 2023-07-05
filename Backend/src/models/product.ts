@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../migrations/mysql';
-
+import { Brand } from './brand';
 export interface productData extends Model {
     id: number;
     name: string;
@@ -31,5 +31,6 @@ export const Product = sequelize.define<productData>(
         timestamps: false,
     },
 );
+Product.belongsTo(Brand, { foreignKey: 'brandId' });
 
 // sequelize.sync();

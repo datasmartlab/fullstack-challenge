@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Product } from '../../models/Product';
+import { Product } from '../../models/product';
 import { Op } from 'sequelize';
 
 interface Filter {
@@ -7,7 +7,7 @@ interface Filter {
     price?: number;
 }
 
-export const List = async (req: Request, res: Response) => {
+export const ListProduct = async (req: Request, res: Response) => {
     try {
         const filter: Filter = req.query.filter as unknown as Filter;
         const limit = parseInt(req.query.limit as string);

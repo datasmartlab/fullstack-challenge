@@ -1,14 +1,7 @@
 import { Request, Response } from 'express';
-import { Product } from '../../models/Product';
+import { Product } from '../../models/product';
 
-interface productData {
-    id?: number;
-    name: string;
-    description: string;
-    price: number;
-}
-
-export const Update = async (req: Request, res: Response) => {
+export const UpdateProduct = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
 

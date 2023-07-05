@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Product } from '../../models/Product';
+import { Product } from '../../models/product';
 import { ProductSchema } from '../../validations/product';
 
 interface productData {
@@ -9,7 +9,7 @@ interface productData {
     price: number;
 }
 
-export const Create = async (req: Request, res: Response) => {
+export const CreateProduct = async (req: Request, res: Response) => {
     try {
         const productData: productData = {
             name: req.body.name,

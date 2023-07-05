@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Product } from '../../models/Product';
+import { Product } from '../../models/product';
 
-export const Show = async (req: Request, res: Response) => {
+export const ShowProduct = async (req: Request, res: Response) => {
     try {
         const ID: number = parseInt(req.params.id);
 

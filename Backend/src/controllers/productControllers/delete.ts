@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Product } from '../../models/Product';
+import { Product } from '../../models/product';
 
-export const Delete = async (req: Request, res: Response) => {
+export const DeleteProduct = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
 
