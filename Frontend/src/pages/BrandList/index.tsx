@@ -1,39 +1,58 @@
-import { Typography, Button, Box, CircularProgress } from '@mui/material';
+import {
+    Typography,
+    Button,
+    Box,
+    CircularProgress,
+    TextField,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsRequested } from '../../redux/products/actions';
+import { fetchBrandsRequested } from '../../redux/brands/actions';
 import { RootState } from '../../redux/store';
-import { FormProduct } from './FormCreateProduct';
-import { TableProduct } from './TableProduct';
+import { FormCreateBrand } from './FormCreateBrand';
+import { TableProduct } from './TableBrand';
 import { useIntl } from '../../translate/useTranslate';
-import { TableFilter } from './FilterTableProduct';
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 
-interface productData {
+interface BrandData {
     id: number;
     name: string;
-    description: string;
-    price: number;
 }
-export function Home() {
+
+export function BrandList() {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
-    const results: productData[] = useSelector(
-        (state: RootState) => state.products.list,
+
+    const results: BrandData[] = useSelector(
+        (state: RootState) => state.brands.list,
     );
+
     const pagination = useSelector(
-        (state: RootState) => state.products.pagination,
+        (state: RootState) => state.brands.pagination,
     );
+
+    const loading = useSelector((state: RootState) => state.brands.loading);
+
     const [limit, setLimit] = useState(pagination.limit);
     const [offset, setOffset] = useState(pagination.offset);
-    const loading = useSelector((state: RootState) => state.products.loading);
     const [visibleForm, setVisibleForm] = useState(false);
     const [filter, setFilter] = useState(pagination.filter);
+    const [name, setName] = useState(pagination.filter);
 
     useEffect(() => {
         if (!visibleForm) {
-            dispatch(fetchProductsRequested(offset, limit, filter));
+            dispatch(fetchBrandsRequested(offset, limit, filter));
         }
     }, [dispatch, visibleForm, limit, offset, filter]);
+
+    function handleSeachProduct() {
+        setFilter('');
+    }
+
+    function handleFormClean() {
+        setName('');
+        setFilter('');
+    }
 
     return (
         <Box>
@@ -51,12 +70,63 @@ export function Home() {
             ) : (
                 <>
                     <Typography variant="h4" align="center">
-                        {formatMessage({ id: 'homeTitle' })}
+                        {formatMessage({ id: 'ListBrandTitle' })}
                     </Typography>
-                    <TableFilter
-                        pagination={pagination}
-                        setFilter={setFilter}
-                    />
+                    <Box
+                        marginBottom={2}
+                        sx={{
+                            display: 'flex',
+                            height: '3rem',
+                            gap: '1%',
+                        }}
+                    >
+                        <TextField
+                            sx={{
+                                width: '100%',
+                                marginBottom: 0,
+                            }}
+                            inputProps={{
+                                style: {
+                                    height: '3rem',
+                                    padding: 0,
+                                    paddingLeft: '0.5rem',
+                                },
+                            }}
+                            InputLabelProps={{
+                                style: {
+                                    lineHeight: '1rem',
+                                },
+                            }}
+                            label={formatMessage({
+                                id: 'ListBrandFilterNameLabel',
+                            })}
+                            value={name}
+                            onChange={(envent) => {
+                                setName(envent.target.value);
+                            }}
+                            placeholder={formatMessage({
+                                id: 'ListBrandFilterNamePlaceholder',
+                            })}
+                        />
+                        <Button
+                            variant="contained"
+                            sx={{ width: '5%' }}
+                            color="error"
+                            onClick={handleFormClean}
+                        >
+                            <CleaningServicesIcon />
+                        </Button>
+                        <Button
+                            variant="contained"
+                            sx={{ width: '30%' }}
+                            color="success"
+                            onClick={handleSeachProduct}
+                        >
+                            {formatMessage({
+                                id: 'homeFilterButton',
+                            })}
+                        </Button>
+                    </Box>
                     {results.length != 0 ? (
                         <>
                             <TableProduct
@@ -77,7 +147,7 @@ export function Home() {
                             }}
                         >
                             {formatMessage({
-                                id: 'homeNoProduct',
+                                id: 'ListBrandNoBrand',
                             })}
                         </Typography>
                     )}
@@ -94,7 +164,7 @@ export function Home() {
                             disabled={visibleForm}
                         >
                             {formatMessage({
-                                id: 'homeCreateProductButton',
+                                id: 'ListBrandCreateButton',
                             })}
                         </Button>
                         {visibleForm ? (
@@ -111,7 +181,9 @@ export function Home() {
                                     zIndex: '9999',
                                 }}
                             >
-                                <FormProduct setVisibleForm={setVisibleForm} />
+                                <FormCreateBrand
+                                    setVisibleForm={setVisibleForm}
+                                />
                             </Box>
                         ) : null}
                     </Box>

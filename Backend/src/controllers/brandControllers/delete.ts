@@ -10,7 +10,6 @@ export const DeleteBrand = async (req: Request, res: Response) => {
         if (!result) {
             return res.status(404).json({ message: 'A marca não encontrado' });
         }
-
         await result.destroy();
 
         res.json({

@@ -7,7 +7,7 @@ import {
 } from './ProductsSlice'; // Importe as actions do slice de produtos
 
 import { listProducts } from '../../services/ProductApi';
-import axios from 'axios';
+
 interface ProductData {
     data: {
         id: number;
@@ -48,11 +48,7 @@ function* fetchProducts({ payload }: FetchProductsAction) {
         };
         yield put(getProductSuccess(Data));
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            if (error.response) {
-                yield put(getProductFailure(error.response.data.message));
-            }
-        }
+        yield put(getProductFailure(error));
     }
 }
 

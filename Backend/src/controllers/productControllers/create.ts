@@ -18,15 +18,15 @@ export const CreateProduct = async (req: Request, res: Response) => {
         };
         await ProductSchema.validate(productData);
 
-        const result = await Product.findOne({
-            where: { name: productData.name },
-        });
+        // const result = await Product.findOne({
+        //     where: { name: productData.name },
+        // });
 
-        if (result) {
-            return res.status(409).json({
-                message: `O produto com o nome ${productData.name} já foi cadastrado `,
-            });
-        }
+        // if (result) {
+        //     return res.status(409).json({
+        //         message: `O produto com o nome ${productData.name} já foi cadastrado `,
+        //     });
+        // }
 
         const product = Product.build({
             name: productData.name,

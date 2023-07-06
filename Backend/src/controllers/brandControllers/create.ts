@@ -12,26 +12,22 @@ export const CreateBrand = async (req: Request, res: Response) => {
         const BrandData: brandData = {
             name: req.body.name,
         };
+
         await BrandSchema.validate(BrandData);
 
-        const result = await Brand.findOne({
+        const [result, created] = await Brand.findOrCreate({
             where: { name: BrandData.name },
         });
 
-        if (result) {
+        if (!created) {
             return res.status(409).json({
-                message: `O marca com o nome ${BrandData.name} já foi cadastrado `,
+                message: `A marca com o nome ${BrandData.name} já foi cadastrado `,
             });
         }
 
-        const product = Brand.build({
-            name: BrandData.name,
-        });
-
-        product.save();
-
         res.status(201).json({
-            message: 'O produto foi cadastrado com sucesso',
+            message: 'A marca foi cadastrada com sucesso',
+            data: result,
         });
     } catch (error) {
         res.status(500).json(error);

@@ -49,7 +49,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
     const menuItems = useMemo(
         () => [
             { path: '/', label: 'Lista de produtos' },
-            { path: '/Animal', label: 'Lista de Marcas' },
+            { path: '/marca', label: 'Lista de Marcas' },
         ],
         [],
     );
@@ -62,15 +62,17 @@ export function Header({ setLanguage, language }: HeaderProps) {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ marginRight: 2 }}
                         onClick={toggleDrawer}
                     >
-                        <Menu />
+                        <Menu fontSize="large" />
                     </IconButton>
                     <Typography
                         variant="h4"
                         component="div"
-                        sx={{ flexGrow: 1, textAlign: 'center' }}
+                        sx={{
+                            flexGrow: 1,
+                            textAlign: 'center',
+                        }}
                     >
                         {formatMessage({ id: 'headerTitle' })}
                     </Typography>
@@ -109,7 +111,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
                 <List
                     sx={{
-                        width: '30vw',
+                        width: '100%',
                         height: '100%',
                         textAlign: 'center',
                     }}

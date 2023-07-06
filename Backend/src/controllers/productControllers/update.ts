@@ -6,6 +6,7 @@ export const UpdateProduct = async (req: Request, res: Response) => {
         const id = parseInt(req.params.id);
 
         const result = await Product.findOne({ where: { id } });
+
         if (!result) {
             return res
                 .status(404)

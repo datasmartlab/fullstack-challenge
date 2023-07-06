@@ -7,12 +7,6 @@ interface productData {
     description: string;
 }
 
-const baseURL = import.meta.env.VITE_LINK;
-
-const api = axios.create({
-    baseURL: baseURL,
-});
-
 interface paginationData {
     offset: number;
     limit: number;
@@ -22,25 +16,29 @@ interface paginationData {
     };
 }
 
+const baseURL = import.meta.env.VITE_LINK;
+
+const api = axios.create({
+    baseURL: baseURL,
+});
+
 export async function listProducts(pagination: paginationData) {
+    let params = {
+        offset: pagination.offset,
+        limit: pagination.limit,
+    };
+
     if (pagination.filter.name || pagination.filter.price) {
-        const response = await api.get(`product`, {
-            params: {
-                offset: pagination.offset,
-                limit: pagination.limit,
-                filter: pagination.filter,
-            },
-        });
-        return response;
-    } else {
-        const response = await api.get(`product`, {
-            params: {
-                offset: pagination.offset,
-                limit: pagination.limit,
-            },
-        });
-        return response;
+        params = {
+            ...params,
+            filter: pagination.filter,
+        } as typeof params;
     }
+    const response = await api.get(`product`, {
+        params,
+    });
+
+    return response;
 }
 
 export async function showProduct(id: number) {

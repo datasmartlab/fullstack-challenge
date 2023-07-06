@@ -4,7 +4,7 @@ const messagesPtBr = {
 
     // Form create Product
     formCreateProductTitle: 'Formulário de adição de produtos',
-    formUpdateProductTitle: 'Formulário de Atualização de produtos',
+    formUpdateProductTitle: 'Formulário de atualização de produtos',
     formProductErrorMessageName: 'O nome é obrigatório',
     formProductErrorMessagePrice: 'O preço deve ser um número válido',
     // Mesagens do backend
@@ -29,9 +29,9 @@ const messagesPtBr = {
     homeFilterPricePlaceholder: 'R$00.00',
     homeFilterButton: 'Buscar',
 
-    homeNoProduct: 'Nenhum Produto foi Cadastrado',
+    homeNoProduct: 'Nenhum produto foi encontrado',
 
-    homeCreateProductButton: 'Adicionar Produto',
+    homeCreateProductButton: 'Adicionar produto',
 
     TableName: 'Nome',
     TablePrice: 'Preço',
@@ -42,10 +42,21 @@ const messagesPtBr = {
     TablePageLines: 'Linhas por página',
     TableOutOf: 'de',
 
+    // Info Product
     DeleteDialogTitle: 'Deleção de Produto',
     DeleteDialog: 'Tem certeza que deseja deletar o produto com o nome',
     DeleteDialogButtonCancel: 'Cancelar',
     DeleteDialogButtonConfirm: 'Confirmar',
+
+    // List Brands
+    ListBrandTitle: 'Lista de marcas',
+
+    ListBrandFilterNameLabel: 'nome',
+    ListBrandFilterNamePlaceholder: 'Digite o nome da marca',
+    ListBrandFilterButton: 'Buscar',
+
+    ListBrandNoBrand: 'Nenhuma marca foi encontrado',
+    ListBrandCreateButton: 'Adicionar marca',
 };
 
 export default messagesPtBr;

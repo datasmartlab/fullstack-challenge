@@ -20,14 +20,14 @@ const messagesEnglish = {
     formUpdateProductButtonLoading: 'Updating',
 
     //Home
-    homeTitle: 'Product List',
+    homeTitle: 'Product list',
     homeFilterNameLabel: 'Name',
     homeFilterNamePlaceholder: 'Enter product name',
     homeFilterPriceLabel: 'Price',
     homeFilterPricePlaceholder: 'R$00.00',
     homeFilterButton: 'Search',
 
-    homeNoProduct: 'No Product has been Registered',
+    homeNoProduct: 'No product found',
 
     homeCreateProductButton: 'add product',
 
@@ -44,6 +44,16 @@ const messagesEnglish = {
     DeleteDialog: 'Are you sure you want to delete the product with the name',
     DeleteDialogButtonCancel: 'Cancel',
     DeleteDialogButtonConfirm: 'Confirm',
+
+    // List Brands
+    ListBrandTitle: 'Brand list',
+
+    ListBrandFilterNameLabel: 'name',
+    ListBrandFilterNamePlaceholder: 'Enter brand name',
+    ListBrandFilterButton: 'Search',
+
+    ListBrandNoBrand: 'No brand found',
+    ListBrandCreateButton: 'Add brand',
 };
 
 export default messagesEnglish;
