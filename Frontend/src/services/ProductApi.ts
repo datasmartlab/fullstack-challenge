@@ -37,7 +37,6 @@ export async function listProducts(pagination: paginationData) {
     const response = await api.get(`product`, {
         params,
     });
-
     return response;
 }
 

@@ -14,6 +14,8 @@ interface ProductData {
         name: string;
         description: string;
         price: number;
+        brandId: number;
+        brandDatum: { name: string };
     }[];
     count?: number;
 }

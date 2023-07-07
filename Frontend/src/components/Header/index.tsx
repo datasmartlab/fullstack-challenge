@@ -49,7 +49,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
     const menuItems = useMemo(
         () => [
             { path: '/', label: 'Lista de produtos' },
-            { path: '/marca', label: 'Lista de Marcas' },
+            { path: '/brand', label: 'Lista de Marcas' },
         ],
         [],
     );

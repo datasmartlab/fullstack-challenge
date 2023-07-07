@@ -44,7 +44,7 @@ export function InfoBrand() {
             }
             const response = await deleteBrand(product?.id);
             if (response.status === 200) {
-                navigator('/marca');
+                navigator('/brand');
                 toast.success(response.data.message);
             }
         } catch (error) {
@@ -68,7 +68,7 @@ export function InfoBrand() {
                         disabled={loading}
                         sx={{ marginTop: '1.5rem' }}
                         onClick={() => {
-                            navigator('/');
+                            navigator('/brand');
                         }}
                         variant="text"
                     >

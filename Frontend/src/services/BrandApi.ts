@@ -5,33 +5,19 @@ interface BrandData {
     name: string;
 }
 
-interface paginationData {
-    offset: number;
-    limit: number;
-    filter: string;
-}
-
 const baseURL = import.meta.env.VITE_LINK;
 
 const api = axios.create({
     baseURL: baseURL,
 });
 
-export async function listBrands(pagination: paginationData) {
-    let params = {
-        offset: pagination.offset,
-        limit: pagination.limit,
-    };
-    if (pagination.filter) {
-        params = {
-            ...params,
-            filter: pagination.filter,
-        } as typeof params;
-    }
+export async function listBrands(filter: string) {
     const response = await api.get(`brand`, {
-        params,
+        params: {
+            filter,
+        },
     });
-    return response;
+    return response.data;
 }
 export async function showBrand(id: number) {
     const response = await api.get(`brand/${id}`);

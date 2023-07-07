@@ -8,23 +8,13 @@ interface Brand {
 interface initialStateProps {
     list: Brand[];
     loading: boolean;
-    pagination: {
-        count: number;
-        offset: number;
-        limit: number;
-        filter: string;
-    };
+    filter: string;
 }
 
 const initialState: initialStateProps = {
     list: [],
     loading: false,
-    pagination: {
-        offset: 0,
-        limit: 5,
-        count: 10,
-        filter: '',
-    },
+    filter: '',
 };
 
 export const sliceBrand = createSlice({
@@ -35,9 +25,7 @@ export const sliceBrand = createSlice({
             state.loading = true;
         },
         getBrandSuccess: (state, action) => {
-            state.pagination = action.payload.pagination;
-            state.pagination.count = action.payload.list.data.count;
-            state.list = action.payload.list.data.data;
+            state.list = action.payload.data;
 
             state.loading = false;
         },

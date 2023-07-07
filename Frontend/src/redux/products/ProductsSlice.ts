@@ -5,6 +5,8 @@ interface Product {
     name: string;
     description: string;
     price: number;
+    brandId: number;
+    brandDatum: { name: string };
 }
 interface initialStateProps {
     list: Product[];

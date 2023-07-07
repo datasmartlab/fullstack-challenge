@@ -4,7 +4,7 @@ import {
     getBrandRequest,
     getBrandFailure,
     getBrandSuccess,
-} from './brandsSlice';
+} from './BrandsSlice';
 import { listBrands } from '../../services/BrandApi';
 
 interface BrandData {
@@ -14,33 +14,18 @@ interface BrandData {
     }[];
     count?: number;
 }
-
-interface FetchBrandsAction {
+interface FetchProductsAction {
     type: typeof FETCH_BRANDS_REQUESTED;
     payload: {
-        offset: number;
-        limit: number;
         filter: string;
     };
 }
 
-interface Data {
-    list: BrandData;
-    pagination: {
-        offset: number;
-        limit: number;
-    };
-}
-
-function* fetchBrands({ payload }: FetchBrandsAction) {
+function* fetchBrands({ payload }: FetchProductsAction) {
     try {
-        yield put(getBrandRequest({ payload }));
-        const brand: BrandData = yield call(listBrands, payload);
-        const data: Data = {
-            list: brand,
-            pagination: payload,
-        };
-        yield put(getBrandSuccess(data));
+        yield put(getBrandRequest({}));
+        const brand: BrandData = yield call(listBrands, payload.filter);
+        yield put(getBrandSuccess(brand));
     } catch (error) {
         yield put(getBrandFailure(error));
     }

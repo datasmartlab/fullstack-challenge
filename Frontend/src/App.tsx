@@ -12,8 +12,8 @@ function App() {
                 <Route path="/" element={<DefaultLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/infoProduct/:id" element={<InfoProduct />} />
-                    <Route path="/marca" element={<BrandList />} />
-                    <Route path="/marca/:id" element={<InfoBrand />} />
+                    <Route path="/brand" element={<BrandList />} />
+                    <Route path="/infobrand/:id" element={<InfoBrand />} />
                 </Route>
             </Routes>
         </BrowserRouter>

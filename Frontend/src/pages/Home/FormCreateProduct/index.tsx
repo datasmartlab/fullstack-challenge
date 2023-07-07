@@ -1,18 +1,37 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+} from '@mui/material';
 import { useState } from 'react';
 import { createProduct } from '../../../services/ProductApi';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Close } from '@mui/icons-material';
 import { useIntl } from '../../../translate/useTranslate';
+import { RootState } from '../../../redux/store';
+import { useSelector } from 'react-redux';
+
+interface BrandData {
+    id: number;
+    name: string;
+}
 
 interface newProductData {
     name: string;
     price: string;
     description: string;
+    brand: number | string;
 }
 
 const newProductValidationSchema = zod.object({
@@ -24,6 +43,7 @@ const newProductValidationSchema = zod.object({
             'O preço deve ser um número válido e maior que zero',
         ),
     description: zod.string(),
+    brand: zod.string(),
 });
 
 type Product = zod.infer<typeof newProductValidationSchema>;
@@ -34,19 +54,21 @@ interface FormProps {
 
 export function FormProduct({ setVisibleForm }: FormProps) {
     const { formatMessage } = useIntl();
-    const newProductForm = useForm<Product>({
-        resolver: zodResolver(newProductValidationSchema),
-    });
+    const brands: BrandData[] = useSelector(
+        (state: RootState) => state.brands.list,
+    );
     const {
         handleSubmit,
         register,
+        control, // Importar o control do useForm
         formState: { errors },
-    } = newProductForm;
-    const [loding, setLoding] = useState(false);
-
+    } = useForm<Product>({
+        resolver: zodResolver(newProductValidationSchema),
+    });
+    const [loading, setLoading] = useState(false);
     async function handleCreateProduct(data: newProductData) {
         try {
-            setLoding(true);
+            setLoading(true);
             const response = await createProduct(data);
             if (response.status === 201) {
                 setVisibleForm(false);
@@ -59,30 +81,24 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                 }
             }
         }
-        setLoding(false);
+        setLoading(false);
     }
 
     return (
-        <Box
-            sx={{
-                position: 'relative',
-                borderRadius: 2,
-                boxShadow: `0 0 0 100vw rgba(0, 0, 0, 0.6)`,
-            }}
+        <Dialog
+            maxWidth={false}
+            open={true}
+            onClose={() => setVisibleForm(false)}
         >
-            <Box
-                sx={{
-                    position: 'relative',
-                    zIndex: 2,
-                    backgroundColor: '#ffffff',
-                    paddingX: '1rem',
-                    borderRadius: 2,
-                }}
-            >
-                <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+            <DialogTitle variant="h4" align="center">
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'end',
+                    }}
+                >
                     <Button
-                        disabled={loding}
-                        sx={{ marginTop: '1rem' }}
+                        disabled={loading}
                         color="error"
                         onClick={() => {
                             setVisibleForm(false);
@@ -92,39 +108,85 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                         <Close sx={{ fontSize: '3rem' }} />
                     </Button>
                 </Box>
-                <Typography
-                    variant="h4"
-                    sx={{ textAlign: 'center', marginBottom: '2rem' }}
+
+                {formatMessage({ id: 'formCreateProductTitle' })}
+            </DialogTitle>
+            <DialogContent>
+                <form
+                    style={{ marginTop: '0.5rem' }}
+                    onSubmit={handleSubmit(handleCreateProduct)}
                 >
-                    {formatMessage({ id: 'formCreateProductTitle' })}
-                </Typography>
-                <form onSubmit={handleSubmit(handleCreateProduct)}>
                     <TextField
                         error={errors.name?.message ? true : false}
                         helperText={errors.name?.message}
                         type="text"
                         sx={{
-                            width: '75%',
-                            marginRight: '5%',
+                            width: '55%',
+                            marginRight: '2.5%',
                             marginBottom: '2rem',
                         }}
-                        variant={'outlined'}
-                        label={formatMessage({
-                            id: 'formProductNameLabel',
-                        })}
+                        variant="outlined"
+                        label={formatMessage({ id: 'formProductNameLabel' })}
                         placeholder={formatMessage({
                             id: 'formProductNamePlaceholder',
                         })}
                         {...register('name', { required: true })}
                     />
+                    {brands.length == 0 ? (
+                        <Button
+                            color="secondary"
+                            variant="outlined"
+                            sx={{
+                                width: '20%',
+                                marginRight: '2.5%',
+                            }}
+                        >
+                            Adicionar Marca
+                        </Button>
+                    ) : (
+                        <FormControl
+                            sx={{
+                                width: '20%',
+                                marginRight: '2.5%',
+                            }}
+                        >
+                            <InputLabel>Marca</InputLabel>
+                            <Controller
+                                name="brand"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        label="Marca"
+                                        onChange={(event) =>
+                                            field.onChange(event.target.value)
+                                        }
+                                        defaultValue={''}
+                                        disabled={brands.length == 0}
+                                    >
+                                        {brands.map((brand) => (
+                                            <MenuItem
+                                                key={brand.id}
+                                                value={brand.id}
+                                            >
+                                                {brand.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                )}
+                            />
+                        </FormControl>
+                    )}
                     <TextField
                         error={errors.price?.message ? true : false}
                         helperText={errors.price?.message}
                         type="text"
                         sx={{ width: '20%' }}
-                        variant={'outlined'}
+                        variant="outlined"
                         label={formatMessage({ id: 'formProductPriceLabel' })}
-                        {...register('price', { required: true })}
+                        {...register('price', {
+                            required: true,
+                        })}
                         placeholder={formatMessage({
                             id: 'formProductPricePlaceholder',
                         })}
@@ -133,9 +195,10 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                         error={errors.description?.message ? true : false}
                         helperText={errors.description?.message}
                         type="text"
-                        variant={'outlined'}
+                        variant="outlined"
                         sx={{ marginBottom: '2rem' }}
                         multiline
+                        fullWidth
                         inputProps={{ maxLength: 250 }}
                         maxRows={3}
                         label={formatMessage({
@@ -144,22 +207,21 @@ export function FormProduct({ setVisibleForm }: FormProps) {
                         placeholder={formatMessage({
                             id: 'formProductDescriptionPlaceholder',
                         })}
-                        fullWidth
                         {...register('description')}
                     />
                     <Button
                         size="large"
-                        color={'success'}
-                        disabled={loding}
-                        sx={{ marginBottom: '2rem' }}
+                        color="success"
+                        disabled={loading}
                         variant="contained"
                         type="submit"
+                        style={{ marginTop: '1rem' }}
                         fullWidth
                     >
-                        {loding ? 'Adicionando...' : 'Adicionar Produto'}
+                        {loading ? 'Adicionando...' : 'Adicionar Produto'}
                     </Button>
                 </form>
-            </Box>
-        </Box>
+            </DialogContent>
+        </Dialog>
     );
 }

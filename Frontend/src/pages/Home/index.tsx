@@ -7,13 +7,17 @@ import { FormProduct } from './FormCreateProduct';
 import { TableProduct } from './TableProduct';
 import { useIntl } from '../../translate/useTranslate';
 import { TableFilter } from './FilterTableProduct';
+import { fetchBrandsRequested } from '../../redux/brands/actions';
 
 interface productData {
     id: number;
     name: string;
     description: string;
     price: number;
+    brandId: number;
+    brandDatum: { name: string };
 }
+
 export function Home() {
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
@@ -32,6 +36,7 @@ export function Home() {
     useEffect(() => {
         if (!visibleForm) {
             dispatch(fetchProductsRequested(offset, limit, filter));
+            dispatch(fetchBrandsRequested());
         }
     }, [dispatch, visibleForm, limit, offset, filter]);
 
@@ -98,21 +103,7 @@ export function Home() {
                             })}
                         </Button>
                         {visibleForm ? (
-                            <Box
-                                sx={{
-                                    position: 'fixed',
-                                    top: '0',
-                                    left: '0',
-                                    right: '0',
-                                    bottom: '0',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    zIndex: '9999',
-                                }}
-                            >
-                                <FormProduct setVisibleForm={setVisibleForm} />
-                            </Box>
+                            <FormProduct setVisibleForm={setVisibleForm} />
                         ) : null}
                     </Box>
                 </>

@@ -9,26 +9,11 @@ interface Filter {
 export const ListBrand = async (req: Request, res: Response) => {
     try {
         const filter: Filter = req.query.filter as unknown as Filter;
-        const limit = parseInt(req.query.limit as string);
-        const offset = parseInt(req.query.offset as string);
-
-        //caso não tenha nenhum filtro
-        if (!filter) {
-            const results = await Brand.findAndCountAll({
-                offset,
-                limit,
-            });
-            return res.json({ data: results.rows, count: results.count });
-        }
         let whereData = {};
-        if (filter.name) {
-            whereData = { name: { [Op.like]: `${filter.name}%` } };
+        if (filter) {
+            whereData = { name: { [Op.like]: `${filter}%` } };
         }
-        const results = await Brand.findAndCountAll({
-            offset,
-            limit,
-            where: whereData,
-        });
+        const results = await Brand.findAndCountAll({ where: whereData });
         return res.json({ data: results.rows, count: results.count });
     } catch (error) {
         res.status(500).json(error);

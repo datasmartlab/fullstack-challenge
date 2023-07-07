@@ -1,10 +1,4 @@
-import {
-    Typography,
-    Button,
-    Box,
-    CircularProgress,
-    TextField,
-} from '@mui/material';
+import { Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBrandsRequested } from '../../redux/brands/actions';
@@ -12,7 +6,7 @@ import { RootState } from '../../redux/store';
 import { FormCreateBrand } from './FormCreateBrand';
 import { TableProduct } from './TableBrand';
 import { useIntl } from '../../translate/useTranslate';
-import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
+import { FilterTableBrand } from './FilterTableBrand';
 
 interface BrandData {
     id: number;
@@ -27,33 +21,17 @@ export function BrandList() {
         (state: RootState) => state.brands.list,
     );
 
-    const pagination = useSelector(
-        (state: RootState) => state.brands.pagination,
-    );
-
     const loading = useSelector((state: RootState) => state.brands.loading);
-
-    const [limit, setLimit] = useState(pagination.limit);
-    const [offset, setOffset] = useState(pagination.offset);
+    const [filter, setFilter] = useState(
+        useSelector((state: RootState) => state.brands.filter),
+    );
     const [visibleForm, setVisibleForm] = useState(false);
-    const [filter, setFilter] = useState(pagination.filter);
-    const [name, setName] = useState(pagination.filter);
 
     useEffect(() => {
         if (!visibleForm) {
-            dispatch(fetchBrandsRequested(offset, limit, filter));
+            dispatch(fetchBrandsRequested(filter));
         }
-    }, [dispatch, visibleForm, limit, offset, filter]);
-
-    function handleSeachProduct() {
-        setFilter('');
-    }
-
-    function handleFormClean() {
-        setName('');
-        setFilter('');
-    }
-
+    }, [dispatch, visibleForm, filter]);
     return (
         <Box>
             {loading ? (
@@ -72,69 +50,10 @@ export function BrandList() {
                     <Typography variant="h4" align="center">
                         {formatMessage({ id: 'ListBrandTitle' })}
                     </Typography>
-                    <Box
-                        marginBottom={2}
-                        sx={{
-                            display: 'flex',
-                            height: '3rem',
-                            gap: '1%',
-                        }}
-                    >
-                        <TextField
-                            sx={{
-                                width: '100%',
-                                marginBottom: 0,
-                            }}
-                            inputProps={{
-                                style: {
-                                    height: '3rem',
-                                    padding: 0,
-                                    paddingLeft: '0.5rem',
-                                },
-                            }}
-                            InputLabelProps={{
-                                style: {
-                                    lineHeight: '1rem',
-                                },
-                            }}
-                            label={formatMessage({
-                                id: 'ListBrandFilterNameLabel',
-                            })}
-                            value={name}
-                            onChange={(envent) => {
-                                setName(envent.target.value);
-                            }}
-                            placeholder={formatMessage({
-                                id: 'ListBrandFilterNamePlaceholder',
-                            })}
-                        />
-                        <Button
-                            variant="contained"
-                            sx={{ width: '5%' }}
-                            color="error"
-                            onClick={handleFormClean}
-                        >
-                            <CleaningServicesIcon />
-                        </Button>
-                        <Button
-                            variant="contained"
-                            sx={{ width: '30%' }}
-                            color="success"
-                            onClick={handleSeachProduct}
-                        >
-                            {formatMessage({
-                                id: 'homeFilterButton',
-                            })}
-                        </Button>
-                    </Box>
+                    <FilterTableBrand filter={filter} setFilter={setFilter} />
                     {results.length != 0 ? (
                         <>
-                            <TableProduct
-                                data={results}
-                                setLimit={setLimit}
-                                setOffset={setOffset}
-                                pagination={pagination}
-                            />
+                            <TableProduct data={results} />
                         </>
                     ) : (
                         <Typography

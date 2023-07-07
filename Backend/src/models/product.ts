@@ -31,6 +31,6 @@ export const Product = sequelize.define<productData>(
         timestamps: false,
     },
 );
-Product.belongsTo(Brand, { foreignKey: 'brandId' });
+Product.belongsTo(Brand, { foreignKey: 'brandId', onDelete: 'SET NULL' });
 
 // sequelize.sync();

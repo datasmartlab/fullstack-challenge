@@ -21,6 +21,8 @@ interface tableProductProps {
         name: string;
         price: number;
         description: string;
+        brandId: number;
+        brandDatum: { name: string };
     }[];
     setOffset: any;
     setLimit: any;
@@ -55,6 +57,9 @@ export function TableProduct({
                             <TableHeadCellStyled>
                                 {formatMessage({ id: 'TableName' })}
                             </TableHeadCellStyled>
+                            <TableHeadCellStyled sx={{ textAlign: 'center' }}>
+                                Marca
+                            </TableHeadCellStyled>
                             <TableHeadCellStyled>
                                 {formatMessage({ id: 'TablePrice' })}
                             </TableHeadCellStyled>
@@ -75,6 +80,19 @@ export function TableProduct({
                                     scope="row"
                                 >
                                     {item.name}
+                                </TableBodyCellStyled>
+                                <TableBodyCellStyled
+                                    width={150}
+                                    component="th"
+                                    scope="row"
+                                >
+                                    {item.brandDatum ? (
+                                        item.brandDatum.name
+                                    ) : (
+                                        <span style={{ color: 'red' }}>
+                                            Sem marca
+                                        </span>
+                                    )}
                                 </TableBodyCellStyled>
                                 <TableBodyCellStyled width={150}>
                                     R${item.price}

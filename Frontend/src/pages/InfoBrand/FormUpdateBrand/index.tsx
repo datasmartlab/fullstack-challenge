@@ -75,8 +75,8 @@ export function FormUpdateBrand({
                     error={errors.name?.message ? true : false}
                     helperText={errors.name?.message}
                     type="text"
+                    fullWidth
                     sx={{
-                        width: '75%',
                         marginRight: '5%',
                         marginBottom: '2rem',
                     }}

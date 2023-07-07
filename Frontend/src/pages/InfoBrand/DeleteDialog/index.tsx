@@ -32,19 +32,12 @@ export default function DeleteDialog({
 
     return (
         <div>
-            <Dialog
-                maxWidth="xs"
-                open={Open}
-                keepMounted
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-slide-title"
-                aria-describedby="alert-dialog-slide-description"
-            >
+            <Dialog maxWidth="xs" open={Open} keepMounted onClose={handleClose}>
                 <DialogTitle align="center">
                     {formatMessage({ id: 'DeleteDialogTitle' })}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-slide-description">
+                    <DialogContentText>
                         {formatMessage({ id: 'DeleteDialog' })}{' '}
                         <span style={{ color: 'red' }}>{name}</span>?
                     </DialogContentText>

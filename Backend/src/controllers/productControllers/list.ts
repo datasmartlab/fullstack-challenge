@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Product } from '../../models/product';
+import { Brand } from '../../models/brand';
 import { Op } from 'sequelize';
 
 interface Filter {
@@ -13,11 +14,14 @@ export const ListProduct = async (req: Request, res: Response) => {
         const limit = parseInt(req.query.limit as string);
         const offset = parseInt(req.query.offset as string);
 
-        //caso não tenha nenhum filtro
         if (!filter) {
             const results = await Product.findAndCountAll({
                 offset,
                 limit,
+                include: {
+                    model: Brand,
+                    attributes: ['name'],
+                },
             });
             return res.json({ data: results.rows, count: results.count });
         }
@@ -40,7 +44,12 @@ export const ListProduct = async (req: Request, res: Response) => {
             offset,
             limit,
             where: whereData,
+            include: {
+                model: Brand,
+                attributes: ['name'],
+            },
         });
+        console.log(results);
         return res.json({ data: results.rows, count: results.count });
     } catch (error) {
         res.status(500).json(error);
