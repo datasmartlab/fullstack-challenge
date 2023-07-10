@@ -25,6 +25,10 @@ export const Product = sequelize.define<productData>(
         price: {
             type: DataTypes.FLOAT,
         },
+        brandId: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
     },
     {
         tableName: 'product',

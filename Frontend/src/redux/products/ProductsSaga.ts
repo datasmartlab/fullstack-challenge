@@ -1,4 +1,4 @@
-import { put, takeLatest, call } from 'redux-saga/effects';
+import { put, takeLatest, call, all } from 'redux-saga/effects';
 import { FETCH_PRODUCTS_REQUESTED } from './actions';
 import {
     getProductRequest,
@@ -54,8 +54,4 @@ function* fetchProducts({ payload }: FetchProductsAction) {
     }
 }
 
-function* rootSaga() {
-    yield takeLatest(FETCH_PRODUCTS_REQUESTED, fetchProducts);
-}
-
-export default rootSaga;
+export default all([takeLatest(FETCH_PRODUCTS_REQUESTED, fetchProducts)]);

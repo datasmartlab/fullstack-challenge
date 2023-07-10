@@ -9,10 +9,11 @@ import axios from 'axios';
 import { FormUpdateProduct } from './FormUpdateProduct';
 
 interface productData {
-    id: number | string;
+    id: number;
     name: string;
     price: string;
     description: string;
+    brandId: number | string;
 }
 
 export function InfoProduct() {
@@ -38,7 +39,6 @@ export function InfoProduct() {
         }
         setLoading(false);
     }, [getProduct, id]);
-
     async function handleDeleteProduct() {
         try {
             if (!product) {
@@ -97,6 +97,7 @@ export function InfoProduct() {
                         <Delete sx={{ fontSize: '3rem' }} />
                     </Button>
                 </Grid>
+
                 {!product ? (
                     <Box
                         sx={{

@@ -1,20 +1,39 @@
-import { Button, Grid, TextField } from '@mui/material';
+import {
+    Box,
+    Button,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+} from '@mui/material';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { updateProduct } from '../../../services/ProductApi';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useIntl } from '../../../translate/useTranslate';
+import { RootState } from '../../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { FormCreateBrand } from '../../BrandList/FormCreateBrand';
+import { fetchBrandsRequested } from '../../../redux/brands/actions';
 
 interface productData {
-    id: number | string;
+    id: number;
     name: string;
     price: string;
     description: string;
+    brandId: number | string;
+}
+interface BrandData {
+    id?: number | string;
+    name: string;
 }
 
-const newProductValidationSchema = zod.object({
+const ProductValidationSchema = zod.object({
     id: zod.number(),
     name: zod.string().min(2, 'O nome é obrigatório'),
     price: zod
@@ -24,9 +43,10 @@ const newProductValidationSchema = zod.object({
             'O preço deve ser um número válido',
         ),
     description: zod.string(),
+    brandId: zod.string(),
 });
 
-type Product = zod.infer<typeof newProductValidationSchema>;
+type Product = zod.infer<typeof ProductValidationSchema>;
 
 interface formUpdateProductProps {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -41,15 +61,29 @@ export function FormUpdateProduct({
     product,
     loading,
 }: formUpdateProductProps) {
+    const dispatch = useDispatch();
     const { formatMessage } = useIntl();
+
+    const brands: BrandData[] = useSelector(
+        (state: RootState) => state.brands.list,
+    );
+
     const newProductForm = useForm<Product>({
-        resolver: zodResolver(newProductValidationSchema),
+        resolver: zodResolver(ProductValidationSchema),
     });
     const {
         handleSubmit,
         register,
         formState: { errors },
+        control,
     } = newProductForm;
+
+    const [openDialog, setOpenDialog] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchBrandsRequested());
+    }, [openDialog, dispatch]);
+
     async function handleUpdateProduct(data: productData) {
         try {
             setLoading(true);
@@ -68,6 +102,7 @@ export function FormUpdateProduct({
             setLoading(false);
         }
     }
+
     return (
         <Grid item sx={{ marginTop: '2rem' }} lg={12}>
             <form onSubmit={handleSubmit(handleUpdateProduct)}>
@@ -85,8 +120,8 @@ export function FormUpdateProduct({
                     helperText={errors.name?.message}
                     type="text"
                     sx={{
-                        width: '75%',
-                        marginRight: '5%',
+                        width: '45%',
+                        marginRight: '2.5%',
                         marginBottom: '2rem',
                     }}
                     variant={'outlined'}
@@ -96,6 +131,68 @@ export function FormUpdateProduct({
                     })}
                     {...register('name', { required: true })}
                 />
+                <FormControl
+                    sx={{
+                        width: '30%',
+                        marginRight: '2.5%',
+                    }}
+                >
+                    <InputLabel>
+                        {formatMessage({
+                            id: 'formProductBrandLabel',
+                        })}
+                    </InputLabel>
+                    <Controller
+                        defaultValue={
+                            product.brandId ? product.brandId.toString() : ''
+                        }
+                        name="brandId"
+                        control={control}
+                        render={({ field }) => (
+                            <Select
+                                defaultValue={
+                                    product.brandId
+                                        ? product.brandId.toString()
+                                        : ''
+                                }
+                                {...field}
+                                label={formatMessage({
+                                    id: 'formProductBrandLabel',
+                                })}
+                                onChange={(event) =>
+                                    field.onChange(
+                                        event.target.value.toString(),
+                                    )
+                                }
+                            >
+                                {brands.map((brand) => (
+                                    <MenuItem key={brand.id} value={brand.id}>
+                                        {brand.name}
+                                    </MenuItem>
+                                ))}
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <Button
+                                        sx={{ width: '90%' }}
+                                        color="secondary"
+                                        variant="outlined"
+                                        onClick={() => {
+                                            setOpenDialog(true);
+                                        }}
+                                    >
+                                        {formatMessage({
+                                            id: 'formProductBrandButton',
+                                        })}
+                                    </Button>
+                                </Box>
+                            </Select>
+                        )}
+                    />
+                </FormControl>
                 <TextField
                     error={errors.price?.message ? true : false}
                     defaultValue={product.price}
@@ -144,6 +241,7 @@ export function FormUpdateProduct({
                           })}
                 </Button>
             </form>
+            <FormCreateBrand open={openDialog} setVisibleForm={setOpenDialog} />
         </Grid>
     );
 }

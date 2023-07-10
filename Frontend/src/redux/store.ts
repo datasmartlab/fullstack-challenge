@@ -1,16 +1,9 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import rootSagaProduct from './products/ProductsSaga';
-import reducerProduct from './products/ProductsSlice';
-import reducerBrand from './brands/BrandsSlice';
-import rootSagaBrand from './brands/BrandsSaga';
+import rootReducer from './rootRedux';
+import rootSaga from './rootSagas';
 
 const sagaMiddleware = createSagaMiddleware();
-
-const rootReducer = combineReducers({
-    products: reducerProduct,
-    brands: reducerBrand,
-});
 
 const store = configureStore({
     reducer: rootReducer,
@@ -18,8 +11,7 @@ const store = configureStore({
     middleware: [sagaMiddleware],
 });
 
-sagaMiddleware.run(rootSagaProduct);
-sagaMiddleware.run(rootSagaBrand);
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 

@@ -48,14 +48,20 @@ export function Header({ setLanguage, language }: HeaderProps) {
 
     const menuItems = useMemo(
         () => [
-            { path: '/', label: 'Lista de produtos' },
-            { path: '/brand', label: 'Lista de Marcas' },
+            {
+                path: '/',
+                label: formatMessage({ id: 'headerNavigationProduct' }),
+            },
+            {
+                path: '/brand',
+                label: formatMessage({ id: 'headerNavigationBrand' }),
+            },
         ],
-        [],
+        [formatMessage],
     );
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" color="primary" sx={{ fontSize: '5rem' }}>
+            <AppBar position="static" color="primary">
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -68,10 +74,10 @@ export function Header({ setLanguage, language }: HeaderProps) {
                     </IconButton>
                     <Typography
                         variant="h4"
-                        component="div"
                         sx={{
                             flexGrow: 1,
                             textAlign: 'center',
+                            paddingLeft: '4%',
                         }}
                     >
                         {formatMessage({ id: 'headerTitle' })}
@@ -79,7 +85,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
 
                     <FormControl color="info" sx={{ marginY: '0.7rem' }}>
                         <InputLabel sx={{ color: grey[50] }}>
-                            linguagem
+                            {formatMessage({ id: 'headerLanguage' })}
                         </InputLabel>
                         <Select
                             value={language}
@@ -128,7 +134,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
                         >
                             <ListItemText
                                 primaryTypographyProps={{
-                                    style: { fontSize: '1.35rem' },
+                                    style: { fontSize: '1.5rem' },
                                 }}
                                 primary={item.label}
                             />

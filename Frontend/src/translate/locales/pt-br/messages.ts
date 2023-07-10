@@ -1,10 +1,12 @@
 const messagesPtBr = {
     // Header
     headerTitle: 'Mercadinho do João',
+    headerLanguage: 'Linguagem',
+    headerNavigationBrand: 'Lista de marcas',
+    headerNavigationProduct: 'Lista de produtos',
 
     // Form create Product
     formCreateProductTitle: 'Formulário de adição de produtos',
-    formUpdateProductTitle: 'Formulário de atualização de produtos',
     formProductErrorMessageName: 'O nome é obrigatório',
     formProductErrorMessagePrice: 'O preço deve ser um número válido',
     // Mesagens do backend
@@ -15,6 +17,8 @@ const messagesPtBr = {
     formProductDescriptionLabel: 'Descrição',
     formProductDescriptionPlaceholder:
         'Digite uma descrição ao produto (opcional)',
+    formProductBrandLabel: 'Marca',
+    formProductBrandButton: 'Adicionar nova marca',
     formCreateProductButton: 'Adicionar produto',
     formCreateProductButtonLoading: 'Adicionando...',
     formUpdateProductButton: 'Alterar Produto',
@@ -33,14 +37,16 @@ const messagesPtBr = {
 
     homeCreateProductButton: 'Adicionar produto',
 
-    TableName: 'Nome',
-    TablePrice: 'Preço',
-    TableDescription: 'Descrição',
-    TableAction: 'Ação',
-    TableButtonInfoProduct: 'Ver produto',
-    TableNoDescription: 'Sem descrição',
-    TablePageLines: 'Linhas por página',
-    TableOutOf: 'de',
+    tableProductName: 'Nome',
+    tableProductBrand: 'Marca',
+    tableProductPrice: 'Preço',
+    tableProductDescription: 'Descrição',
+    tableProductAction: 'Ação',
+    tableProductButtonInfoProduct: 'Ver produto',
+    tableProductPageLines: 'Linhas por página',
+    tableProductOutOf: 'de',
+    tableProductNoDescription: 'Sem descrição',
+    tableProductNoBrand: 'Sem marca',
 
     // Info Product
     DeleteDialogTitle: 'Deleção de Produto',
@@ -50,13 +56,28 @@ const messagesPtBr = {
 
     // List Brands
     ListBrandTitle: 'Lista de marcas',
-
     ListBrandFilterNameLabel: 'nome',
     ListBrandFilterNamePlaceholder: 'Digite o nome da marca',
     ListBrandFilterButton: 'Buscar',
-
     ListBrandNoBrand: 'Nenhuma marca foi encontrado',
     ListBrandCreateButton: 'Adicionar marca',
+    ListBrandUpdateButton: 'Atualizar marca',
+
+    tableBrandName: 'Nome',
+    tableBrandAction: 'Ação',
+    tableBrandButtonInfo: 'Ver marca',
+    tableBrandPageLines: 'Linhas por página',
+    tableBrandOutOf: 'de',
+
+    formCreateBrandTitle: 'Formulário de adição de marcas',
+    formBrandErrorMessageName: 'Nome é obrigatório',
+    //Mesagens do backend
+    formBrandNameLabel: 'Nome*',
+    formBrandNamePlaceholder: 'Digite o nome da marca',
+    formCreateBrandButton: 'Adicionar marca',
+    formCreateBrandButtonLoading: 'Adicionando...',
+    formUpdateBrandButton: 'Atualizar a marca',
+    formUpdateBrandButtonLoading: 'Atualizando...',
 };
 
 export default messagesPtBr;

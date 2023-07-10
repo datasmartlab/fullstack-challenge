@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBrandsRequested } from '../../redux/brands/actions';
 import { RootState } from '../../redux/store';
 import { FormCreateBrand } from './FormCreateBrand';
-import { TableProduct } from './TableBrand';
+import { TableBrand } from './TableBrand';
 import { useIntl } from '../../translate/useTranslate';
-import { FilterTableBrand } from './FilterTableBrand';
 
 interface BrandData {
     id: number;
@@ -50,26 +49,13 @@ export function BrandList() {
                     <Typography variant="h4" align="center">
                         {formatMessage({ id: 'ListBrandTitle' })}
                     </Typography>
-                    <FilterTableBrand filter={filter} setFilter={setFilter} />
-                    {results.length != 0 ? (
-                        <>
-                            <TableProduct data={results} />
-                        </>
-                    ) : (
-                        <Typography
-                            color={'error'}
-                            sx={{
-                                fontSize: '2rem',
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                marginBottom: '0.5rem',
-                            }}
-                        >
-                            {formatMessage({
-                                id: 'ListBrandNoBrand',
-                            })}
-                        </Typography>
-                    )}
+
+                    <TableBrand
+                        filter={filter}
+                        setFilter={setFilter}
+                        data={results}
+                    />
+
                     <Box sx={{ height: '3rem' }}>
                         <Button
                             size="large"
@@ -86,25 +72,11 @@ export function BrandList() {
                                 id: 'ListBrandCreateButton',
                             })}
                         </Button>
-                        {visibleForm ? (
-                            <Box
-                                sx={{
-                                    position: 'fixed',
-                                    top: '0',
-                                    left: '0',
-                                    right: '0',
-                                    bottom: '0',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    zIndex: '9999',
-                                }}
-                            >
-                                <FormCreateBrand
-                                    setVisibleForm={setVisibleForm}
-                                />
-                            </Box>
-                        ) : null}
+
+                        <FormCreateBrand
+                            open={visibleForm}
+                            setVisibleForm={setVisibleForm}
+                        />
                     </Box>
                 </>
             )}

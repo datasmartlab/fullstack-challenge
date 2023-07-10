@@ -81,9 +81,9 @@ export function FormUpdateBrand({
                         marginBottom: '2rem',
                     }}
                     variant={'outlined'}
-                    label={formatMessage({ id: 'formProductNameLabel' })}
+                    label={formatMessage({ id: 'formBrandNameLabel' })}
                     placeholder={formatMessage({
-                        id: 'formProductNamePlaceholder',
+                        id: 'formBrandNamePlaceholder',
                     })}
                     {...register('name', { required: true })}
                 />
@@ -98,10 +98,10 @@ export function FormUpdateBrand({
                 >
                     {loading
                         ? formatMessage({
-                              id: 'formUpdateProductButtonLoading',
+                              id: 'formUpdateBrandButtonLoading',
                           })
                         : formatMessage({
-                              id: 'formUpdateProductButton',
+                              id: 'formUpdateBrandButton',
                           })}
                 </Button>
             </form>

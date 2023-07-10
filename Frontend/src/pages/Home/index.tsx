@@ -6,7 +6,6 @@ import { RootState } from '../../redux/store';
 import { FormProduct } from './FormCreateProduct';
 import { TableProduct } from './TableProduct';
 import { useIntl } from '../../translate/useTranslate';
-import { TableFilter } from './FilterTableProduct';
 import { fetchBrandsRequested } from '../../redux/brands/actions';
 
 interface productData {
@@ -58,34 +57,15 @@ export function Home() {
                     <Typography variant="h4" align="center">
                         {formatMessage({ id: 'homeTitle' })}
                     </Typography>
-                    <TableFilter
-                        pagination={pagination}
+
+                    <TableProduct
                         setFilter={setFilter}
+                        data={results}
+                        setLimit={setLimit}
+                        setOffset={setOffset}
+                        pagination={pagination}
                     />
-                    {results.length != 0 ? (
-                        <>
-                            <TableProduct
-                                data={results}
-                                setLimit={setLimit}
-                                setOffset={setOffset}
-                                pagination={pagination}
-                            />
-                        </>
-                    ) : (
-                        <Typography
-                            color={'error'}
-                            sx={{
-                                fontSize: '2rem',
-                                textAlign: 'center',
-                                fontWeight: 'bold',
-                                marginBottom: '0.5rem',
-                            }}
-                        >
-                            {formatMessage({
-                                id: 'homeNoProduct',
-                            })}
-                        </Typography>
-                    )}
+
                     <Box sx={{ height: '3rem' }}>
                         <Button
                             size="large"
@@ -102,9 +82,11 @@ export function Home() {
                                 id: 'homeCreateProductButton',
                             })}
                         </Button>
-                        {visibleForm ? (
-                            <FormProduct setVisibleForm={setVisibleForm} />
-                        ) : null}
+
+                        <FormProduct
+                            open={visibleForm}
+                            setVisibleForm={setVisibleForm}
+                        />
                     </Box>
                 </>
             )}

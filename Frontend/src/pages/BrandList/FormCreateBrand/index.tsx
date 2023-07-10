@@ -1,4 +1,11 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    TextField,
+} from '@mui/material';
 import { useState } from 'react';
 import { createBrand } from '../../../services/BrandApi';
 import { useForm } from 'react-hook-form';
@@ -20,10 +27,11 @@ const newBrandValidationSchema = zod.object({
 type Brand = zod.infer<typeof newBrandValidationSchema>;
 
 interface FormProps {
-    setVisibleForm: (valor: boolean) => void;
+    setVisibleForm?: (valor: boolean) => void;
+    open: boolean;
 }
 
-export function FormCreateBrand({ setVisibleForm }: FormProps) {
+export function FormCreateBrand({ setVisibleForm, open }: FormProps) {
     const { formatMessage } = useIntl();
     const newBrandForm = useForm<Brand>({
         resolver: zodResolver(newBrandValidationSchema),
@@ -33,14 +41,14 @@ export function FormCreateBrand({ setVisibleForm }: FormProps) {
         register,
         formState: { errors },
     } = newBrandForm;
-    const [loding, setLoding] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     async function handleCreateBrand(data: newBrandData) {
         try {
-            setLoding(true);
+            setLoading(true);
             const response = await createBrand(data);
             if (response.status === 201) {
-                setVisibleForm(false);
+                setVisibleForm ? setVisibleForm(false) : null;
                 toast.success(response.data.message);
             }
         } catch (error) {
@@ -50,77 +58,77 @@ export function FormCreateBrand({ setVisibleForm }: FormProps) {
                 }
             }
         }
-        setLoding(false);
+        setLoading(false);
     }
 
     return (
-        <Box
-            sx={{
-                position: 'relative',
-                borderRadius: 2,
-                boxShadow: `0 0 0 100vw rgba(0, 0, 0, 0.6)`,
-            }}
+        <Dialog
+            maxWidth={false}
+            open={open}
+            onClose={() => (setVisibleForm ? setVisibleForm(false) : null)}
         >
-            <Box
-                sx={{
-                    position: 'relative',
-                    zIndex: 2,
-                    backgroundColor: '#ffffff',
-                    paddingX: '1rem',
-                    borderRadius: 2,
-                }}
-            >
-                <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+            <DialogTitle variant="h4" align="center">
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'end',
+                    }}
+                >
                     <Button
-                        disabled={loding}
-                        sx={{ marginTop: '1rem' }}
+                        disabled={loading}
                         color="error"
                         onClick={() => {
-                            setVisibleForm(false);
+                            setVisibleForm ? setVisibleForm(false) : null;
                         }}
                         variant="text"
                     >
                         <Close sx={{ fontSize: '3rem' }} />
                     </Button>
                 </Box>
-                <Typography
-                    variant="h4"
-                    sx={{ textAlign: 'center', marginBottom: '2rem' }}
+                {formatMessage({
+                    id: 'formCreateBrandTitle',
+                })}
+            </DialogTitle>
+            <DialogContent>
+                <form
+                    style={{ marginTop: '0.5rem' }}
+                    onSubmit={handleSubmit(handleCreateBrand)}
                 >
-                    {formatMessage({ id: 'formCreateProductTitle' })}
-                </Typography>
-                <form onSubmit={handleSubmit(handleCreateBrand)}>
                     <TextField
                         error={errors.name?.message ? true : false}
                         helperText={errors.name?.message}
                         fullWidth
                         type="text"
                         sx={{
-                            marginRight: '5%',
                             marginBottom: '2rem',
                         }}
                         variant={'outlined'}
                         label={formatMessage({
-                            id: 'formProductNameLabel',
+                            id: 'formBrandNameLabel',
                         })}
                         placeholder={formatMessage({
-                            id: 'formProductNamePlaceholder',
+                            id: 'formBrandNamePlaceholder',
                         })}
                         {...register('name', { required: true })}
                     />
                     <Button
                         size="large"
                         color={'success'}
-                        disabled={loding}
-                        sx={{ marginBottom: '2rem' }}
+                        disabled={loading}
                         variant="contained"
                         type="submit"
                         fullWidth
                     >
-                        {loding ? 'Adicionando...' : 'Adicionar Produto'}
+                        {loading
+                            ? formatMessage({
+                                  id: 'formCreateBrandButtonLoading',
+                              })
+                            : formatMessage({
+                                  id: 'formCreateBrandButton',
+                              })}
                     </Button>
                 </form>
-            </Box>
-        </Box>
+            </DialogContent>
+        </Dialog>
     );
 }

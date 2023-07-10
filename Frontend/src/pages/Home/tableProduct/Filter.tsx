@@ -40,7 +40,7 @@ export function TableFilter({
         >
             <TextField
                 sx={{
-                    width: '59%',
+                    width: '50%',
                     marginBottom: 0,
                 }}
                 inputProps={{
@@ -69,7 +69,7 @@ export function TableFilter({
             <TextField
                 type="number"
                 sx={{
-                    width: '10%',
+                    width: '30%',
                     marginBottom: 0,
                 }}
                 inputProps={{

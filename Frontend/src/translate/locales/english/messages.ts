@@ -1,6 +1,9 @@
 const messagesEnglish = {
     //Header
     headerTitle: "John's market",
+    headerLanguage: 'Language',
+    headerNavigationBrand: 'Brand list',
+    headerNavigationProduct: 'Product list',
 
     //Form create Products
     formCreateProductTitle: 'Add product form',
@@ -14,10 +17,12 @@ const messagesEnglish = {
     formProductPricePlaceholder: 'R$00.00',
     formProductDescriptionLabel: 'Description',
     formProductDescriptionPlaceholder: 'Enter product description (optional)',
+    formProductBrandLabel: 'Brand',
+    formProductBrandButton: 'Add new brand',
     formCreateProductButton: 'Add product',
     formCreateProductButtonLoading: 'Adding...',
     formUpdateProductButton: 'Update product',
-    formUpdateProductButtonLoading: 'Updating',
+    formUpdateProductButtonLoading: 'Updating...',
 
     //Home
     homeTitle: 'Product list',
@@ -31,14 +36,16 @@ const messagesEnglish = {
 
     homeCreateProductButton: 'add product',
 
-    TableName: 'Name',
-    TablePrice: 'Price',
-    TableDescription: 'Description',
-    TableAction: 'Action',
-    TableButtonInfoProduct: 'Show product',
-    TableNoDescription: 'without description',
-    TablePageLines: 'Lines per page',
-    TableOutOf: 'out of',
+    tableProductName: 'Name',
+    tableProductBrand: 'Brand',
+    tableProductPrice: 'Price',
+    tableProductDescription: 'Description',
+    tableProductAction: 'Action',
+    tableProductButtonInfoProduct: 'Show product',
+    tableProductPageLines: 'Lines per page',
+    tableProductOutOf: 'out of',
+    tableProductNoDescription: 'Without description',
+    tableProductNoBrand: 'No brand',
 
     DeleteDialogTitle: 'Product deletion',
     DeleteDialog: 'Are you sure you want to delete the product with the name',
@@ -47,13 +54,29 @@ const messagesEnglish = {
 
     // List Brands
     ListBrandTitle: 'Brand list',
-
     ListBrandFilterNameLabel: 'name',
     ListBrandFilterNamePlaceholder: 'Enter brand name',
     ListBrandFilterButton: 'Search',
-
     ListBrandNoBrand: 'No brand found',
     ListBrandCreateButton: 'Add brand',
+    ListBrandUpdateButton: 'Update brand',
+
+    tableBrandName: 'Name',
+    tableBrandAction: 'Action',
+    tableBrandButtonInfo: 'Show brand',
+    tableBrandPageLines: 'Lines per page',
+    tableBrandOutOf: 'out of',
+
+    formCreateBrandTitle: 'Add brand form',
+    formUpdateBrandTitle: 'Update brand form',
+    formBrandErrorMessageName: 'Name is required',
+    //Mesagens do backend
+    formBrandNameLabel: 'Name*',
+    formBrandNamePlaceholder: 'Enter brand name',
+    formCreateBrandButton: 'Add brand',
+    formCreateBrandButtonLoading: 'Adding...',
+    formUpdateBrandButton: 'Update brand',
+    formUpdateBrandButtonLoading: 'Updating...',
 };
 
 export default messagesEnglish;

@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 interface productData {
-    id?: number | string;
+    id?: number;
     name: string;
     price: string;
     description: string;
+    brandId?: number | string;
 }
 
 interface paginationData {
@@ -53,6 +54,7 @@ export async function createProduct(data: productData) {
         name: data.name,
         price: data.price.replace(',', '.'),
         description: data.description,
+        brandId: data.brandId,
     });
     return response;
 }
@@ -67,6 +69,7 @@ export async function updateProduct(data: productData) {
         name: data.name,
         price: data.price.replace(',', '.'),
         description: data.description,
+        brandId: data.brandId,
     });
     return response;
 }

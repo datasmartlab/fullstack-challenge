@@ -5,7 +5,6 @@ import { useIntl } from '../../../translate/useTranslate';
 
 interface TableProductFilterProps {
     setFilter: Dispatch<SetStateAction<string>>;
-
     filter: string;
 }
 
