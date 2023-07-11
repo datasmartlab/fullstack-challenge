@@ -2,29 +2,28 @@ import { Request, Response } from 'express';
 import { Product } from '../../models/product';
 import { ProductSchema } from '../../validations/product';
 
-interface productData {
-    id?: number;
+interface ProductData {
     name: string;
-    description?: string;
-    brandId: number;
     price: number;
+    description?: string;
+    brandId?: number;
 }
 
 export const CreateProduct = async (req: Request, res: Response) => {
     try {
-        const productData: productData = {
+        const productData: ProductData = {
             name: req.body.name,
-            brandId: req.body.brandId,
-            description: req.body.description,
             price: req.body.price,
+            description: req.body.description,
+            brandId: req.body.brandId,
         };
         await ProductSchema.validate(productData);
 
         const product = Product.build({
             name: productData.name,
-            description: productData.description || '',
             price: productData.price,
-            brandId: productData.brandId,
+            description: productData.description || '',
+            brandId: productData.brandId || null,
         });
 
         product.save();

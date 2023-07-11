@@ -1,7 +1,7 @@
 import { Container, Box, ThemeProvider } from '@mui/material';
 import { Header } from '../../components/Header';
 import { GlobalStyles } from '@mui/styled-engine-sc';
-import { ToastContainer } from 'react-toastify';
+import { Alert } from '../../components/Alert';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
 import lightTheme from '../../styles/Themes/Light';
@@ -11,7 +11,8 @@ import { useState } from 'react';
 
 export function DefaultLayout() {
     const [language, setLanguage] = useState<'pt' | 'en'>(() => {
-        const savedLanguage = localStorage.getItem('langue');
+        const savedLanguage = localStorage.getItem('language');
+
         return savedLanguage === 'pt' || savedLanguage === 'en'
             ? savedLanguage
             : 'pt';
@@ -19,25 +20,9 @@ export function DefaultLayout() {
 
     const locale = locales[language];
     return (
-        <IntlProvider
-            messages={locale.message}
-            locale={locale.locale}
-            defaultLocale={locales.pt.locale}
-        >
+        <IntlProvider messages={locale.message} locale={locale.locale}>
             <ThemeProvider theme={lightTheme}>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={2000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                />
-
+                <Alert />
                 <GlobalStyles
                     styles={{
                         '*': {

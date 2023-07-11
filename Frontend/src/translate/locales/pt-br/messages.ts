@@ -1,15 +1,40 @@
 const messagesPtBr = {
-    // Header
+    /* Header */
     headerTitle: 'Mercadinho do João',
     headerLanguage: 'Linguagem',
     headerNavigationBrand: 'Lista de marcas',
     headerNavigationProduct: 'Lista de produtos',
 
-    // Form create Product
+    /* Home */
+    homeTitle: 'Lista de produtos',
+    homeFilterNameLabel: 'nome',
+    homeFilterNamePlaceholder: 'Digite o nome do produto',
+    homeFilterPriceLabel: 'preço',
+    homeFilterPricePlaceholder: 'R$00.00',
+    homeFilterButton: 'Buscar',
+    homeNoProduct: 'Nenhum produto foi encontrado',
+    homeCreateProductButton: 'Adicionar produto',
+
+    /* Table Products */
+    tableProductName: 'Nome',
+    tableProductBrand: 'Marca',
+    tableProductPrice: 'Preço',
+    tableProductDescription: 'Descrição',
+    tableProductAction: 'Ação',
+    tableProductButtonInfoProduct: 'Ver produto',
+    tableProductPageLines: 'Linhas por página',
+    tableProductOutOf: 'de',
+    tableProductNoDescription: 'Sem descrição',
+    tableProductNoBrand: 'Sem marca',
+
+    /* Delete Dialog */
+    DeleteDialogProductTitle: 'Deleção de Produto',
+    DeleteDialogProduct: 'Tem certeza que deseja deletar o produto com o nome',
+    DeleteDialogProductButtonCancel: 'Cancelar',
+    DeleteDialogProductButtonConfirm: 'Confirmar',
+
+    /* Form Products */
     formCreateProductTitle: 'Formulário de adição de produtos',
-    formProductErrorMessageName: 'O nome é obrigatório',
-    formProductErrorMessagePrice: 'O preço deve ser um número válido',
-    // Mesagens do backend
     formProductNameLabel: 'Nome*',
     formProductNamePlaceholder: 'Digite o nome do Produto',
     formProductPriceLabel: 'Preço*',
@@ -23,38 +48,11 @@ const messagesPtBr = {
     formCreateProductButtonLoading: 'Adicionando...',
     formUpdateProductButton: 'Alterar Produto',
     formUpdateProductButtonLoading: 'Atualizando...',
+    //Validations
+    formProductValidationName: 'O nome é obrigatório',
+    formProductValidationPrice: 'O preço deve ser um valor válido',
 
-    // Home
-    homeTitle: 'Lista de produtos',
-
-    homeFilterNameLabel: 'nome',
-    homeFilterNamePlaceholder: 'Digite o nome do produto',
-    homeFilterPriceLabel: 'preço',
-    homeFilterPricePlaceholder: 'R$00.00',
-    homeFilterButton: 'Buscar',
-
-    homeNoProduct: 'Nenhum produto foi encontrado',
-
-    homeCreateProductButton: 'Adicionar produto',
-
-    tableProductName: 'Nome',
-    tableProductBrand: 'Marca',
-    tableProductPrice: 'Preço',
-    tableProductDescription: 'Descrição',
-    tableProductAction: 'Ação',
-    tableProductButtonInfoProduct: 'Ver produto',
-    tableProductPageLines: 'Linhas por página',
-    tableProductOutOf: 'de',
-    tableProductNoDescription: 'Sem descrição',
-    tableProductNoBrand: 'Sem marca',
-
-    // Info Product
-    DeleteDialogTitle: 'Deleção de Produto',
-    DeleteDialog: 'Tem certeza que deseja deletar o produto com o nome',
-    DeleteDialogButtonCancel: 'Cancelar',
-    DeleteDialogButtonConfirm: 'Confirmar',
-
-    // List Brands
+    /* List Brands */
     ListBrandTitle: 'Lista de marcas',
     ListBrandFilterNameLabel: 'nome',
     ListBrandFilterNamePlaceholder: 'Digite o nome da marca',
@@ -63,21 +61,29 @@ const messagesPtBr = {
     ListBrandCreateButton: 'Adicionar marca',
     ListBrandUpdateButton: 'Atualizar marca',
 
+    /* Table Brands */
     tableBrandName: 'Nome',
     tableBrandAction: 'Ação',
     tableBrandButtonInfo: 'Ver marca',
     tableBrandPageLines: 'Linhas por página',
     tableBrandOutOf: 'de',
 
+    /* Delete Dialog */
+    DeleteDialogBrandTitle: 'Deleção de Marcas',
+    DeleteDialogBrand: 'Tem certeza que deseja deletar a marca com o nome',
+    DeleteDialogBrandButtonCancel: 'Cancelar',
+    DeleteDialogBrandButtonConfirm: 'Confirmar',
+
+    /* Form Brand */
     formCreateBrandTitle: 'Formulário de adição de marcas',
-    formBrandErrorMessageName: 'Nome é obrigatório',
-    //Mesagens do backend
     formBrandNameLabel: 'Nome*',
     formBrandNamePlaceholder: 'Digite o nome da marca',
     formCreateBrandButton: 'Adicionar marca',
     formCreateBrandButtonLoading: 'Adicionando...',
     formUpdateBrandButton: 'Atualizar a marca',
     formUpdateBrandButtonLoading: 'Atualizando...',
+    // validations
+    formBrandValidationName: 'O nome é obrigatório',
 };
 
 export default messagesPtBr;

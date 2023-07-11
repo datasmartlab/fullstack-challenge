@@ -10,10 +10,11 @@ import {
     TablePagination,
     Box,
     Typography,
-    // useMediaQuery
+    useMediaQuery,
+    TableCell,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { TableHeadCellStyled, TableBodyCellStyled } from './style';
+import { TableHeadCellStyled } from './style';
 import { useIntl } from '../../../translate/useTranslate';
 import { TableFilter } from './Filter';
 import { Dispatch, SetStateAction } from 'react';
@@ -50,6 +51,7 @@ export function TableProduct({
 }: tableProductProps) {
     const { formatMessage } = useIntl();
     const navigator = useNavigate();
+    const minWidth800 = useMediaQuery('(min-width:800px)');
 
     const handleChangePage = (_event: unknown, newPage: number) => {
         setOffset(newPage * pagination.limit);
@@ -71,17 +73,21 @@ export function TableProduct({
                             <TableHeadCellStyled>
                                 {formatMessage({ id: 'tableProductName' })}
                             </TableHeadCellStyled>
+
                             <TableHeadCellStyled>
                                 {formatMessage({ id: 'tableProductBrand' })}
                             </TableHeadCellStyled>
+
                             <TableHeadCellStyled>
                                 {formatMessage({ id: 'tableProductPrice' })}
                             </TableHeadCellStyled>
-                            <TableHeadCellStyled>
-                                {formatMessage({
-                                    id: 'tableProductDescription',
-                                })}
-                            </TableHeadCellStyled>
+                            {minWidth800 ? (
+                                <TableHeadCellStyled>
+                                    {formatMessage({
+                                        id: 'tableProductDescription',
+                                    })}
+                                </TableHeadCellStyled>
+                            ) : null}
                             <TableHeadCellStyled sx={{ textAlign: 'center' }}>
                                 {formatMessage({ id: 'tableProductAction' })}
                             </TableHeadCellStyled>
@@ -92,14 +98,15 @@ export function TableProduct({
                             <>
                                 {data.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableBodyCellStyled
-                                            width={150}
+                                        <TableCell
+                                            width={100}
                                             component="th"
                                             scope="row"
                                         >
                                             {item.name}
-                                        </TableBodyCellStyled>
-                                        <TableBodyCellStyled
+                                        </TableCell>
+
+                                        <TableCell
                                             width={150}
                                             component="th"
                                             scope="row"
@@ -113,33 +120,39 @@ export function TableProduct({
                                                     })}
                                                 </span>
                                             )}
-                                        </TableBodyCellStyled>
-                                        <TableBodyCellStyled width={150}>
+                                        </TableCell>
+
+                                        <TableCell width={70}>
                                             R${item.price}
-                                        </TableBodyCellStyled>
-                                        <TableBodyCellStyled width={540}>
-                                            {item.description ? (
-                                                <span>{item.description}</span>
-                                            ) : (
-                                                <span
-                                                    style={{
-                                                        color: 'red',
-                                                    }}
-                                                >
-                                                    {formatMessage({
-                                                        id: 'tableProductNoDescription',
-                                                    })}
-                                                </span>
-                                            )}
-                                        </TableBodyCellStyled>
-                                        <TableBodyCellStyled
+                                        </TableCell>
+                                        {minWidth800 ? (
+                                            <TableCell width={540}>
+                                                {item.description ? (
+                                                    <span>
+                                                        {item.description}
+                                                    </span>
+                                                ) : (
+                                                    <span
+                                                        style={{
+                                                            color: 'red',
+                                                        }}
+                                                    >
+                                                        {formatMessage({
+                                                            id: 'tableProductNoDescription',
+                                                        })}
+                                                    </span>
+                                                )}
+                                            </TableCell>
+                                        ) : null}
+                                        <TableCell
+                                            width={140}
                                             sx={{ textAlign: 'center' }}
                                         >
                                             <Button
                                                 color="secondary"
                                                 onClick={() => {
                                                     navigator(
-                                                        `/infoProduct/${item.id}`,
+                                                        `/infoproduct/${item.id}`,
                                                     );
                                                 }}
                                             >
@@ -147,47 +160,13 @@ export function TableProduct({
                                                     id: 'tableProductButtonInfoProduct',
                                                 })}
                                             </Button>
-                                        </TableBodyCellStyled>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
-
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 15, 20]}
-                                        count={
-                                            pagination.count
-                                                ? pagination.count
-                                                : 10
-                                        }
-                                        onPageChange={handleChangePage}
-                                        page={Math.floor(
-                                            pagination.offset /
-                                                pagination.limit,
-                                        )}
-                                        onRowsPerPageChange={
-                                            handleChangeRowsPerPage
-                                        }
-                                        rowsPerPage={pagination.limit}
-                                        labelRowsPerPage={formatMessage({
-                                            id: 'tableProductPageLines',
-                                        })}
-                                        labelDisplayedRows={({
-                                            from,
-                                            to,
-                                            count,
-                                        }) => {
-                                            return `${from}–${to} ${formatMessage(
-                                                {
-                                                    id: 'tableProductOutOf',
-                                                },
-                                            )} ${count}`;
-                                        }}
-                                    />
-                                </TableRow>
                             </>
                         ) : (
                             <TableRow>
-                                <TableBodyCellStyled colSpan={5}>
+                                <TableCell colSpan={5}>
                                     <Typography
                                         color={'error'}
                                         sx={{
@@ -201,9 +180,29 @@ export function TableProduct({
                                             id: 'homeNoProduct',
                                         })}
                                     </Typography>
-                                </TableBodyCellStyled>
+                                </TableCell>
                             </TableRow>
                         )}
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 15, 20]}
+                                count={pagination.count}
+                                onPageChange={handleChangePage}
+                                page={Math.floor(
+                                    pagination.offset / pagination.limit,
+                                )}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                rowsPerPage={pagination.limit}
+                                labelRowsPerPage={formatMessage({
+                                    id: 'tableProductPageLines',
+                                })}
+                                labelDisplayedRows={({ from, to, count }) => {
+                                    return `${from}–${to} ${formatMessage({
+                                        id: 'tableProductOutOf',
+                                    })} ${count}`;
+                                }}
+                            />
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Product } from '../../models/product';
-import { Brand } from '../../models/brand';
 
 export const ShowProduct = async (req: Request, res: Response) => {
     try {
@@ -8,16 +7,12 @@ export const ShowProduct = async (req: Request, res: Response) => {
 
         const result = await Product.findOne({
             where: { id },
-            include: {
-                model: Brand,
-                attributes: ['name'],
-            },
         });
 
         if (!result) {
             return res
                 .status(404)
-                .json({ message: 'Produto não foi encontrado' });
+                .json({ message: 'O produto não foi encontrado' });
         }
         return res.json(result);
     } catch (error) {

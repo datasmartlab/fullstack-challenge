@@ -1,16 +1,13 @@
 const messagesEnglish = {
-    //Header
+    /* Header */
     headerTitle: "John's market",
     headerLanguage: 'Language',
     headerNavigationBrand: 'Brand list',
     headerNavigationProduct: 'Product list',
 
-    //Form create Products
+    /* Form Products */
     formCreateProductTitle: 'Add product form',
     formUpdateProductTitle: 'Update product form',
-    formProductErrorMessageName: 'Name is required',
-    formProductErrorMessagePrice: 'Price must be a valid number',
-    //Mesagens do backend
     formProductNameLabel: 'Name*',
     formProductNamePlaceholder: 'Enter product name',
     formProductPriceLabel: 'Price*',
@@ -23,19 +20,21 @@ const messagesEnglish = {
     formCreateProductButtonLoading: 'Adding...',
     formUpdateProductButton: 'Update product',
     formUpdateProductButtonLoading: 'Updating...',
+    //Validations
+    formProductValidationName: 'Name is required',
+    formProductValidationPrice: 'Price must be a valid value',
 
-    //Home
+    /* Home */
     homeTitle: 'Product list',
     homeFilterNameLabel: 'Name',
     homeFilterNamePlaceholder: 'Enter product name',
     homeFilterPriceLabel: 'Price',
     homeFilterPricePlaceholder: 'R$00.00',
     homeFilterButton: 'Search',
-
     homeNoProduct: 'No product found',
-
     homeCreateProductButton: 'add product',
 
+    /* Table Products */
     tableProductName: 'Name',
     tableProductBrand: 'Brand',
     tableProductPrice: 'Price',
@@ -47,12 +46,13 @@ const messagesEnglish = {
     tableProductNoDescription: 'Without description',
     tableProductNoBrand: 'No brand',
 
-    DeleteDialogTitle: 'Product deletion',
-    DeleteDialog: 'Are you sure you want to delete the product with the name',
-    DeleteDialogButtonCancel: 'Cancel',
-    DeleteDialogButtonConfirm: 'Confirm',
+    DeleteDialogProductTitle: 'Product deletion',
+    DeleteDialogProduct:
+        'Are you sure you want to delete the product with the name',
+    DeleteDialogProductButtonCancel: 'Cancel',
+    DeleteDialogProductButtonConfirm: 'Confirm',
 
-    // List Brands
+    /* List Brands */
     ListBrandTitle: 'Brand list',
     ListBrandFilterNameLabel: 'name',
     ListBrandFilterNamePlaceholder: 'Enter brand name',
@@ -61,22 +61,30 @@ const messagesEnglish = {
     ListBrandCreateButton: 'Add brand',
     ListBrandUpdateButton: 'Update brand',
 
+    /* Table Brand */
     tableBrandName: 'Name',
     tableBrandAction: 'Action',
     tableBrandButtonInfo: 'Show brand',
     tableBrandPageLines: 'Lines per page',
     tableBrandOutOf: 'out of',
 
+    /* Delete Dialog */
+    DeleteDialogBrandTitle: 'Brand deletion',
+    DeleteDialogBrand:
+        'Are you sure you want to delete the brand with the name',
+    DeleteDialogBrandButtonCancel: 'Cancel',
+    DeleteDialogBrandButtonConfirm: 'Confirm',
+
+    /* Form Brand */
     formCreateBrandTitle: 'Add brand form',
-    formUpdateBrandTitle: 'Update brand form',
-    formBrandErrorMessageName: 'Name is required',
-    //Mesagens do backend
     formBrandNameLabel: 'Name*',
     formBrandNamePlaceholder: 'Enter brand name',
     formCreateBrandButton: 'Add brand',
     formCreateBrandButtonLoading: 'Adding...',
     formUpdateBrandButton: 'Update brand',
     formUpdateBrandButtonLoading: 'Updating...',
+    //validations
+    formBrandValidationName: 'Name is required',
 };
 
 export default messagesEnglish;

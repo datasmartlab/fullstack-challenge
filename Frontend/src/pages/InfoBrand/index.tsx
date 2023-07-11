@@ -17,18 +17,24 @@ export function InfoBrand() {
     const { id } = useParams();
     const navigator = useNavigate();
 
-    const [product, setBrand] = useState<BrandData>();
+    const [brand, setBrand] = useState<BrandData>();
     const [loading, setLoading] = useState(true);
     const [Alert, setAlert] = useState(false);
-    const getBrand = useCallback(async (id: string) => {
-        try {
-            const ID = parseInt(id);
-            const BrandData = await showBrand(ID);
-            setBrand(BrandData);
-        } catch (error) {
-            return toast.error(error + '');
-        }
-    }, []);
+    const getBrand = useCallback(
+        async (id: string) => {
+            try {
+                const ID = parseInt(id);
+                const BrandData = await showBrand(ID);
+                setBrand(BrandData);
+            } catch (error) {
+                navigator('/brand');
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.error(error.response.data.message);
+                }
+            }
+        },
+        [navigator],
+    );
 
     useEffect(() => {
         if (id) {
@@ -37,23 +43,18 @@ export function InfoBrand() {
         setLoading(false);
     }, [getBrand, id]);
 
-    async function handleDeleteProduct() {
+    async function handleDeletebrand() {
         try {
-            if (!product) {
+            if (!brand) {
                 return toast.error('Sem ID');
             }
-            const response = await deleteBrand(product?.id);
-            if (response.status === 200) {
-                navigator('/brand');
-                toast.success(response.data.message);
-            }
+            const response = await deleteBrand(brand?.id);
+
+            navigator('/brand');
+            toast.success(response.data.message);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                if (error.response?.status === 500) {
-                    toast.error(error.response.data.message);
-                } else if (error.response?.status === 400) {
-                    toast.error(error.response.data.message);
-                }
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data.message);
             }
         }
     }
@@ -83,7 +84,7 @@ export function InfoBrand() {
                     <Button
                         sx={{
                             marginTop: '1.5rem',
-                            display: product ? 'block' : 'none',
+                            display: brand ? 'block' : 'none',
                         }}
                         disabled={loading}
                         color="error"
@@ -95,7 +96,7 @@ export function InfoBrand() {
                         <Delete sx={{ fontSize: '3rem' }} />
                     </Button>
                 </Grid>
-                {!product ? (
+                {!brand ? (
                     <Box
                         sx={{
                             width: '100vw',
@@ -111,16 +112,16 @@ export function InfoBrand() {
                 ) : (
                     <>
                         <DeleteDialog
-                            deleteProduct={handleDeleteProduct}
+                            deleteBrand={handleDeletebrand}
                             onClose={() => setAlert(false)}
-                            Open={Alert}
-                            name={product.name}
+                            OpenDialogDelete={Alert}
+                            name={brand.name}
                         />
                         <FormUpdateBrand
                             setLoading={setLoading}
                             loading={loading}
                             setBrand={setBrand}
-                            brand={product}
+                            brand={brand}
                         />
                     </>
                 )}

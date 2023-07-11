@@ -5,8 +5,7 @@ export const DeleteProduct = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
 
-        const result = await Product.findOne({ where: { id: id } });
-
+        const result = await Product.findOne({ where: { id } });
         if (!result) {
             return res
                 .status(404)
@@ -16,7 +15,7 @@ export const DeleteProduct = async (req: Request, res: Response) => {
         await result.destroy();
 
         res.json({
-            message: `O produto ${result.name}  foi deletado com sucesso`,
+            message: `O produto ${result.name} foi deletado com sucesso`,
         });
     } catch (error) {
         res.status(500).json(error);

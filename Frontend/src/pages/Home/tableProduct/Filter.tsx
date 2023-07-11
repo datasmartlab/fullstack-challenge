@@ -18,6 +18,10 @@ export function TableFilter({
     pagination,
 }: TableProductFilterProps) {
     const { formatMessage } = useIntl();
+
+    const [name, setName] = useState(pagination.filter.name);
+    const [price, setPrice] = useState(pagination.filter.price);
+
     function handleSeachProduct() {
         setFilter({ name, price });
     }
@@ -27,8 +31,7 @@ export function TableFilter({
         setPrice('');
         setFilter({ name: '', price: '' });
     }
-    const [name, setName] = useState(pagination.filter.name);
-    const [price, setPrice] = useState(pagination.filter.price);
+
     return (
         <Box
             marginBottom={2}

@@ -12,13 +12,6 @@ interface BrandData {
     name: string;
 }
 
-const newBrandValidationSchema = zod.object({
-    id: zod.number(),
-    name: zod.string().min(2, 'O nome é obrigatório'),
-});
-
-type Product = zod.infer<typeof newBrandValidationSchema>;
-
 interface formUpdateProductProps {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
@@ -33,6 +26,16 @@ export function FormUpdateBrand({
     loading,
 }: formUpdateProductProps) {
     const { formatMessage } = useIntl();
+
+    const newBrandValidationSchema = zod.object({
+        id: zod.number(),
+        name: zod
+            .string()
+            .min(2, formatMessage({ id: 'formBrandValidationName' })),
+    });
+
+    type Product = zod.infer<typeof newBrandValidationSchema>;
+
     const newProductForm = useForm<Product>({
         resolver: zodResolver(newBrandValidationSchema),
     });
@@ -44,13 +47,13 @@ export function FormUpdateBrand({
     async function handleUpdateProduct(data: BrandData) {
         try {
             setLoading(true);
+
             const response = await updateBrand(data);
-            if (response.status === 200) {
-                setBrand(data);
-                toast.success(response.data.message);
-            } else {
-                toast.warning(response.data.message);
-            }
+
+            setBrand(data);
+
+            toast.success(response.data.message);
+
             setLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {

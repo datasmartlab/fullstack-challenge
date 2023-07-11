@@ -14,6 +14,7 @@ export function FilterTableBrand({
 }: TableProductFilterProps) {
     const [name, setName] = useState(filter);
     const { formatMessage } = useIntl();
+
     function handleSeachProduct() {
         setFilter(name);
     }
@@ -50,14 +51,14 @@ export function FilterTableBrand({
                     },
                 }}
                 label={formatMessage({
-                    id: 'homeFilterNameLabel',
+                    id: 'ListBrandFilterNameLabel',
                 })}
                 value={name}
                 onChange={(envent) => {
                     setName(envent.target.value);
                 }}
                 placeholder={formatMessage({
-                    id: 'homeFilterNamePlaceholder',
+                    id: 'ListBrandFilterNamePlaceholder',
                 })}
             />
             <Button

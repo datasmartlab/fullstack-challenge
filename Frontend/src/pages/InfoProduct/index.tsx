@@ -23,15 +23,22 @@ export function InfoProduct() {
     const [product, setProduct] = useState<productData>();
     const [loading, setLoading] = useState(true);
     const [Alert, setAlert] = useState(false);
-    const getProduct = useCallback(async (id: string) => {
-        try {
-            const ID = parseInt(id);
-            const productData = await showProduct(ID);
-            setProduct(productData);
-        } catch (error) {
-            return toast.error(error + '');
-        }
-    }, []);
+
+    const getProduct = useCallback(
+        async (id: string) => {
+            try {
+                const ID = parseInt(id);
+                const productData = await showProduct(ID);
+                setProduct(productData);
+            } catch (error) {
+                navigator('/brand');
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.error(error.response.data.message);
+                }
+            }
+        },
+        [navigator],
+    );
 
     useEffect(() => {
         if (id) {
@@ -45,17 +52,12 @@ export function InfoProduct() {
                 return toast.error('Sem ID');
             }
             const response = await deleteProduct(product?.id);
-            if (response.status === 200) {
-                navigator('/');
-                toast.success(response.data.message);
-            }
+
+            navigator('/');
+            toast.success(response.data.message);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                if (error.response?.status === 500) {
-                    toast.error(error.response.data.message);
-                } else if (error.response?.status === 400) {
-                    toast.error(error.response.data.message);
-                }
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data.message);
             }
         }
     }
@@ -116,7 +118,7 @@ export function InfoProduct() {
                         <DeleteDialog
                             deleteProduct={handleDeleteProduct}
                             onClose={() => setAlert(false)}
-                            Open={Alert}
+                            openDialogDelete={Alert}
                             name={product.name}
                         />
                         <FormUpdateProduct

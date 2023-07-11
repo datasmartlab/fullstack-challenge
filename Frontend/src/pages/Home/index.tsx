@@ -6,7 +6,6 @@ import { RootState } from '../../redux/store';
 import { FormProduct } from './FormCreateProduct';
 import { TableProduct } from './TableProduct';
 import { useIntl } from '../../translate/useTranslate';
-import { fetchBrandsRequested } from '../../redux/brands/actions';
 
 interface productData {
     id: number;
@@ -18,14 +17,16 @@ interface productData {
 }
 
 export function Home() {
-    const { formatMessage } = useIntl();
-    const dispatch = useDispatch();
     const results: productData[] = useSelector(
         (state: RootState) => state.products.list,
     );
     const pagination = useSelector(
         (state: RootState) => state.products.pagination,
     );
+
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+
     const [limit, setLimit] = useState(pagination.limit);
     const [offset, setOffset] = useState(pagination.offset);
     const loading = useSelector((state: RootState) => state.products.loading);
@@ -34,11 +35,12 @@ export function Home() {
 
     useEffect(() => {
         if (!visibleForm) {
+            if (!results.length && offset) {
+                setOffset(0);
+            }
             dispatch(fetchProductsRequested(offset, limit, filter));
-            dispatch(fetchBrandsRequested());
         }
-    }, [dispatch, visibleForm, limit, offset, filter]);
-
+    }, [dispatch, visibleForm, limit, offset, filter, results.length]);
     return (
         <Box>
             {loading ? (
@@ -84,7 +86,7 @@ export function Home() {
                         </Button>
 
                         <FormProduct
-                            open={visibleForm}
+                            visibleForm={visibleForm}
                             setVisibleForm={setVisibleForm}
                         />
                     </Box>

@@ -3,4 +3,3 @@ import { styled } from '@mui/system';
 export const TableHeadCellStyled = styled(TableCell)({
     fontWeight: 'bold',
 });
-export const TableBodyCellStyled = styled(TableCell)({});

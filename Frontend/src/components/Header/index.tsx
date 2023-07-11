@@ -30,21 +30,23 @@ interface HeaderProps {
 export function Header({ setLanguage, language }: HeaderProps) {
     const { formatMessage } = useIntl();
 
-    useEffect(() => {
-        localStorage.setItem('langue', language);
-    }, [language]);
-
-    function handleChangeLanguage(event: SelectChangeEvent<'pt' | 'en'>) {
-        const selectedLanguage = event.target.value as string;
-        if (selectedLanguage === 'pt' || selectedLanguage === 'en') {
-            setLanguage(selectedLanguage);
-        }
-    }
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
     };
+
+    useEffect(() => {
+        localStorage.setItem('language', language);
+    }, [language]);
+
+    function handleChangeLanguage(event: SelectChangeEvent<'pt' | 'en'>) {
+        const selectedLanguage = event.target.value as string;
+
+        if (selectedLanguage === 'pt' || selectedLanguage === 'en') {
+            setLanguage(selectedLanguage);
+        }
+    }
 
     const menuItems = useMemo(
         () => [
@@ -59,6 +61,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
         ],
         [formatMessage],
     );
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" color="primary">
@@ -72,12 +75,13 @@ export function Header({ setLanguage, language }: HeaderProps) {
                     >
                         <Menu fontSize="large" />
                     </IconButton>
+
                     <Typography
                         variant="h4"
                         sx={{
                             flexGrow: 1,
                             textAlign: 'center',
-                            paddingLeft: '4%',
+                            paddingLeft: '2.1875rem',
                         }}
                     >
                         {formatMessage({ id: 'headerTitle' })}
@@ -87,6 +91,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
                         <InputLabel sx={{ color: grey[50] }}>
                             {formatMessage({ id: 'headerLanguage' })}
                         </InputLabel>
+
                         <Select
                             value={language}
                             label="linguagem"
@@ -102,6 +107,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
                                     width={'20rem'}
                                 />
                             </MenuItem>
+
                             <MenuItem value={'en'}>
                                 En{' '}
                                 <img

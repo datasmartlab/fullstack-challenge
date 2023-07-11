@@ -9,11 +9,12 @@ import { DeleteBrand } from '../controllers/brandControllers/delete';
 import { ListBrand } from '../controllers/brandControllers/list';
 import { ShowBrand } from '../controllers/brandControllers/show';
 import { UpdateBrand } from '../controllers/brandControllers/update';
+
 const mainRoutes = Router();
 
 //rotas das Marcas
-
 mainRoutes.route('/brand').post(CreateBrand).get(ListBrand);
+
 mainRoutes
     .route('/brand/:id')
     .get(ShowBrand)

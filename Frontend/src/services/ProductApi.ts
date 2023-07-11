@@ -43,6 +43,7 @@ export async function listProducts(pagination: paginationData) {
 
 export async function showProduct(id: number) {
     const response = await api.get(`product/${id}`);
+
     if (response.status != 200) {
         return response.data.message;
     }

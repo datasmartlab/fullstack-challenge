@@ -9,22 +9,24 @@ import {
 import { useIntl } from '../../../translate/useTranslate';
 
 interface AlertDeleteProps {
-    Open: boolean; // Altere o nome da propriedade para 'open'
+    openDialogDelete: boolean;
     onClose: () => void;
     deleteProduct: () => void;
     name: string;
 }
 
 export default function DeleteDialog({
-    Open,
+    openDialogDelete,
     onClose,
     deleteProduct,
     name,
 }: AlertDeleteProps) {
     const { formatMessage } = useIntl();
+
     const handleClose = () => {
-        onClose(); // Chame a função 'onClose' para fechar o diálogo
+        onClose();
     };
+
     function Confirm() {
         onClose();
         deleteProduct();
@@ -34,18 +36,18 @@ export default function DeleteDialog({
         <div>
             <Dialog
                 maxWidth="xs"
-                open={Open}
+                open={openDialogDelete}
                 keepMounted
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle align="center">
-                    {formatMessage({ id: 'DeleteDialogTitle' })}
+                    {formatMessage({ id: 'DeleteDialogProductTitle' })}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {formatMessage({ id: 'DeleteDialog' })}{' '}
+                        {formatMessage({ id: 'DeleteDialogProduct' })}{' '}
                         <span style={{ color: 'red' }}>{name}</span>?
                     </DialogContentText>
                 </DialogContent>
@@ -56,7 +58,9 @@ export default function DeleteDialog({
                         onClick={handleClose}
                         color="error"
                     >
-                        {formatMessage({ id: 'DeleteDialogButtonCancel' })}
+                        {formatMessage({
+                            id: 'DeleteDialogProductButtonCancel',
+                        })}
                     </Button>
                     <Button
                         fullWidth
@@ -64,7 +68,9 @@ export default function DeleteDialog({
                         onClick={Confirm}
                         color="secondary"
                     >
-                        {formatMessage({ id: 'DeleteDialogButtonConfirm' })}
+                        {formatMessage({
+                            id: 'DeleteDialogProductButtonConfirm',
+                        })}
                     </Button>
                 </DialogActions>
             </Dialog>

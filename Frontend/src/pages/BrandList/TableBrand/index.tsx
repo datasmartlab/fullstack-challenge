@@ -9,10 +9,10 @@ import {
     TableRow,
     Box,
     Typography,
-    // useMediaQuery
+    TableCell,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { TableHeadCellStyled, TableBodyCellStyled } from './style';
+import { TableHeadCellStyled } from './style';
 import { useIntl } from '../../../translate/useTranslate';
 import { FilterTableBrand } from './filter';
 import { Dispatch, SetStateAction } from 'react';
@@ -54,13 +54,10 @@ export function TableBrand({ data, setFilter, filter }: tableBrandProps) {
                             <>
                                 {data.map((item) => (
                                     <TableRow key={item.id}>
-                                        <TableBodyCellStyled
-                                            component="th"
-                                            scope="row"
-                                        >
+                                        <TableCell component="th" scope="row">
                                             {item.name}
-                                        </TableBodyCellStyled>
-                                        <TableBodyCellStyled
+                                        </TableCell>
+                                        <TableCell
                                             sx={{
                                                 textAlign: 'center',
                                             }}
@@ -77,13 +74,13 @@ export function TableBrand({ data, setFilter, filter }: tableBrandProps) {
                                                     id: 'tableBrandButtonInfo',
                                                 })}
                                             </Button>
-                                        </TableBodyCellStyled>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </>
                         ) : (
                             <TableRow>
-                                <TableBodyCellStyled colSpan={5}>
+                                <TableCell colSpan={5}>
                                     <Typography
                                         color={'error'}
                                         sx={{
@@ -97,7 +94,7 @@ export function TableBrand({ data, setFilter, filter }: tableBrandProps) {
                                             id: 'ListBrandNoBrand',
                                         })}
                                     </Typography>
-                                </TableBodyCellStyled>
+                                </TableCell>
                             </TableRow>
                         )}
                     </TableBody>

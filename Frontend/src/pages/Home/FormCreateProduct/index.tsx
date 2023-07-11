@@ -37,31 +37,37 @@ interface newProductData {
     brandId: number | string;
 }
 
-const newProductValidationSchema = zod.object({
-    name: zod.string().min(2, 'O nome é obrigatório'),
-    price: zod
-        .string()
-        .refine(
-            (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
-            'O preço deve ser um número válido e maior que zero',
-        ),
-    description: zod.string(),
-    brandId: zod.string(),
-});
-
-type Product = zod.infer<typeof newProductValidationSchema>;
-
 interface FormProps {
     setVisibleForm: (valor: boolean) => void;
-    open: boolean;
+    visibleForm: boolean;
 }
 
-export function FormProduct({ setVisibleForm, open }: FormProps) {
-    const dispatch = useDispatch();
-    const { formatMessage } = useIntl();
+export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
     const brands: BrandData[] = useSelector(
         (state: RootState) => state.brands.list,
     );
+
+    const dispatch = useDispatch();
+    const { formatMessage } = useIntl();
+    const [loading, setLoading] = useState(false);
+    const [visibleFormBrand, setVisibleFormBrand] = useState(false);
+
+    const newProductValidationSchema = zod.object({
+        name: zod
+            .string()
+            .min(2, formatMessage({ id: 'formProductValidationName' })),
+        price: zod
+            .string()
+            .refine(
+                (value) => !isNaN(parseFloat(value)) && parseFloat(value) > 0,
+                formatMessage({ id: 'formProductValidationPrice' }),
+            ),
+        description: zod.string(),
+        brandId: zod.string(),
+    });
+
+    type Product = zod.infer<typeof newProductValidationSchema>;
+
     const {
         handleSubmit,
         register,
@@ -70,12 +76,6 @@ export function FormProduct({ setVisibleForm, open }: FormProps) {
     } = useForm<Product>({
         resolver: zodResolver(newProductValidationSchema),
     });
-    const [loading, setLoading] = useState(false);
-    const [openDialog, setOpenDialog] = useState(false);
-
-    useEffect(() => {
-        dispatch(fetchBrandsRequested());
-    }, [openDialog, dispatch]);
 
     async function handleCreateProduct(data: newProductData) {
         try {
@@ -94,12 +94,16 @@ export function FormProduct({ setVisibleForm, open }: FormProps) {
         }
         setLoading(false);
     }
-    console.log(errors);
+
+    useEffect(() => {
+        dispatch(fetchBrandsRequested());
+    }, [visibleFormBrand, dispatch]);
+
     return (
         <>
             <Dialog
                 maxWidth={false}
-                open={open}
+                open={visibleForm}
                 onClose={() => setVisibleForm(false)}
             >
                 <DialogTitle variant="h4" align="center">
@@ -193,7 +197,7 @@ export function FormProduct({ setVisibleForm, open }: FormProps) {
                                                 color="secondary"
                                                 variant="outlined"
                                                 onClick={() => {
-                                                    setOpenDialog(true);
+                                                    setVisibleFormBrand(true);
                                                 }}
                                             >
                                                 {formatMessage({
@@ -260,7 +264,10 @@ export function FormProduct({ setVisibleForm, open }: FormProps) {
                     </form>
                 </DialogContent>
             </Dialog>
-            <FormCreateBrand open={openDialog} setVisibleForm={setOpenDialog} />
+            <FormCreateBrand
+                visibleForm={visibleFormBrand}
+                setVisibleForm={setVisibleFormBrand}
+            />
         </>
     );
 }

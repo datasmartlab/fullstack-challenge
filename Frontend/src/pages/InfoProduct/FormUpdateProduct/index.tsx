@@ -33,21 +33,6 @@ interface BrandData {
     name: string;
 }
 
-const ProductValidationSchema = zod.object({
-    id: zod.number(),
-    name: zod.string().min(2, 'O nome é obrigatório'),
-    price: zod
-        .string()
-        .refine(
-            (value) => !isNaN(parseFloat(value)),
-            'O preço deve ser um número válido',
-        ),
-    description: zod.string(),
-    brandId: zod.string(),
-});
-
-type Product = zod.infer<typeof ProductValidationSchema>;
-
 interface formUpdateProductProps {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     loading: boolean;
@@ -64,6 +49,23 @@ export function FormUpdateProduct({
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
 
+    const ProductValidationSchema = zod.object({
+        id: zod.number(),
+        name: zod
+            .string()
+            .min(2, formatMessage({ id: 'formProductValidationName' })),
+        price: zod
+            .string()
+            .refine(
+                (value) => !isNaN(parseFloat(value)),
+                formatMessage({ id: 'formProductValidationPrice' }),
+            ),
+        description: zod.string(),
+        brandId: zod.string(),
+    });
+
+    type Product = zod.infer<typeof ProductValidationSchema>;
+
     const brands: BrandData[] = useSelector(
         (state: RootState) => state.brands.list,
     );
@@ -78,22 +80,18 @@ export function FormUpdateProduct({
         control,
     } = newProductForm;
 
-    const [openDialog, setOpenDialog] = useState(false);
+    const [visibleFormBrand, setVisibleFormBrand] = useState(false);
 
     useEffect(() => {
         dispatch(fetchBrandsRequested());
-    }, [openDialog, dispatch]);
+    }, [visibleFormBrand, dispatch]);
 
     async function handleUpdateProduct(data: productData) {
         try {
             setLoading(true);
             const response = await updateProduct(data);
-            if (response.status === 200) {
-                setProduct(data);
-                toast.success(response.data.message);
-            } else {
-                toast.warning(response.data.message);
-            }
+            setProduct(data);
+            toast.success(response.data.message);
             setLoading(false);
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
@@ -181,7 +179,7 @@ export function FormUpdateProduct({
                                         color="secondary"
                                         variant="outlined"
                                         onClick={() => {
-                                            setOpenDialog(true);
+                                            setVisibleFormBrand(true);
                                         }}
                                     >
                                         {formatMessage({
@@ -241,7 +239,10 @@ export function FormUpdateProduct({
                           })}
                 </Button>
             </form>
-            <FormCreateBrand open={openDialog} setVisibleForm={setOpenDialog} />
+            <FormCreateBrand
+                visibleForm={visibleFormBrand}
+                setVisibleForm={setVisibleFormBrand}
+            />
         </Grid>
     );
 }

@@ -16,9 +16,9 @@ export const UpdateBrand = async (req: Request, res: Response) => {
 
         const { count } = await Brand.findAndCountAll({ where: { name } });
 
-        if (count === 1) {
+        if (count == 1) {
             return res.status(409).json({
-                message: `Ja existe uma marca com o nome ${name}`,
+                message: `Já existe uma marca com o nome ${name}`,
             });
         }
 

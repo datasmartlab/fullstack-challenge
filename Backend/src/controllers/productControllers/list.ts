@@ -4,7 +4,7 @@ import { Brand } from '../../models/brand';
 import { Op } from 'sequelize';
 
 interface Filter {
-    name: string;
+    name?: string;
     price?: number;
 }
 
@@ -26,30 +26,31 @@ export const ListProduct = async (req: Request, res: Response) => {
             return res.json({ data: results.rows, count: results.count });
         }
 
-        let whereData = {};
+        let where = {};
 
         if (filter.name) {
-            whereData = { name: { [Op.like]: `${filter.name}%` } };
+            where = { name: { [Op.like]: `${filter.name}%` } };
         }
         if (filter.price) {
-            whereData = { price: filter.price };
+            where = { price: filter.price };
         }
         if (filter.name && filter.price) {
-            whereData = {
+            where = {
                 name: { [Op.like]: `${filter.name}%` },
                 price: filter.price,
             };
         }
+
         const results = await Product.findAndCountAll({
             offset,
             limit,
-            where: whereData,
+            where,
             include: {
                 model: Brand,
                 attributes: ['name'],
             },
         });
-        console.log(results);
+
         return res.json({ data: results.rows, count: results.count });
     } catch (error) {
         res.status(500).json(error);

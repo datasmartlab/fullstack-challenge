@@ -20,19 +20,24 @@ interface newBrandData {
     name: string;
 }
 
-const newBrandValidationSchema = zod.object({
-    name: zod.string().min(2, 'O nome é obrigatório'),
-});
-
-type Brand = zod.infer<typeof newBrandValidationSchema>;
-
 interface FormProps {
     setVisibleForm?: (valor: boolean) => void;
-    open: boolean;
+    visibleForm: boolean;
 }
 
-export function FormCreateBrand({ setVisibleForm, open }: FormProps) {
+export function FormCreateBrand({ setVisibleForm, visibleForm }: FormProps) {
     const { formatMessage } = useIntl();
+
+    const [loading, setLoading] = useState(false);
+
+    const newBrandValidationSchema = zod.object({
+        name: zod
+            .string()
+            .min(2, formatMessage({ id: 'formBrandValidationName' })),
+    });
+
+    type Brand = zod.infer<typeof newBrandValidationSchema>;
+
     const newBrandForm = useForm<Brand>({
         resolver: zodResolver(newBrandValidationSchema),
     });
@@ -41,19 +46,16 @@ export function FormCreateBrand({ setVisibleForm, open }: FormProps) {
         register,
         formState: { errors },
     } = newBrandForm;
-    const [loading, setLoading] = useState(false);
 
     async function handleCreateBrand(data: newBrandData) {
         try {
             setLoading(true);
             const response = await createBrand(data);
-            if (response.status === 201) {
-                setVisibleForm ? setVisibleForm(false) : null;
-                toast.success(response.data.message);
-            }
+            setVisibleForm ? setVisibleForm(false) : null;
+            toast.success(response.data.message);
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                if (error.response?.status === 409) {
+                if (error.response) {
                     toast.error(error.response.data.message);
                 }
             }
@@ -64,7 +66,7 @@ export function FormCreateBrand({ setVisibleForm, open }: FormProps) {
     return (
         <Dialog
             maxWidth={false}
-            open={open}
+            open={visibleForm}
             onClose={() => (setVisibleForm ? setVisibleForm(false) : null)}
         >
             <DialogTitle variant="h4" align="center">

@@ -2,26 +2,25 @@ import { Request, Response } from 'express';
 import { Brand } from '../../models/brand';
 import { BrandSchema } from '../../validations/brand';
 
-export interface brandData {
-    id?: number;
+export interface BrandData {
     name: string;
 }
 
 export const CreateBrand = async (req: Request, res: Response) => {
     try {
-        const BrandData: brandData = {
+        const brandData: BrandData = {
             name: req.body.name,
         };
 
-        await BrandSchema.validate(BrandData);
+        await BrandSchema.validate(brandData);
 
         const [result, created] = await Brand.findOrCreate({
-            where: { name: BrandData.name },
+            where: { name: brandData.name },
         });
 
         if (!created) {
             return res.status(409).json({
-                message: `A marca com o nome ${BrandData.name} já foi cadastrado `,
+                message: `A marca com o nome ${brandData.name} já foi cadastrado `,
             });
         }
 

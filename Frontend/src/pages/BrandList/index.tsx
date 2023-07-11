@@ -13,18 +13,18 @@ interface BrandData {
 }
 
 export function BrandList() {
-    const { formatMessage } = useIntl();
-    const dispatch = useDispatch();
-
     const results: BrandData[] = useSelector(
         (state: RootState) => state.brands.list,
     );
-
     const loading = useSelector((state: RootState) => state.brands.loading);
+
+    const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+
+    const [visibleForm, setVisibleForm] = useState(false);
     const [filter, setFilter] = useState(
         useSelector((state: RootState) => state.brands.filter),
     );
-    const [visibleForm, setVisibleForm] = useState(false);
 
     useEffect(() => {
         if (!visibleForm) {
@@ -74,7 +74,7 @@ export function BrandList() {
                         </Button>
 
                         <FormCreateBrand
-                            open={visibleForm}
+                            visibleForm={visibleForm}
                             setVisibleForm={setVisibleForm}
                         />
                     </Box>

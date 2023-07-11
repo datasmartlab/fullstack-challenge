@@ -19,6 +19,7 @@ export async function listBrands(filter: string) {
     });
     return response.data;
 }
+
 export async function showBrand(id: number) {
     const response = await api.get(`brand/${id}`);
     if (response.status != 200) {
