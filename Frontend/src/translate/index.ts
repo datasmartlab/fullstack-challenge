@@ -1,4 +1,4 @@
-import { english } from './locales/english';
+import { english } from './locales/en-usa';
 import { portugueseBrazil } from './locales/pt-br';
 
 const locales = {

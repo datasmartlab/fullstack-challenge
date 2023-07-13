@@ -20,6 +20,7 @@ export function InfoBrand() {
     const [brand, setBrand] = useState<BrandData>();
     const [loading, setLoading] = useState(true);
     const [Alert, setAlert] = useState(false);
+
     const getBrand = useCallback(
         async (id: string) => {
             try {
@@ -36,13 +37,6 @@ export function InfoBrand() {
         [navigator],
     );
 
-    useEffect(() => {
-        if (id) {
-            getBrand(id);
-        }
-        setLoading(false);
-    }, [getBrand, id]);
-
     async function handleDeletebrand() {
         try {
             if (!brand) {
@@ -58,6 +52,13 @@ export function InfoBrand() {
             }
         }
     }
+
+    useEffect(() => {
+        if (id) {
+            getBrand(id);
+        }
+        setLoading(false);
+    }, [getBrand, id]);
 
     return (
         <Box>

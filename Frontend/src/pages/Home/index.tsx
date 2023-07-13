@@ -1,11 +1,12 @@
 import { Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsRequested } from '../../redux/products/actions';
 import { RootState } from '../../redux/store';
 import { FormProduct } from './FormCreateProduct';
 import { TableProduct } from './TableProduct';
 import { useIntl } from '../../translate/useTranslate';
+import { fetchProductsRequested } from '../../redux/products/actions';
+import { actions } from '../../redux/products/slice';
 
 interface productData {
     id: number;
@@ -13,34 +14,45 @@ interface productData {
     description: string;
     price: number;
     brandId: number;
-    brandDatum: { name: string };
+    brandData: { id: number; name: string };
+}
+
+interface ProductProps {
+    list: productData[];
+    loading: boolean;
+    pagination: {
+        count: number;
+        offset: number;
+        limit: number;
+        filter: {
+            name: string;
+            price: string;
+        };
+    };
 }
 
 export function Home() {
-    const results: productData[] = useSelector(
-        (state: RootState) => state.products.list,
-    );
-    const pagination = useSelector(
-        (state: RootState) => state.products.pagination,
-    );
-
     const { formatMessage } = useIntl();
+    const { getProductRequest } = actions;
     const dispatch = useDispatch();
+
+    const { list, loading, pagination }: ProductProps = useSelector(
+        (state: RootState) => state.products,
+    );
 
     const [limit, setLimit] = useState(pagination.limit);
     const [offset, setOffset] = useState(pagination.offset);
-    const loading = useSelector((state: RootState) => state.products.loading);
     const [visibleForm, setVisibleForm] = useState(false);
     const [filter, setFilter] = useState(pagination.filter);
 
     useEffect(() => {
         if (!visibleForm) {
-            if (!results.length && offset) {
+            if (!list.length && offset) {
                 setOffset(0);
             }
             dispatch(fetchProductsRequested(offset, limit, filter));
         }
-    }, [dispatch, visibleForm, limit, offset, filter, results.length]);
+    }, [dispatch, visibleForm, limit, offset, filter, list.length]);
     return (
         <Box>
             {loading ? (
@@ -62,7 +74,7 @@ export function Home() {
 
                     <TableProduct
                         setFilter={setFilter}
-                        data={results}
+                        data={list}
                         setLimit={setLimit}
                         setOffset={setOffset}
                         pagination={pagination}
@@ -85,10 +97,12 @@ export function Home() {
                             })}
                         </Button>
 
-                        <FormProduct
-                            visibleForm={visibleForm}
-                            setVisibleForm={setVisibleForm}
-                        />
+                        {visibleForm && (
+                            <FormProduct
+                                visibleForm={visibleForm}
+                                setVisibleForm={setVisibleForm}
+                            />
+                        )}
                     </Box>
                 </>
             )}

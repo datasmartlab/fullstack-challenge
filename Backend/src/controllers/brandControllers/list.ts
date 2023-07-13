@@ -3,7 +3,7 @@ import { Brand } from '../../models/brand';
 import { Op } from 'sequelize';
 
 interface Filter {
-    name: string;
+    name?: string;
 }
 
 export const ListBrand = async (req: Request, res: Response) => {

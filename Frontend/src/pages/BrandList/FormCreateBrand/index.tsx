@@ -16,7 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Close } from '@mui/icons-material';
 import { useIntl } from '../../../translate/useTranslate';
 
-interface newBrandData {
+interface NewBrandData {
     name: string;
 }
 
@@ -47,7 +47,7 @@ export function FormCreateBrand({ setVisibleForm, visibleForm }: FormProps) {
         formState: { errors },
     } = newBrandForm;
 
-    async function handleCreateBrand(data: newBrandData) {
+    async function handleCreateBrand(data: NewBrandData) {
         try {
             setLoading(true);
             const response = await createBrand(data);

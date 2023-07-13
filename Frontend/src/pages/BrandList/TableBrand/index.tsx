@@ -14,7 +14,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { TableHeadCellStyled } from './style';
 import { useIntl } from '../../../translate/useTranslate';
-import { FilterTableBrand } from './filter';
+import { FilterTableBrand } from './Filter';
 import { Dispatch, SetStateAction } from 'react';
 
 interface tableBrandProps {
@@ -26,7 +26,7 @@ interface tableBrandProps {
     }[];
 }
 
-export function TableBrand({ data, setFilter, filter }: tableBrandProps) {
+export function TableBrand({ setFilter, filter, data }: tableBrandProps) {
     const { formatMessage } = useIntl();
     const navigator = useNavigate();
 
@@ -66,7 +66,7 @@ export function TableBrand({ data, setFilter, filter }: tableBrandProps) {
                                                 color="secondary"
                                                 onClick={() => {
                                                     navigator(
-                                                        `/infobrand/${item.id}`,
+                                                        `/brand/${item.id}`,
                                                     );
                                                 }}
                                             >
@@ -91,7 +91,7 @@ export function TableBrand({ data, setFilter, filter }: tableBrandProps) {
                                         }}
                                     >
                                         {formatMessage({
-                                            id: 'ListBrandNoBrand',
+                                            id: 'tableNoBrand',
                                         })}
                                     </Typography>
                                 </TableCell>

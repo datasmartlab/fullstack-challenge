@@ -1,8 +1,9 @@
 import { all } from 'redux-saga/effects';
-import BrandSaga from './brands/BrandsSaga';
-import ProductsSaga from './products/ProductsSaga';
+import brandSaga from './brands/saga';
+import productSaga from './products/saga';
+import translateSaga from './translate/saga';
 import { SagaIterator } from 'redux-saga';
 
 export default function* rootSaga(): SagaIterator<void> {
-    return yield all([BrandSaga, ProductsSaga]);
+    return yield all([brandSaga, productSaga, translateSaga]);
 }

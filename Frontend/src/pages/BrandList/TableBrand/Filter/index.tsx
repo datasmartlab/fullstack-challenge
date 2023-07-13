@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useIntl } from '../../../translate/useTranslate';
+import { useIntl } from '../../../../translate/useTranslate';
 
 interface TableProductFilterProps {
     setFilter: Dispatch<SetStateAction<string>>;
@@ -51,14 +51,14 @@ export function FilterTableBrand({
                     },
                 }}
                 label={formatMessage({
-                    id: 'ListBrandFilterNameLabel',
+                    id: 'filterBrandNameLabel',
                 })}
                 value={name}
                 onChange={(envent) => {
                     setName(envent.target.value);
                 }}
                 placeholder={formatMessage({
-                    id: 'ListBrandFilterNamePlaceholder',
+                    id: 'filterBrandNamePlaceholder',
                 })}
             />
             <Button
@@ -76,7 +76,7 @@ export function FilterTableBrand({
                 onClick={handleSeachProduct}
             >
                 {formatMessage({
-                    id: 'homeFilterButton',
+                    id: 'filterBrandButton',
                 })}
             </Button>
         </Box>

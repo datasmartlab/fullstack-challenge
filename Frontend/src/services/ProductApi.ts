@@ -5,7 +5,7 @@ interface productData {
     name: string;
     price: string;
     description: string;
-    brandId?: number | string;
+    brandId: number | string | null;
 }
 
 interface paginationData {

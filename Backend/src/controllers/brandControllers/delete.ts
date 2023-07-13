@@ -12,7 +12,7 @@ export const DeleteBrand = async (req: Request, res: Response) => {
         await result.destroy();
 
         res.json({
-            message: `A marca ${result.name}  foi deletada com sucesso`,
+            message: `A marca ${result.name} foi deletada com sucesso`,
         });
     } catch (error) {
         res.status(500).json(error);

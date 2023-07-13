@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     Button,
     Paper,
@@ -27,10 +26,10 @@ interface tableProductProps {
         price: number;
         description: string;
         brandId: number;
-        brandDatum: { name: string };
+        brandData: { name: string };
     }[];
-    setOffset: any;
-    setLimit: any;
+    setOffset: React.Dispatch<React.SetStateAction<number>>;
+    setLimit: React.Dispatch<React.SetStateAction<number>>;
     pagination: {
         offset: number;
         count: number;
@@ -111,8 +110,8 @@ export function TableProduct({
                                             component="th"
                                             scope="row"
                                         >
-                                            {item.brandDatum ? (
-                                                item.brandDatum.name
+                                            {item.brandData ? (
+                                                item.brandData.name
                                             ) : (
                                                 <span style={{ color: 'red' }}>
                                                     {formatMessage({
@@ -123,7 +122,8 @@ export function TableProduct({
                                         </TableCell>
 
                                         <TableCell width={70}>
-                                            R${item.price}
+                                            R$
+                                            {item.price}
                                         </TableCell>
                                         {minWidth800 ? (
                                             <TableCell width={540}>
@@ -152,7 +152,7 @@ export function TableProduct({
                                                 color="secondary"
                                                 onClick={() => {
                                                     navigator(
-                                                        `/infoproduct/${item.id}`,
+                                                        `/product/${item.id}`,
                                                     );
                                                 }}
                                             >
@@ -177,7 +177,7 @@ export function TableProduct({
                                         }}
                                     >
                                         {formatMessage({
-                                            id: 'homeNoProduct',
+                                            id: 'tableProductNoProduct',
                                         })}
                                     </Typography>
                                 </TableCell>
@@ -194,11 +194,11 @@ export function TableProduct({
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 rowsPerPage={pagination.limit}
                                 labelRowsPerPage={formatMessage({
-                                    id: 'tableProductPageLines',
+                                    id: 'tableProductPaginationPageLines',
                                 })}
                                 labelDisplayedRows={({ from, to, count }) => {
                                     return `${from}–${to} ${formatMessage({
-                                        id: 'tableProductOutOf',
+                                        id: 'tableProductPaginationOutOf',
                                     })} ${count}`;
                                 }}
                             />

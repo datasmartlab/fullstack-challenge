@@ -27,7 +27,7 @@ export default function DeleteDialog({
         onClose();
     };
 
-    function Confirm() {
+    function handleConfirm() {
         onClose();
         deleteBrand();
     }
@@ -41,11 +41,11 @@ export default function DeleteDialog({
                 onClose={handleClose}
             >
                 <DialogTitle align="center">
-                    {formatMessage({ id: 'DeleteDialogBrandTitle' })}
+                    {formatMessage({ id: 'deleteDialogBrandTitle' })}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {formatMessage({ id: 'DeleteDialogBrand' })}{' '}
+                        {formatMessage({ id: 'deleteDialogBrandContent' })}{' '}
                         <span style={{ color: 'red' }}>{name}</span>?
                     </DialogContentText>
                 </DialogContent>
@@ -56,16 +56,16 @@ export default function DeleteDialog({
                         onClick={handleClose}
                         color="error"
                     >
-                        {formatMessage({ id: 'DeleteDialogBrandButtonCancel' })}
+                        {formatMessage({ id: 'deleteDialogBrandButtonCancel' })}
                     </Button>
                     <Button
                         fullWidth
                         variant="contained"
-                        onClick={Confirm}
+                        onClick={handleConfirm}
                         color="secondary"
                     >
                         {formatMessage({
-                            id: 'DeleteDialogBrandButtonConfirm',
+                            id: 'deleteDialogBrandButtonConfirm',
                         })}
                     </Button>
                 </DialogActions>

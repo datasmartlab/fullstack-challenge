@@ -43,11 +43,11 @@ export default function DeleteDialog({
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle align="center">
-                    {formatMessage({ id: 'DeleteDialogProductTitle' })}
+                    {formatMessage({ id: 'deleteDialogProductTitle' })}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {formatMessage({ id: 'DeleteDialogProduct' })}{' '}
+                        {formatMessage({ id: 'deleteDialogProductContent' })}{' '}
                         <span style={{ color: 'red' }}>{name}</span>?
                     </DialogContentText>
                 </DialogContent>
@@ -59,7 +59,7 @@ export default function DeleteDialog({
                         color="error"
                     >
                         {formatMessage({
-                            id: 'DeleteDialogProductButtonCancel',
+                            id: 'deleteDialogProductButtonCancel',
                         })}
                     </Button>
                     <Button
@@ -69,7 +69,7 @@ export default function DeleteDialog({
                         color="secondary"
                     >
                         {formatMessage({
-                            id: 'DeleteDialogProductButtonConfirm',
+                            id: 'deleteDialogProductButtonConfirm',
                         })}
                     </Button>
                 </DialogActions>

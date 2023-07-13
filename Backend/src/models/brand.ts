@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../migrations/mysql';
+import { Product } from './product';
 
 export interface brandData extends Model {
     id: number;
@@ -23,5 +24,4 @@ export const Brand = sequelize.define<brandData>(
         timestamps: false,
     },
 );
-
-// sequelize.sync();
+sequelize.sync();

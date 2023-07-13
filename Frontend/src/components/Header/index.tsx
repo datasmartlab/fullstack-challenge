@@ -20,7 +20,9 @@ import { useState, useMemo, useEffect } from 'react';
 import { Menu } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
 import flagBrazil from '../../images/flags/brazil.png';
-import flagEua from '../../images/flags/eua.png';
+import flagUSA from '../../images/flags/eua.png';
+import { changeLanguageRequest } from '../../redux/translate/actions';
+import { useDispatch } from 'react-redux';
 
 interface HeaderProps {
     setLanguage: (language: 'pt' | 'en') => void;
@@ -29,6 +31,11 @@ interface HeaderProps {
 
 export function Header({ setLanguage, language }: HeaderProps) {
     const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(changeLanguageRequest(language));
+    }, [language, dispatch]);
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -81,7 +88,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
                         sx={{
                             flexGrow: 1,
                             textAlign: 'center',
-                            paddingLeft: '2.1875rem',
+                            paddingLeft: '4rem',
                         }}
                     >
                         {formatMessage({ id: 'headerTitle' })}
@@ -89,7 +96,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
 
                     <FormControl color="info" sx={{ marginY: '0.7rem' }}>
                         <InputLabel sx={{ color: grey[50] }}>
-                            {formatMessage({ id: 'headerLanguage' })}
+                            {formatMessage({ id: 'selectLanguageTitle' })}
                         </InputLabel>
 
                         <Select
@@ -100,7 +107,8 @@ export function Header({ setLanguage, language }: HeaderProps) {
                             sx={{ color: grey[50] }}
                         >
                             <MenuItem value={'pt'}>
-                                Pt-Br{' '}
+                                {formatMessage({ id: 'selectLanguagePtBr' }) +
+                                    ' '}
                                 <img
                                     style={{ borderRadius: 1 }}
                                     src={flagBrazil}
@@ -109,9 +117,10 @@ export function Header({ setLanguage, language }: HeaderProps) {
                             </MenuItem>
 
                             <MenuItem value={'en'}>
-                                En{' '}
+                                {formatMessage({ id: 'selectLanguageEnUSA' }) +
+                                    ' '}
                                 <img
-                                    src={flagEua}
+                                    src={flagUSA}
                                     style={{ borderRadius: 1 }}
                                     width={'20rem'}
                                 />

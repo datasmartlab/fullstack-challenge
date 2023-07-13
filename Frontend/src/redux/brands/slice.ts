@@ -21,7 +21,7 @@ export const sliceBrand = createSlice({
     name: 'brands',
     initialState,
     reducers: {
-        getBrandRequest: (state, action) => {
+        getBrandRequest: (state) => {
             state.loading = true;
         },
         getBrandSuccess: (state, action) => {
@@ -29,13 +29,12 @@ export const sliceBrand = createSlice({
 
             state.loading = false;
         },
-        getBrandFailure: (state, action) => {
+        getBrandFailure: (state) => {
             state.loading = false;
         },
     },
 });
 
-export const { getBrandRequest, getBrandSuccess, getBrandFailure } =
-    sliceBrand.actions;
+export const { actions } = sliceBrand;
 
 export default sliceBrand.reducer;

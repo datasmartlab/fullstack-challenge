@@ -11,26 +11,31 @@ interface BrandData {
     id: number;
     name: string;
 }
+interface BrandProps {
+    list: BrandData[];
+    loading: boolean;
+    filter: string;
+}
 
 export function BrandList() {
-    const results: BrandData[] = useSelector(
-        (state: RootState) => state.brands.list,
-    );
-    const loading = useSelector((state: RootState) => state.brands.loading);
-
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
-    const [visibleForm, setVisibleForm] = useState(false);
+    const { list, loading }: BrandProps = useSelector(
+        (state: RootState) => state.brands,
+    );
     const [filter, setFilter] = useState(
         useSelector((state: RootState) => state.brands.filter),
     );
+
+    const [visibleForm, setVisibleForm] = useState(false);
 
     useEffect(() => {
         if (!visibleForm) {
             dispatch(fetchBrandsRequested(filter));
         }
     }, [dispatch, visibleForm, filter]);
+
     return (
         <Box>
             {loading ? (
@@ -47,13 +52,13 @@ export function BrandList() {
             ) : (
                 <>
                     <Typography variant="h4" align="center">
-                        {formatMessage({ id: 'ListBrandTitle' })}
+                        {formatMessage({ id: 'listBrandTitle' })}
                     </Typography>
 
                     <TableBrand
                         filter={filter}
                         setFilter={setFilter}
-                        data={results}
+                        data={list}
                     />
 
                     <Box sx={{ height: '3rem' }}>
@@ -69,14 +74,16 @@ export function BrandList() {
                             disabled={visibleForm}
                         >
                             {formatMessage({
-                                id: 'ListBrandCreateButton',
+                                id: 'listBrandCreateButton',
                             })}
                         </Button>
 
-                        <FormCreateBrand
-                            visibleForm={visibleForm}
-                            setVisibleForm={setVisibleForm}
-                        />
+                        {visibleForm && (
+                            <FormCreateBrand
+                                visibleForm={visibleForm}
+                                setVisibleForm={setVisibleForm}
+                            />
+                        )}
                     </Box>
                 </>
             )}

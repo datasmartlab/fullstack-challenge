@@ -1,23 +1,22 @@
 import { put, takeLatest, call, all } from 'redux-saga/effects';
 import { FETCH_PRODUCTS_REQUESTED } from './actions';
-import {
-    getProductRequest,
-    getProductFailure,
-    getProductSuccess,
-} from './ProductsSlice'; // Importe as actions do slice de produtos
-
 import { listProducts } from '../../services/ProductApi';
+import { actions } from './slice';
+
+interface Product {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    brandId: number;
+    brandData: { id: number; name: string };
+}
 
 interface ProductData {
     data: {
-        id: number;
-        name: string;
-        description: string;
-        price: number;
-        brandId: number;
-        brandDatum: { name: string };
-    }[];
-    count?: number;
+        data: Product[];
+        count: number;
+    };
 }
 
 interface FetchProductsAction {
@@ -35,22 +34,27 @@ interface FetchProductsAction {
 interface Data {
     list: ProductData;
     pagination: {
+        count: number;
         offset: number;
         limit: number;
+        filter: {
+            name: string;
+            price: string;
+        };
     };
 }
 
 function* fetchProducts({ payload }: FetchProductsAction) {
     try {
-        yield put(getProductRequest(payload));
         const product: ProductData = yield call(listProducts, payload);
+        const pagination = { ...payload, count: product.data.count };
         const Data: Data = {
             list: product,
-            pagination: payload,
+            pagination,
         };
-        yield put(getProductSuccess(Data));
+        yield put(actions.getProductSuccess(Data));
     } catch (error) {
-        yield put(getProductFailure(error));
+        yield put(actions.getProductFailure());
     }
 }
 

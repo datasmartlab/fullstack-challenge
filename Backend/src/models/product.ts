@@ -24,7 +24,7 @@ export const Product = sequelize.define<ProductData>(
             type: DataTypes.STRING,
         },
         price: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.DECIMAL(18, 2),
         },
         brandId: {
             type: DataTypes.INTEGER,
@@ -36,6 +36,10 @@ export const Product = sequelize.define<ProductData>(
         timestamps: false,
     },
 );
-Product.belongsTo(Brand, { foreignKey: 'brandId', onDelete: 'SET NULL' });
+Product.belongsTo(Brand, {
+    as: 'brandData',
+    foreignKey: 'brandId',
+    onDelete: 'SET NULL',
+});
 
-// sequelize.sync();
+sequelize.sync();

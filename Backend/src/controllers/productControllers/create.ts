@@ -1,29 +1,13 @@
 import { Request, Response } from 'express';
 import { Product } from '../../models/product';
-import { ProductSchema } from '../../validations/product';
-
-interface ProductData {
-    name: string;
-    price: number;
-    description?: string;
-    brandId?: number;
-}
 
 export const CreateProduct = async (req: Request, res: Response) => {
     try {
-        const productData: ProductData = {
-            name: req.body.name,
-            price: req.body.price,
-            description: req.body.description,
-            brandId: req.body.brandId,
-        };
-        await ProductSchema.validate(productData);
-
         const product = Product.build({
-            name: productData.name,
-            price: productData.price,
-            description: productData.description || '',
-            brandId: productData.brandId || null,
+            name: req.body.name,
+            price: parseFloat(req.body.price),
+            description: req.body.description || '',
+            brandId: req.body.brandId || null,
         });
 
         product.save();

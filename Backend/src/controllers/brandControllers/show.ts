@@ -6,6 +6,7 @@ export const ShowBrand = async (req: Request, res: Response) => {
         const id: number = parseInt(req.params.id);
 
         const result = await Brand.findOne({ where: { id } });
+
         if (!result) {
             return res
                 .status(404)

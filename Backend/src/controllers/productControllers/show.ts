@@ -7,6 +7,10 @@ export const ShowProduct = async (req: Request, res: Response) => {
 
         const result = await Product.findOne({
             where: { id },
+            include: {
+                association: 'brandData',
+                attributes: ['name', 'id'],
+            },
         });
 
         if (!result) {

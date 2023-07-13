@@ -1,56 +1,40 @@
 import { Request, Response } from 'express';
 import { Product } from '../../models/product';
-import { Brand } from '../../models/brand';
 import { Op } from 'sequelize';
 
 interface Filter {
     name?: string;
-    price?: number;
+    price?: string;
 }
 
 export const ListProduct = async (req: Request, res: Response) => {
     try {
-        const filter: Filter = req.query.filter as unknown as Filter;
+        const filter: Filter = (req.query.filter as Filter) || null;
         const limit = parseInt(req.query.limit as string);
         const offset = parseInt(req.query.offset as string);
 
-        if (!filter) {
-            const results = await Product.findAndCountAll({
-                offset,
-                limit,
-                include: {
-                    model: Brand,
-                    attributes: ['name'],
-                },
-            });
-            return res.json({ data: results.rows, count: results.count });
+        let where: { [Op.and]: any[] } = {
+            [Op.and]: [],
+        };
+        if (filter) {
+            if (filter.name) {
+                where[Op.and].push({ name: { [Op.like]: `${filter.name}%` } });
+            }
+            if (filter.price) {
+                where[Op.and].push({
+                    price: filter.price,
+                });
+            }
         }
-
-        let where = {};
-
-        if (filter.name) {
-            where = { name: { [Op.like]: `${filter.name}%` } };
-        }
-        if (filter.price) {
-            where = { price: filter.price };
-        }
-        if (filter.name && filter.price) {
-            where = {
-                name: { [Op.like]: `${filter.name}%` },
-                price: filter.price,
-            };
-        }
-
         const results = await Product.findAndCountAll({
             offset,
             limit,
             where,
             include: {
-                model: Brand,
-                attributes: ['name'],
+                association: 'brandData',
+                attributes: ['name', 'id'],
             },
         });
-
         return res.json({ data: results.rows, count: results.count });
     } catch (error) {
         res.status(500).json(error);

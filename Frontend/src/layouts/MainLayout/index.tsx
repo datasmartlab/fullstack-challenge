@@ -8,15 +8,13 @@ import lightTheme from '../../styles/Themes/Light';
 import { IntlProvider } from 'react-intl';
 import locales from '../../translate/index';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export function DefaultLayout() {
-    const [language, setLanguage] = useState<'pt' | 'en'>(() => {
-        const savedLanguage = localStorage.getItem('language');
-
-        return savedLanguage === 'pt' || savedLanguage === 'en'
-            ? savedLanguage
-            : 'pt';
-    });
+    const [language, setLanguage] = useState(
+        useSelector((state: RootState) => state.traslate.language),
+    );
 
     const locale = locales[language];
     return (
@@ -39,7 +37,7 @@ export function DefaultLayout() {
                         backgroundColor: lightTheme.palette.background.paper,
                     }}
                 >
-                    <Header setLanguage={setLanguage} language={language} />
+                    <Header language={language} setLanguage={setLanguage} />
                     <Container
                         maxWidth={'lg'}
                         sx={{

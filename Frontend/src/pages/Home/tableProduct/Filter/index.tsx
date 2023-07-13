@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useIntl } from '../../../translate/useTranslate';
+import { useIntl } from '../../../../translate/useTranslate';
 
 interface TableProductFilterProps {
     setFilter: Dispatch<SetStateAction<{ name: string; price: string }>>;
@@ -23,7 +23,9 @@ export function TableFilter({
     const [price, setPrice] = useState(pagination.filter.price);
 
     function handleSeachProduct() {
-        setFilter({ name, price });
+        const formatedPrice = price.replace(',', '.');
+        console.log(`${price} = ${formatedPrice}`);
+        setFilter({ name, price: formatedPrice });
     }
 
     function handleFormClean() {
@@ -59,14 +61,14 @@ export function TableFilter({
                     },
                 }}
                 label={formatMessage({
-                    id: 'homeFilterNameLabel',
+                    id: 'filterProductNameLabel',
                 })}
                 value={name}
                 onChange={(envent) => {
                     setName(envent.target.value);
                 }}
                 placeholder={formatMessage({
-                    id: 'homeFilterNamePlaceholder',
+                    id: 'filterProductNamePlaceholder',
                 })}
             />
             <TextField
@@ -88,7 +90,7 @@ export function TableFilter({
                     },
                 }}
                 label={formatMessage({
-                    id: 'homeFilterPriceLabel',
+                    id: 'filterProductPriceLabel',
                 })}
                 value={price}
                 onChange={(event) => {
@@ -98,7 +100,7 @@ export function TableFilter({
                     }
                 }}
                 placeholder={formatMessage({
-                    id: 'homeFilterPricePlaceholder',
+                    id: 'filterProductPricePlaceholder',
                 })}
             />
             <Button
@@ -116,7 +118,7 @@ export function TableFilter({
                 onClick={handleSeachProduct}
             >
                 {formatMessage({
-                    id: 'homeFilterButton',
+                    id: 'filterProductButton',
                 })}
             </Button>
         </Box>

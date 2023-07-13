@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Brand } from '../../models/brand';
-import { BrandSchema } from '../../validations/brand';
 
 export interface BrandData {
     name: string;
@@ -11,8 +10,6 @@ export const CreateBrand = async (req: Request, res: Response) => {
         const brandData: BrandData = {
             name: req.body.name,
         };
-
-        await BrandSchema.validate(brandData);
 
         const [result, created] = await Brand.findOrCreate({
             where: { name: brandData.name },

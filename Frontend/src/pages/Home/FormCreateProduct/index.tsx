@@ -29,12 +29,12 @@ interface BrandData {
     name: string;
 }
 
-interface newProductData {
+interface NewProductData {
     id?: number;
     name: string;
     price: string;
     description: string;
-    brandId: number | string;
+    brandId: number | string | null;
 }
 
 interface FormProps {
@@ -43,12 +43,13 @@ interface FormProps {
 }
 
 export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
+    const dispatch = useDispatch();
+    const { formatMessage } = useIntl();
+
     const brands: BrandData[] = useSelector(
         (state: RootState) => state.brands.list,
     );
 
-    const dispatch = useDispatch();
-    const { formatMessage } = useIntl();
     const [loading, setLoading] = useState(false);
     const [visibleFormBrand, setVisibleFormBrand] = useState(false);
 
@@ -63,7 +64,7 @@ export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
                 formatMessage({ id: 'formProductValidationPrice' }),
             ),
         description: zod.string(),
-        brandId: zod.string(),
+        brandId: zod.union([zod.number(), zod.string(), zod.null()]),
     });
 
     type Product = zod.infer<typeof newProductValidationSchema>;
@@ -77,28 +78,26 @@ export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
         resolver: zodResolver(newProductValidationSchema),
     });
 
-    async function handleCreateProduct(data: newProductData) {
+    async function handleCreateProduct(data: NewProductData) {
         try {
             setLoading(true);
+
             const response = await createProduct(data);
-            if (response.status === 201) {
-                setVisibleForm(false);
-                toast.success(response.data.message);
-            }
+
+            setVisibleForm(false);
+            toast.success(response.data.message);
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                if (error.response?.status === 409) {
-                    toast.error(error.response.data.message);
-                }
+            if (axios.isAxiosError(error) && error.response) {
+                toast.error(error.response.data.message);
             }
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
 
     useEffect(() => {
         dispatch(fetchBrandsRequested());
     }, [visibleFormBrand, dispatch]);
-
     return (
         <>
             <Dialog
@@ -163,7 +162,7 @@ export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
                                 })}
                             </InputLabel>
                             <Controller
-                                defaultValue=""
+                                defaultValue={''}
                                 name="brandId"
                                 control={control}
                                 render={({ field }) => (
@@ -172,11 +171,9 @@ export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
                                         label={formatMessage({
                                             id: 'formProductBrandLabel',
                                         })}
-                                        onChange={(event) =>
-                                            field.onChange(
-                                                event.target.value.toString(),
-                                            )
-                                        }
+                                        onChange={(event) => {
+                                            field.onChange(event.target.value);
+                                        }}
                                     >
                                         {brands.map((brand) => (
                                             <MenuItem
@@ -264,10 +261,12 @@ export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
                     </form>
                 </DialogContent>
             </Dialog>
-            <FormCreateBrand
-                visibleForm={visibleFormBrand}
-                setVisibleForm={setVisibleFormBrand}
-            />
+            {visibleForm && (
+                <FormCreateBrand
+                    visibleForm={visibleFormBrand}
+                    setVisibleForm={setVisibleFormBrand}
+                />
+            )}
         </>
     );
 }

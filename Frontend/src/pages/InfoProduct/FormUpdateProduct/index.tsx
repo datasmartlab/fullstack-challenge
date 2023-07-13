@@ -27,6 +27,7 @@ interface productData {
     price: string;
     description: string;
     brandId: number | string;
+    brandData?: { id: number; name: string };
 }
 interface BrandData {
     id?: number | string;
@@ -49,6 +50,12 @@ export function FormUpdateProduct({
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
 
+    const brands: BrandData[] = useSelector(
+        (state: RootState) => state.brands.list,
+    );
+
+    const [visibleFormBrand, setVisibleFormBrand] = useState(false);
+
     const ProductValidationSchema = zod.object({
         id: zod.number(),
         name: zod
@@ -66,10 +73,6 @@ export function FormUpdateProduct({
 
     type Product = zod.infer<typeof ProductValidationSchema>;
 
-    const brands: BrandData[] = useSelector(
-        (state: RootState) => state.brands.list,
-    );
-
     const newProductForm = useForm<Product>({
         resolver: zodResolver(ProductValidationSchema),
     });
@@ -79,12 +82,6 @@ export function FormUpdateProduct({
         formState: { errors },
         control,
     } = newProductForm;
-
-    const [visibleFormBrand, setVisibleFormBrand] = useState(false);
-
-    useEffect(() => {
-        dispatch(fetchBrandsRequested());
-    }, [visibleFormBrand, dispatch]);
 
     async function handleUpdateProduct(data: productData) {
         try {
@@ -100,6 +97,10 @@ export function FormUpdateProduct({
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        dispatch(fetchBrandsRequested());
+    }, [visibleFormBrand, dispatch]);
 
     return (
         <Grid item sx={{ marginTop: '2rem' }} lg={12}>

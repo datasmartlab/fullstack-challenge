@@ -9,25 +9,29 @@ import { DeleteBrand } from '../controllers/brandControllers/delete';
 import { ListBrand } from '../controllers/brandControllers/list';
 import { ShowBrand } from '../controllers/brandControllers/show';
 import { UpdateBrand } from '../controllers/brandControllers/update';
-
+import ValidationBrand from '../validations/brand';
+import ValidationProduct from '../validations/product';
 const mainRoutes = Router();
 
 //rotas das Marcas
-mainRoutes.route('/brand').post(CreateBrand).get(ListBrand);
+mainRoutes.route('/brand').post(ValidationBrand, CreateBrand).get(ListBrand);
 
 mainRoutes
     .route('/brand/:id')
     .get(ShowBrand)
     .delete(DeleteBrand)
-    .put(UpdateBrand);
+    .put(ValidationBrand, UpdateBrand);
 
 // rotas do produto
-mainRoutes.route('/product').get(ListProduct).post(CreateProduct);
+mainRoutes
+    .route('/product')
+    .get(ListProduct)
+    .post(ValidationProduct, CreateProduct);
 
 mainRoutes
     .route('/product/:id')
     .get(ShowProduct)
     .delete(DeleteProduct)
-    .put(UpdateProduct);
+    .put(ValidationProduct, UpdateProduct);
 
 export default mainRoutes;
