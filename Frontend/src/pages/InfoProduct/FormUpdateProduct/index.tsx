@@ -19,7 +19,7 @@ import { RootState } from '../../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { FormCreateBrand } from '../../BrandList/FormCreateBrand';
-import { fetchBrandsRequested } from '../../../redux/brands/actions';
+import { actions } from '../../../redux/brands/slice';
 
 interface productData {
     id: number;
@@ -47,6 +47,7 @@ export function FormUpdateProduct({
     product,
     loading,
 }: formUpdateProductProps) {
+    const { getBrandRequest } = actions;
     const dispatch = useDispatch();
     const { formatMessage } = useIntl();
 
@@ -99,8 +100,8 @@ export function FormUpdateProduct({
     }
 
     useEffect(() => {
-        dispatch(fetchBrandsRequested());
-    }, [visibleFormBrand, dispatch]);
+        dispatch(getBrandRequest());
+    }, [visibleFormBrand, dispatch, getBrandRequest]);
 
     return (
         <Grid item sx={{ marginTop: '2rem' }} lg={12}>

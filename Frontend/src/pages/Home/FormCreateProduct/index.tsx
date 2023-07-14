@@ -22,7 +22,7 @@ import { useIntl } from '../../../translate/useTranslate';
 import { RootState } from '../../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormCreateBrand } from '../../BrandList/FormCreateBrand';
-import { fetchBrandsRequested } from '../../../redux/brands/actions';
+import { actions } from '../../../redux/brands/slice';
 
 interface BrandData {
     id: number;
@@ -43,8 +43,9 @@ interface FormProps {
 }
 
 export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
-    const dispatch = useDispatch();
+    const { getBrandRequest } = actions;
     const { formatMessage } = useIntl();
+    const dispatch = useDispatch();
 
     const brands: BrandData[] = useSelector(
         (state: RootState) => state.brands.list,
@@ -96,8 +97,8 @@ export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
     }
 
     useEffect(() => {
-        dispatch(fetchBrandsRequested());
-    }, [visibleFormBrand, dispatch]);
+        dispatch(getBrandRequest());
+    }, [visibleFormBrand, dispatch, getBrandRequest]);
     return (
         <>
             <Dialog

@@ -10,7 +10,7 @@ interface Product {
 }
 
 interface Data {
-    list: { data: { data: Product[]; count: number } };
+    list: { data: { data: Product[] } };
     pagination: {
         count: number;
         offset: number;
@@ -53,8 +53,17 @@ export const sliceProduct = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        getProductRequest: (state) => {
-            state.loading = true;
+        getProductRequest: {
+            reducer: (state) => {
+                state.loading = true;
+            },
+            prepare: (
+                offset: number,
+                limit: number,
+                filter: { name: string; price: string },
+            ) => {
+                return { payload: { offset, limit, filter } };
+            },
         },
         getProductSuccess: {
             reducer: (

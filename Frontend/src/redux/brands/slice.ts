@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Brand {
     id: number;
@@ -21,13 +21,26 @@ export const sliceBrand = createSlice({
     name: 'brands',
     initialState,
     reducers: {
-        getBrandRequest: (state) => {
-            state.loading = true;
+        getBrandRequest: {
+            reducer: (state) => {
+                state.loading = true;
+            },
+            prepare: (filter?: string) => {
+                return { payload: { filter } };
+            },
         },
-        getBrandSuccess: (state, action) => {
-            state.list = action.payload.data;
-
-            state.loading = false;
+        getBrandSuccess: {
+            reducer: (state, action: PayloadAction<{ brand: Brand[] }>) => {
+                state.list = action.payload.brand;
+                state.loading = false;
+            },
+            prepare: (brand: Brand[]) => {
+                return {
+                    payload: {
+                        brand,
+                    },
+                };
+            },
         },
         getBrandFailure: (state) => {
             state.loading = false;

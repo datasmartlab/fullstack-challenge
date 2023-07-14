@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+const savedLanguage = localStorage.getItem('language');
+
+const language =
+    savedLanguage === 'pt' || savedLanguage === 'en' ? savedLanguage : 'pt';
+
 interface productData {
     id?: number;
     name: string;
@@ -21,6 +26,9 @@ const baseURL = import.meta.env.VITE_LINK;
 
 const api = axios.create({
     baseURL: baseURL,
+    params: {
+        language,
+    },
 });
 
 export async function listProducts(pagination: paginationData) {

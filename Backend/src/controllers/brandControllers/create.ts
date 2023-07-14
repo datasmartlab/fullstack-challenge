@@ -17,12 +17,12 @@ export const CreateBrand = async (req: Request, res: Response) => {
 
         if (!created) {
             return res.status(409).json({
-                message: `A marca com o nome ${brandData.name} já foi cadastrado `,
+                message: `A marca com o nome ${brandData.name} já foi cadastrada`,
             });
         }
 
         res.status(201).json({
-            message: 'A marca foi cadastrada com sucesso',
+            message: `A marca ${brandData.name} foi cadastrada com sucesso`,
             data: result,
         });
     } catch (error) {

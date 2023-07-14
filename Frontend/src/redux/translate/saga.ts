@@ -1,22 +1,16 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
-import { CHANGE_LANGUAGE_REQUEST } from './actions';
 import { actions } from './slice';
 
 interface ChangeLanguageAction {
-    type: typeof CHANGE_LANGUAGE_REQUEST;
+    type: typeof actions.changeLanguageRequest.type;
     payload: {
         language: 'pt' | 'en';
     };
 }
 
 function* changeLanguage({ payload }: ChangeLanguageAction) {
-    const {
-        changeLanguageFailure,
-        changeLanguageSuccess,
-        changeLanguageRequest,
-    } = actions;
+    const { changeLanguageFailure, changeLanguageSuccess } = actions;
     try {
-        yield put(changeLanguageRequest());
         yield put(changeLanguageSuccess(payload.language));
         localStorage.setItem('language', payload.language);
     } catch (error) {
@@ -24,4 +18,4 @@ function* changeLanguage({ payload }: ChangeLanguageAction) {
     }
 }
 
-export default all([takeLatest(CHANGE_LANGUAGE_REQUEST, changeLanguage)]);
+export default all([takeLatest(actions.changeLanguageRequest, changeLanguage)]);

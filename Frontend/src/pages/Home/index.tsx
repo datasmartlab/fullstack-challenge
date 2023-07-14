@@ -5,7 +5,6 @@ import { RootState } from '../../redux/store';
 import { FormProduct } from './FormCreateProduct';
 import { TableProduct } from './TableProduct';
 import { useIntl } from '../../translate/useTranslate';
-import { fetchProductsRequested } from '../../redux/products/actions';
 import { actions } from '../../redux/products/slice';
 
 interface productData {
@@ -44,15 +43,22 @@ export function Home() {
     const [offset, setOffset] = useState(pagination.offset);
     const [visibleForm, setVisibleForm] = useState(false);
     const [filter, setFilter] = useState(pagination.filter);
-
     useEffect(() => {
         if (!visibleForm) {
             if (!list.length && offset) {
                 setOffset(0);
             }
-            dispatch(fetchProductsRequested(offset, limit, filter));
+            dispatch(getProductRequest(offset, limit, filter));
         }
-    }, [dispatch, visibleForm, limit, offset, filter, list.length]);
+    }, [
+        dispatch,
+        visibleForm,
+        limit,
+        offset,
+        filter,
+        list.length,
+        getProductRequest,
+    ]);
     return (
         <Box>
             {loading ? (

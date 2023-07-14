@@ -1,29 +1,26 @@
 import { put, takeLatest, call, all } from 'redux-saga/effects';
-import { FETCH_BRANDS_REQUESTED } from './actions';
 import { actions } from './slice';
 import { listBrands } from '../../services/BrandApi';
 
 interface BrandData {
-    data: {
-        id: number;
-        name: string;
-    }[];
-    count?: number;
+    id: number;
+    name: string;
 }
 interface FetchProductsAction {
-    type: typeof FETCH_BRANDS_REQUESTED;
+    type: typeof actions.getBrandRequest;
     payload: {
         filter: string;
     };
 }
 
 function* fetchBrands({ payload }: FetchProductsAction) {
+    const { getBrandFailure, getBrandSuccess } = actions;
     try {
-        const brand: BrandData = yield call(listBrands, payload.filter);
-        yield put(actions.getBrandSuccess(brand));
+        const brand: BrandData[] = yield call(listBrands, payload.filter);
+        yield put(getBrandSuccess(brand));
     } catch (error) {
-        yield put(actions.getBrandFailure());
+        yield put(getBrandFailure());
     }
 }
 
-export default all([takeLatest(FETCH_BRANDS_REQUESTED, fetchBrands)]);
+export default all([takeLatest('brands/getBrandRequest', fetchBrands)]);

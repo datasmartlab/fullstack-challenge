@@ -1,5 +1,4 @@
 import { put, takeLatest, call, all } from 'redux-saga/effects';
-import { FETCH_PRODUCTS_REQUESTED } from './actions';
 import { listProducts } from '../../services/ProductApi';
 import { actions } from './slice';
 
@@ -20,13 +19,13 @@ interface ProductData {
 }
 
 interface FetchProductsAction {
-    type: typeof FETCH_PRODUCTS_REQUESTED;
+    type: typeof actions.getProductRequest;
     payload: {
         offset: number;
         limit: number;
         filter: {
-            name: string;
-            price: string;
+            name: string | '';
+            price: string | '';
         };
     };
 }
@@ -38,8 +37,8 @@ interface Data {
         offset: number;
         limit: number;
         filter: {
-            name: string;
-            price: string;
+            name: string | '';
+            price: string | '';
         };
     };
 }
@@ -54,8 +53,9 @@ function* fetchProducts({ payload }: FetchProductsAction) {
         };
         yield put(actions.getProductSuccess(Data));
     } catch (error) {
+        console.log(error);
         yield put(actions.getProductFailure());
     }
 }
 
-export default all([takeLatest(FETCH_PRODUCTS_REQUESTED, fetchProducts)]);
+export default all([takeLatest('products/getProductRequest', fetchProducts)]);

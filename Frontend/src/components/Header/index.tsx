@@ -21,7 +21,7 @@ import { Menu } from '@mui/icons-material';
 import { grey } from '@mui/material/colors';
 import flagBrazil from '../../images/flags/brazil.png';
 import flagUSA from '../../images/flags/eua.png';
-import { changeLanguageRequest } from '../../redux/translate/actions';
+import { actions } from '../../redux/translate/slice';
 import { useDispatch } from 'react-redux';
 
 interface HeaderProps {
@@ -31,11 +31,12 @@ interface HeaderProps {
 
 export function Header({ setLanguage, language }: HeaderProps) {
     const { formatMessage } = useIntl();
+    const { changeLanguageRequest } = actions;
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(changeLanguageRequest(language));
-    }, [language, dispatch]);
+    }, [language, dispatch, changeLanguageRequest]);
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { Product } from '../../models/product';
 import { Op } from 'sequelize';
-
 interface Filter {
     name?: string;
     price?: string;
@@ -11,8 +10,8 @@ export const ListProduct = async (req: Request, res: Response) => {
     try {
         const filter: Filter = (req.query.filter as Filter) || null;
         const limit = parseInt(req.query.limit as string);
+        const language = req.query.translate;
         const offset = parseInt(req.query.offset as string);
-
         let where: { [Op.and]: any[] } = {
             [Op.and]: [],
         };

@@ -1,11 +1,11 @@
 import { Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBrandsRequested } from '../../redux/brands/actions';
 import { RootState } from '../../redux/store';
 import { FormCreateBrand } from './FormCreateBrand';
 import { TableBrand } from './TableBrand';
 import { useIntl } from '../../translate/useTranslate';
+import { actions } from '../../redux/brands/slice';
 
 interface BrandData {
     id: number;
@@ -18,6 +18,7 @@ interface BrandProps {
 }
 
 export function BrandList() {
+    const { getBrandRequest } = actions;
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
 
@@ -32,9 +33,9 @@ export function BrandList() {
 
     useEffect(() => {
         if (!visibleForm) {
-            dispatch(fetchBrandsRequested(filter));
+            dispatch(getBrandRequest(filter));
         }
-    }, [dispatch, visibleForm, filter]);
+    }, [dispatch, visibleForm, filter, getBrandRequest]);
 
     return (
         <Box>
