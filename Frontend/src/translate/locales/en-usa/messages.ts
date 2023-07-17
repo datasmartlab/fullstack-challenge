@@ -27,7 +27,7 @@ const messagesEnglish = {
     tableProductDescription: 'Description',
     tableProductAction: 'Action',
     tableProductButtonInfoProduct: 'Show product',
-    tableProductPaginationPageLines: 'Lines per page',
+    tableProductPaginationLimit: 'Limit',
     tableProductPaginationOutOf: 'out of',
 
     tableProductNoDescription: 'Without description',

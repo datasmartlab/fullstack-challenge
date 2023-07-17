@@ -4,7 +4,7 @@ import { GlobalStyles } from '@mui/styled-engine-sc';
 import { Alert } from '../../components/Alert';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet } from 'react-router-dom';
-import lightTheme from '../../styles/Themes/Light';
+import theme from '../../styles/Themes/theme';
 import { IntlProvider } from 'react-intl';
 import locales from '../../translate/index';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ export function DefaultLayout() {
     const locale = locales[language];
     return (
         <IntlProvider messages={locale.message} locale={locale.locale}>
-            <ThemeProvider theme={lightTheme}>
+            <ThemeProvider theme={theme}>
                 <Alert />
                 <GlobalStyles
                     styles={{
@@ -34,15 +34,14 @@ export function DefaultLayout() {
                 />
                 <Box
                     sx={{
-                        backgroundColor: lightTheme.palette.background.paper,
+                        backgroundColor: theme.palette.background.paper,
                     }}
                 >
                     <Header language={language} setLanguage={setLanguage} />
                     <Container
                         maxWidth={'lg'}
                         sx={{
-                            backgroundColor:
-                                lightTheme.palette.background.default,
+                            backgroundColor: theme.palette.background.default,
                             minHeight: '100vh',
                         }}
                     >

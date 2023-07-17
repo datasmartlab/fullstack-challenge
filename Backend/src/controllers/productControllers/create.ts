@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import { Product } from '../../models/product';
+import locales from '../../translate/locales/locales';
 
 export const CreateProduct = async (req: Request, res: Response) => {
     try {
+        const language = req.query.language as 'pt' | 'en';
+        const messages = locales[language].message;
+
         const product = Product.build({
             name: req.body.name,
             price: parseFloat(req.body.price),
@@ -13,7 +17,7 @@ export const CreateProduct = async (req: Request, res: Response) => {
         product.save();
 
         res.status(201).json({
-            message: 'O produto foi cadastrado com sucesso',
+            message: messages.createProduct201,
         });
     } catch (error) {
         res.status(500).json(error);

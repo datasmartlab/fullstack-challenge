@@ -1,10 +1,5 @@
 import axios from 'axios';
 
-const savedLanguage = localStorage.getItem('language');
-
-const language =
-    savedLanguage === 'pt' || savedLanguage === 'en' ? savedLanguage : 'pt';
-
 interface productData {
     id?: number;
     name: string;
@@ -12,7 +7,6 @@ interface productData {
     description: string;
     brandId: number | string | null;
 }
-
 interface paginationData {
     offset: number;
     limit: number;
@@ -23,6 +17,8 @@ interface paginationData {
 }
 
 const baseURL = import.meta.env.VITE_LINK;
+
+const language = translate();
 
 const api = axios.create({
     baseURL: baseURL,
@@ -81,4 +77,11 @@ export async function updateProduct(data: productData) {
         brandId: data.brandId,
     });
     return response;
+}
+
+function translate() {
+    const savedLanguage = localStorage.getItem('language');
+    return savedLanguage === 'pt' || savedLanguage === 'en'
+        ? savedLanguage
+        : 'pt';
 }

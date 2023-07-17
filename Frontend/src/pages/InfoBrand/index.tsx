@@ -4,7 +4,7 @@ import { Box, Button, Grid, CircularProgress } from '@mui/material';
 import { ArrowBack, Delete } from '@mui/icons-material';
 import DeleteDialog from './DeleteDialog';
 import { toast } from 'react-toastify';
-import { showBrand, deleteBrand } from '../../services/BrandApi';
+import { showBrand, deleteBrand } from '../../services/brandApi';
 import axios from 'axios';
 import { FormUpdateBrand } from './FormUpdateBrand';
 

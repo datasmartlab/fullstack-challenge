@@ -7,7 +7,7 @@ import {
     TextField,
 } from '@mui/material';
 import { useState } from 'react';
-import { createBrand } from '../../../services/BrandApi';
+import { createBrand } from '../../../services/brandApi';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';

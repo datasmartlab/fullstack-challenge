@@ -1,5 +1,5 @@
 import { put, takeLatest, call, all } from 'redux-saga/effects';
-import { listProducts } from '../../services/ProductApi';
+import { listProducts } from '../../services/productApi';
 import { actions } from './slice';
 
 interface Product {

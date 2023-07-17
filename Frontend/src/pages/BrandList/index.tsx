@@ -18,9 +18,9 @@ interface BrandProps {
 }
 
 export function BrandList() {
-    const { getBrandRequest } = actions;
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
+    const { getBrandRequest } = actions;
 
     const { list, loading }: BrandProps = useSelector(
         (state: RootState) => state.brands,

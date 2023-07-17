@@ -7,6 +7,7 @@ export interface ProductData extends Model {
     name: string;
     description: string;
     price: number;
+    brandId: number;
 }
 
 export const Product = sequelize.define<ProductData>(
@@ -26,20 +27,18 @@ export const Product = sequelize.define<ProductData>(
         price: {
             type: DataTypes.DECIMAL(18, 2),
         },
-        brandId: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-        },
     },
     {
         tableName: 'product',
         timestamps: false,
     },
 );
+
+Brand.hasOne(Product);
+
 Product.belongsTo(Brand, {
-    as: 'brandData',
     foreignKey: 'brandId',
+    targetKey: 'id',
+    as: 'brandData',
     onDelete: 'SET NULL',
 });
-
-sequelize.sync();

@@ -11,7 +11,7 @@ import {
     TextField,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { createProduct } from '../../../services/ProductApi';
+import { createProduct } from '../../../services/productApi';
 import { useForm, Controller } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -43,9 +43,10 @@ interface FormProps {
 }
 
 export function FormProduct({ setVisibleForm, visibleForm }: FormProps) {
-    const { getBrandRequest } = actions;
     const { formatMessage } = useIntl();
     const dispatch = useDispatch();
+
+    const { getBrandRequest } = actions;
 
     const brands: BrandData[] = useSelector(
         (state: RootState) => state.brands.list,

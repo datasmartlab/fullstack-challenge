@@ -6,9 +6,12 @@ interface BrandData {
 }
 
 const baseURL = import.meta.env.VITE_LINK;
-
+const language = translate();
 const api = axios.create({
     baseURL: baseURL,
+    params: {
+        language,
+    },
 });
 
 export async function listBrands(filter: string) {
@@ -45,4 +48,11 @@ export async function updateBrand(data: BrandData) {
         name: data.name,
     });
     return response;
+}
+
+function translate() {
+    const savedLanguage = localStorage.getItem('language');
+    return savedLanguage === 'pt' || savedLanguage === 'en'
+        ? savedLanguage
+        : 'pt';
 }

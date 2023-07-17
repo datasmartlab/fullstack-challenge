@@ -26,8 +26,9 @@ const messagesPtBr = {
     tableProductPrice: 'Preço',
     tableProductDescription: 'Descrição',
     tableProductAction: 'Ação',
+
     tableProductButtonInfoProduct: 'Ver produto',
-    tableProductPaginationPageLines: 'Linhas por página',
+    tableProductPaginationLimit: 'Limite',
     tableProductPaginationOutOf: 'de',
 
     tableProductNoDescription: 'Sem descrição',

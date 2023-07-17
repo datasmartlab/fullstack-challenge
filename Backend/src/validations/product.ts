@@ -1,13 +1,6 @@
 import * as Yup from 'yup';
 import { Request, Response, NextFunction } from 'express';
-
-const ProductSchema = Yup.object().shape({
-    name: Yup.string().required('Nome é obrigatório'),
-    description: Yup.string(),
-    price: Yup.number()
-        .required('Preço é obrigatória')
-        .positive('o preço precisa ser positivo'),
-});
+import locales from '../translate/locales/locales';
 
 export const ValidationProduct = async (
     req: Request,
@@ -15,7 +8,20 @@ export const ValidationProduct = async (
     next: NextFunction,
 ) => {
     try {
+        const language = req.query.language as 'pt' | 'en';
+
+        const messages = locales[language].message;
+
+        const ProductSchema = Yup.object().shape({
+            name: Yup.string().required(messages.validationProductName),
+            description: Yup.string(),
+            price: Yup.number()
+                .required(messages.validationProductPriceRequired)
+                .positive(messages.validationProductPricePositive),
+        });
+
         await ProductSchema.validate(req.body);
+
         next();
     } catch (error) {
         return res.status(500).json(error);

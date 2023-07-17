@@ -31,22 +31,14 @@ interface HeaderProps {
 
 export function Header({ setLanguage, language }: HeaderProps) {
     const { formatMessage } = useIntl();
-    const { changeLanguageRequest } = actions;
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(changeLanguageRequest(language));
-    }, [language, dispatch, changeLanguageRequest]);
+    const { changeLanguageRequest } = actions;
 
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    const toggleDrawer = () => {
+    const handleToggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
     };
-
-    useEffect(() => {
-        localStorage.setItem('language', language);
-    }, [language]);
 
     function handleChangeLanguage(event: SelectChangeEvent<'pt' | 'en'>) {
         const selectedLanguage = event.target.value as string;
@@ -70,6 +62,14 @@ export function Header({ setLanguage, language }: HeaderProps) {
         [formatMessage],
     );
 
+    useEffect(() => {
+        localStorage.setItem('language', language);
+    }, [language]);
+
+    useEffect(() => {
+        dispatch(changeLanguageRequest(language));
+    }, [language, dispatch, changeLanguageRequest]);
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" color="primary">
@@ -79,7 +79,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        onClick={toggleDrawer}
+                        onClick={handleToggleDrawer}
                     >
                         <Menu fontSize="large" />
                     </IconButton>
@@ -130,7 +130,11 @@ export function Header({ setLanguage, language }: HeaderProps) {
                     </FormControl>
                 </Toolbar>
             </AppBar>
-            <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={handleToggleDrawer}
+            >
                 <List
                     sx={{
                         width: '100%',
@@ -145,7 +149,7 @@ export function Header({ setLanguage, language }: HeaderProps) {
                             component={NavLink}
                             to={item.path}
                             key={item.label}
-                            onClick={toggleDrawer}
+                            onClick={handleToggleDrawer}
                             divider={true}
                         >
                             <ListItemText

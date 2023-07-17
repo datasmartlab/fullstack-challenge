@@ -1,28 +1,26 @@
 import { Request, Response } from 'express';
 import { Brand } from '../../models/brand';
-
-export interface BrandData {
-    name: string;
-}
+import locales from '../../translate/locales/locales';
 
 export const CreateBrand = async (req: Request, res: Response) => {
     try {
-        const brandData: BrandData = {
-            name: req.body.name,
-        };
+        const language = req.query.language as 'pt' | 'en';
+        const name = req.body.name;
+
+        const messages = locales[language].message;
 
         const [result, created] = await Brand.findOrCreate({
-            where: { name: brandData.name },
+            where: { name },
         });
 
         if (!created) {
             return res.status(409).json({
-                message: `A marca com o nome ${brandData.name} já foi cadastrada`,
+                message: messages.createBrand409,
             });
         }
 
         res.status(201).json({
-            message: `A marca ${brandData.name} foi cadastrada com sucesso`,
+            message: messages.createBrand201,
             data: result,
         });
     } catch (error) {

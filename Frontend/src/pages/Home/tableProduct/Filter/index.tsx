@@ -24,7 +24,6 @@ export function TableFilter({
 
     function handleSeachProduct() {
         const formatedPrice = price.replace(',', '.');
-        console.log(`${price} = ${formatedPrice}`);
         setFilter({ name, price: formatedPrice });
     }
 

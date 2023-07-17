@@ -14,16 +14,13 @@ import ValidationProduct from '../validations/product';
 import { translate } from '../translate/translate';
 const mainRoutes = Router();
 
+mainRoutes.use(translate);
+
 //rotas das Marcas
-mainRoutes
-    .route('/brand')
-    .all(translate)
-    .post(ValidationBrand, CreateBrand)
-    .get(ListBrand);
+mainRoutes.route('/brand').post(ValidationBrand, CreateBrand).get(ListBrand);
 
 mainRoutes
     .route('/brand/:id')
-    .all(translate)
     .get(ShowBrand)
     .delete(DeleteBrand)
     .put(ValidationBrand, UpdateBrand);
@@ -31,13 +28,11 @@ mainRoutes
 // rotas do produto
 mainRoutes
     .route('/product')
-    .all(translate)
     .get(ListProduct)
     .post(ValidationProduct, CreateProduct);
 
 mainRoutes
     .route('/product/:id')
-    .all(translate)
     .get(ShowProduct)
     .delete(DeleteProduct)
     .put(ValidationProduct, UpdateProduct);

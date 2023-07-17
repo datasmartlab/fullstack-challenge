@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import { blue, grey, red } from '@mui/material/colors';
 
-const lightTheme = createTheme({
+const theme = createTheme({
     typography: {
         fontFamily: 'Roboto Mono, sans-serif',
     },
@@ -30,4 +30,4 @@ const lightTheme = createTheme({
     },
 });
 
-export default lightTheme;
+export default theme;

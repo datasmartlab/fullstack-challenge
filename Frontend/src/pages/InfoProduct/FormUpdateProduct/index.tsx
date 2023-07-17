@@ -11,7 +11,7 @@ import {
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
-import { updateProduct } from '../../../services/ProductApi';
+import { updateProduct } from '../../../services/productApi';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useIntl } from '../../../translate/useTranslate';

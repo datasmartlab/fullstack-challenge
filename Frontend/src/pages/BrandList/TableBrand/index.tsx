@@ -66,7 +66,7 @@ export function TableBrand({ setFilter, filter, data }: tableBrandProps) {
                                                 color="secondary"
                                                 onClick={() => {
                                                     navigator(
-                                                        `/brand/${item.id}`,
+                                                        `/product/${item.id}`,
                                                     );
                                                 }}
                                             >

@@ -50,7 +50,9 @@ export function TableProduct({
 }: tableProductProps) {
     const { formatMessage } = useIntl();
     const navigator = useNavigate();
+
     const minWidth800 = useMediaQuery('(min-width:800px)');
+    const minWidth400 = useMediaQuery('(min-width:400px)');
 
     const handleChangePage = (_event: unknown, newPage: number) => {
         setOffset(newPage * pagination.limit);
@@ -66,26 +68,33 @@ export function TableProduct({
         <Box>
             <TableFilter pagination={pagination} setFilter={setFilter} />
             <TableContainer component={Paper} sx={{ marginBottom: '1rem' }}>
-                <Table sx={{ minWidth: 700 }}>
+                <Table>
                     <TableHead>
                         <TableRow sx={{ fontSize: '4rem' }}>
                             <TableHeadCellStyled>
                                 {formatMessage({ id: 'tableProductName' })}
                             </TableHeadCellStyled>
+                            {minWidth400 ? (
+                                <>
+                                    <TableHeadCellStyled>
+                                        {formatMessage({
+                                            id: 'tableProductBrand',
+                                        })}
+                                    </TableHeadCellStyled>
 
-                            <TableHeadCellStyled>
-                                {formatMessage({ id: 'tableProductBrand' })}
-                            </TableHeadCellStyled>
-
-                            <TableHeadCellStyled>
-                                {formatMessage({ id: 'tableProductPrice' })}
-                            </TableHeadCellStyled>
-                            {minWidth800 ? (
-                                <TableHeadCellStyled>
-                                    {formatMessage({
-                                        id: 'tableProductDescription',
-                                    })}
-                                </TableHeadCellStyled>
+                                    <TableHeadCellStyled>
+                                        {formatMessage({
+                                            id: 'tableProductPrice',
+                                        })}
+                                    </TableHeadCellStyled>
+                                    {minWidth800 ? (
+                                        <TableHeadCellStyled>
+                                            {formatMessage({
+                                                id: 'tableProductDescription',
+                                            })}
+                                        </TableHeadCellStyled>
+                                    ) : null}
+                                </>
                             ) : null}
                             <TableHeadCellStyled sx={{ textAlign: 'center' }}>
                                 {formatMessage({ id: 'tableProductAction' })}
@@ -104,45 +113,54 @@ export function TableProduct({
                                         >
                                             {item.name}
                                         </TableCell>
+                                        {minWidth400 ? (
+                                            <>
+                                                <TableCell
+                                                    width={150}
+                                                    component="th"
+                                                    scope="row"
+                                                >
+                                                    {item.brandData ? (
+                                                        item.brandData.name
+                                                    ) : (
+                                                        <span
+                                                            style={{
+                                                                color: 'red',
+                                                            }}
+                                                        >
+                                                            {formatMessage({
+                                                                id: 'tableProductNoBrand',
+                                                            })}
+                                                        </span>
+                                                    )}
+                                                </TableCell>
 
-                                        <TableCell
-                                            width={150}
-                                            component="th"
-                                            scope="row"
-                                        >
-                                            {item.brandData ? (
-                                                item.brandData.name
-                                            ) : (
-                                                <span style={{ color: 'red' }}>
-                                                    {formatMessage({
-                                                        id: 'tableProductNoBrand',
-                                                    })}
-                                                </span>
-                                            )}
-                                        </TableCell>
-
-                                        <TableCell width={70}>
-                                            R$
-                                            {item.price}
-                                        </TableCell>
-                                        {minWidth800 ? (
-                                            <TableCell width={540}>
-                                                {item.description ? (
-                                                    <span>
-                                                        {item.description}
-                                                    </span>
-                                                ) : (
-                                                    <span
-                                                        style={{
-                                                            color: 'red',
-                                                        }}
-                                                    >
-                                                        {formatMessage({
-                                                            id: 'tableProductNoDescription',
-                                                        })}
-                                                    </span>
-                                                )}
-                                            </TableCell>
+                                                <TableCell width={70}>
+                                                    R$
+                                                    {item.price}
+                                                </TableCell>
+                                                {minWidth800 ? (
+                                                    <TableCell width={540}>
+                                                        {item.description ? (
+                                                            <span>
+                                                                {
+                                                                    item.description
+                                                                }
+                                                            </span>
+                                                        ) : (
+                                                            <span
+                                                                style={{
+                                                                    color: 'red',
+                                                                }}
+                                                            >
+                                                                {formatMessage({
+                                                                    id: 'tableProductNoDescription',
+                                                                })}
+                                                            </span>
+                                                        )}
+                                                    </TableCell>
+                                                ) : null}
+                                            </>
                                         ) : null}
                                         <TableCell
                                             width={140}
@@ -194,7 +212,7 @@ export function TableProduct({
                                 onRowsPerPageChange={handleChangeRowsPerPage}
                                 rowsPerPage={pagination.limit}
                                 labelRowsPerPage={formatMessage({
-                                    id: 'tableProductPaginationPageLines',
+                                    id: 'tableProductPaginationLimit',
                                 })}
                                 labelDisplayedRows={({ from, to, count }) => {
                                     return `${from}–${to} ${formatMessage({

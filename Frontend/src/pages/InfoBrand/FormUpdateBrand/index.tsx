@@ -2,7 +2,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import * as zod from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { updateBrand } from '../../../services/BrandApi';
+import { updateBrand } from '../../../services/brandApi';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useIntl } from '../../../translate/useTranslate';
@@ -39,11 +39,13 @@ export function FormUpdateBrand({
     const newProductForm = useForm<Product>({
         resolver: zodResolver(newBrandValidationSchema),
     });
+
     const {
         handleSubmit,
         register,
         formState: { errors },
     } = newProductForm;
+
     async function handleUpdateProduct(data: BrandData) {
         try {
             setLoading(true);
@@ -59,11 +61,11 @@ export function FormUpdateBrand({
             if (axios.isAxiosError(error) && error.response) {
                 toast.error(error.response.data.message);
             }
-            setLoading(false);
         }
+        setLoading(false);
     }
     return (
-        <Grid item sx={{ marginTop: '2rem' }} lg={12}>
+        <Grid item sx={{ marginTop: '2rem' }} width={'100%'}>
             <form onSubmit={handleSubmit(handleUpdateProduct)}>
                 <input
                     defaultValue={brand.id}

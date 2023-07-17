@@ -1,6 +1,6 @@
 import { put, takeLatest, call, all } from 'redux-saga/effects';
 import { actions } from './slice';
-import { listBrands } from '../../services/BrandApi';
+import { listBrands } from '../../services/brandApi';
 
 interface BrandData {
     id: number;
