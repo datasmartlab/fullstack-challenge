@@ -1,0 +1,5 @@
+export {default as get} from './getProducts.js'
+export {default as post} from './postProducts.js'
+export {default as find} from './findProduct.js'
+export {default as update} from './updateProducts.js'
+export {default as _delete} from './deleteProducts.js'

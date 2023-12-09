@@ -1,0 +1,10 @@
+id,nome,preco,descricao,createdAt,updatedAt
+1,Teclado,15,"Teclado numerico","2023-10-26 02:50:46","2023-11-22 01:44:38"
+2,Mouse,20,"Mouse gamer","2023-10-26 02:52:21","2023-12-05 01:24:07"
+3,Fone,50,"Fone gamer","2023-10-26 02:57:08","2023-11-22 01:41:25"
+5,Camera,150,"Camera pro gamer max","2023-11-07 00:11:32","2023-11-22 01:41:35"
+6,Joystick,60,"Controle de pc","2023-11-08 00:36:32","2023-11-22 01:40:15"
+8,Antirruído,70,"Espuma antirruído para microfone","2023-11-13 15:44:08","2023-11-22 01:40:02"
+9,"Câmera ",1500,"Câmera de gravação","2023-11-13 15:49:16","2023-11-14 00:11:55"
+43,Alterado,90,"teste de alteração","2023-11-14 01:44:38","2023-11-22 01:38:04"
+130,"Monitor - Gammer",400,"30 polegadas led FullHD","2023-12-07 01:56:40","2023-12-07 02:53:23"
